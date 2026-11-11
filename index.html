@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>잇:다 AI 러닝랩 | 수업을 잇다, 미래를 깨우다</title>
+<meta name="description" content="수업을 잇다, 미래를 깨우다. 2026 부산광역시교육청 AI·디지털 교사 동아리 잇:다 AI 러닝랩의 프로젝트 수업 전시관.">
+<meta property="og:title" content="잇:다 AI 러닝랩">
+<meta property="og:description" content="수업을 잇다, 미래를 깨우다">
+<meta property="og:image" content="assets/og-image.png">
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700;800&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#13213A; --night-2:#1B2D4C; --mist:#EDF1F5; --mist-2:#DFE6EE;
+  --ink:#1C2433; --ink-soft:#4B566A; --on-night:#EEF2F8; --on-night-soft:#BAC6DA;
+  --lo:#E8566A; --mid:#2BB3A6; --hi:#F2B33D; --dawn:#F6D58E;
+  --display:"Hahmlet","Gothic A1",serif;
+  --latin:"Fredoka","Gothic A1",sans-serif;
+  --sans:"Gothic A1","Apple SD Gothic Neo",sans-serif;
+  --head:68px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--sans);font-size:17px;line-height:1.8;letter-spacing:-.2px;color:var(--ink);background:var(--mist);word-break:keep-all;-webkit-font-smoothing:antialiased}
+p,h1,h2,h3,h4{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+img{display:block}
+:focus-visible{outline:3px solid var(--dawn);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media (min-width:900px) and (min-height:620px){
+  html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+  .screen{height:100vh;height:100dvh;scroll-snap-align:start;overflow:hidden}
+}
+.screen{position:relative;padding:calc(var(--head) + 3.6vh) 5.5vw 3.6vh;display:flex;flex-direction:column}
+#hall{padding-right:9vw}
+.night{background:var(--night);color:var(--on-night)}
+
+/* 글자 위계: 명조 제목 / 고딕 본문 / 라틴 장식 글자 */
+.eyebrow{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink-soft);display:block;margin-bottom:1vh}
+.night .eyebrow{color:var(--dawn)}
+.title{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vh,50px);line-height:1.3;letter-spacing:-1px;margin:0}
+.lede{font-size:clamp(15px,2vh,17px);color:var(--ink-soft);margin:0;line-height:1.85}
+.night .lede{color:var(--on-night-soft)}
+.nowrap{white-space:nowrap}
+
+/* 머리 */
+header{position:fixed;inset:0 0 auto;z-index:20;height:var(--head);padding:0 5.5vw;display:flex;align-items:center;gap:40px;background:rgba(19,33,58,.96);color:var(--on-night);border-bottom:1px solid #ffffff14}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand b{font-family:var(--display);font-weight:800;font-size:24px}
+.brand small{font-weight:500;font-size:13px;color:var(--on-night-soft)}
+header nav{display:flex;gap:6px;margin-left:auto}
+header nav a{font-weight:500;font-size:15px;padding:8px 14px;border-radius:999px;color:var(--on-night-soft)}
+header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffffff14}
+
+/* 화면 위치 점 */
+.dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;gap:10px}
+.dots a{display:flex;align-items:center;justify-content:flex-end;gap:8px;font-size:12px;color:transparent;padding:2px 4px 2px 10px;border-radius:999px}
+.dots a i{width:9px;height:9px;border-radius:50%;background:#8D9AB0;opacity:.6}
+.dots a:hover,.dots a[aria-current="true"]{color:#1C2433;background:#fff;box-shadow:0 2px 8px #0000002a;font-family:var(--display)}
+.dots a[aria-current="true"] i{background:var(--dawn);opacity:1;transform:scale(1.3)}
+
+/* 이미지 자리 */
+.slot{position:relative;overflow:hidden;background:repeating-linear-gradient(-45deg,#ffffff0a 0 12px,transparent 12px 24px),#25385A;border:2px dashed #8FA3C4;border-radius:18px}
+.slot.light{background:repeating-linear-gradient(-45deg,#1C24330a 0 12px,transparent 12px 24px),#E4EAF1;border-color:#9AA8BC}
+.slot .tag{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:12px;font-size:13px;color:#C9D4E6}
+.slot.light .tag{color:#5B6880}
+.slot .tag b{font-size:14px}
+.slot .tag code{font-family:var(--sans);font-size:12px;padding:2px 8px;border-radius:6px;background:#0000001f}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot.has-img{border:0;background:none}
+.slot.has-img .tag{display:none}
+.slot.corner .tag{display:none!important;inset:auto auto 40px 5.5vw;flex-direction:row;gap:8px;padding:6px 12px;border-radius:10px;background:#ffffffe6;font-size:12px}.slot.corner .tag b{font-size:12px}
+
+/* 1. 첫 화면 */
+.hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:5vw;align-items:center;flex:1}
+.motto{font-family:var(--display);font-weight:700;color:var(--dawn);font-size:15px;margin-bottom:2vh;display:block}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,6.2vh,72px);line-height:1.25;letter-spacing:-1.5px;margin:0 0 3vh}
+.hero .lede:last-of-type{margin-bottom:4.5vh}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;padding:14px 26px;border-radius:999px;font-family:var(--display);font-weight:700;font-size:16px;border:1.5px solid #ffffff4d;color:#fff}
+.btn:hover{background:#ffffff14}
+.btn.solid{background:var(--dawn);border-color:var(--dawn);color:var(--night)}
+.hero .slot{height:calc(100dvh - var(--head) - 12vh);min-height:360px}
+
+/* 2. 동아리 소개 */
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:4vw;align-items:center;flex:1;min-height:0}
+.team-motto{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vh,22px);color:var(--ink-soft);margin:0 0 .6vh}
+.team-name{font-family:var(--display);font-weight:800;font-size:clamp(40px,6.4vh,68px);line-height:1.15;margin:0 0 3vh;letter-spacing:-1.5px}
+.team-name small{font-family:var(--sans);font-weight:500;font-size:.42em;color:var(--ink-soft);letter-spacing:0;margin-left:10px}
+.story .lede + .lede{margin-top:1.6vh}
+.venn-wrap{position:relative;width:100%;aspect-ratio:640/580;max-height:calc(100dvh - var(--head) - 22vh);margin:0 auto}
+.venn-art{position:absolute;inset:0;border-radius:24px}
+.venn-art:not(.has-img){background:none;border:0}.venn-art:not(.has-img) .tag{inset:auto auto -2px 0;flex-direction:row;gap:6px;font-size:11px;padding:2px 8px;border:1.5px dashed #9AA8BC;border-radius:8px;background:#ffffffcc}.venn-art:not(.has-img) .tag b{font-size:11px}
+#venn{position:absolute;inset:0;width:100%;height:100%}
+.venn-wrap:has(.venn-art.has-img) #venn .shape{display:none}
+#venn text{font-family:var(--sans)}
+#venn .vt{font-family:var(--display);font-weight:700}
+.signature{display:grid;grid-template-columns:auto 1fr auto;gap:3.5vw;align-items:center;border-top:1px solid #C5CFDB;padding-top:2.2vh;margin-top:2vh}
+.sig-logo{display:flex;align-items:center;gap:16px}.sig-mark{display:flex;flex-direction:column;gap:2px}.sig-mark em{font-style:normal;font-family:var(--latin);font-weight:500;font-size:12px;letter-spacing:.5px;color:var(--ink-soft)}
+.sig-logo b{font-family:var(--latin);font-weight:700;font-size:clamp(34px,5vh,50px);line-height:1;letter-spacing:1px}
+.sig-logo b span:nth-child(1){color:var(--lo)}.sig-logo b span:nth-child(2){color:var(--mid)}.sig-logo b span:nth-child(3){color:#D99A14}.sig-logo b span:nth-child(4){color:#7D8FE0}
+.sig-logo strong{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vh,40px);line-height:1}
+.sig-text{display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:16px;color:var(--ink);line-height:1.5}.sig-text span:first-child{font-family:var(--display);font-size:19px}.sig-text span:last-child{color:var(--ink-soft);font-size:15px}
+.sig-text b{color:var(--ink);font-family:var(--display);font-weight:700}
+.maker{font-size:13px;color:var(--ink-soft)}
+
+/* 수업 모델 공통 */
+.tabs{display:flex;gap:10px;margin-bottom:1.8vh}
+.tabs a{font-size:17px;font-family:var(--sans);font-weight:800;padding:10px 22px;box-shadow:0 2px 10px #0000001f;border-radius:999px;border:1.5px solid #ffffff33;color:var(--on-night-soft)}
+.tabs a[aria-current="true"]{background:var(--dawn);border-color:var(--dawn);color:var(--night)}
+.light-tabs a{border-color:#C5CFDB;color:var(--ink-soft)}
+.light-tabs a[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* 3. 네 걸음 */
+.m-head{display:grid;grid-template-columns:auto 1fr;gap:4vw;align-items:end}
+.wordmark{display:flex;align-items:flex-end;gap:2.4vw}
+.wordmark .big{font-family:var(--latin);font-weight:700;font-size:clamp(64px,11vh,130px);line-height:.82;letter-spacing:-2px;display:flex}
+.wordmark .big span:nth-child(1){color:#FF8A97}.wordmark .big span:nth-child(2){color:#4FD1C5}.wordmark .big span:nth-child(3){color:#F6C35A}.wordmark .big span:nth-child(4){color:#AFC0FF}
+.wordmark .title{font-size:clamp(26px,3.8vh,40px)}
+.m-head .lede{justify-self:end}
+.steps{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4vw;margin-top:2.4vh}
+.step{display:flex;flex-direction:column;background:var(--night-2);border-radius:18px;overflow:hidden;position:relative}
+.step .slot{flex:0 0 17vh;border-radius:0;border-width:0 0 2px 0}
+.step .glyph{position:absolute;left:18px;top:calc(17vh - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
+.step-body{padding:2vh 1.2vw 1.6vh;display:flex;flex-direction:column;gap:.7vh;flex:1;min-height:0}
+.step-name{display:flex;align-items:baseline;gap:10px;padding-left:min(70px,5vw)}
+.step-name strong{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vh,28px)}
+.step-name small{font-family:var(--latin);font-weight:600;font-size:15px;color:var(--c);font-style:normal}
+.joins{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.5vh,22px);color:#fff;margin-top:.6vh}
+.step p{margin:0;font-size:clamp(15px,2.1vh,17px);color:#D5DDEA;line-height:1.7}
+.step-foot{margin-top:auto;padding-top:1.2vh;border-top:1px solid #ffffff1c;display:grid;grid-template-columns:auto 1fr;gap:.7vh 10px;align-items:center}.step-foot .fl{font-size:14px;color:var(--on-night-soft)}.chips2{display:flex;gap:5px;flex-wrap:nowrap}
+.step-foot span{font-family:var(--display);font-weight:700;font-size:14px;white-space:nowrap;padding:3px 11px;border-radius:999px;background:color-mix(in srgb,var(--c) 22%,transparent);color:#fff}
+
+/* 4. AI 사다리 */
+.l-head{display:grid;grid-template-columns:auto 1fr;gap:2.6vw;align-items:end}
+.climb-art{height:15vh;min-height:96px;border-radius:14px}
+.climb-art .tag{font-size:10.5px;gap:1px}.climb-art .tag b{font-size:11px}
+.itda-mini{font-family:var(--latin);font-weight:700;margin-right:10px}
+.itda-mini span:nth-child(1){color:#E8566A}.itda-mini span:nth-child(2){color:#20A296}.itda-mini span:nth-child(3){color:#E0A21E}.itda-mini span:nth-child(4){color:#7D8FE0}
+.l-head .title small{display:block;font-family:var(--sans);font-family:var(--display);font-weight:700;font-size:.4em;color:var(--ink-soft);letter-spacing:0;margin-top:.6vh}
+.l-head .lede{justify-self:end;max-width:36em}
+.ladder-wrap{flex:1;min-height:0;display:grid;grid-template-columns:1fr;gap:14px;margin-top:2.6vh}
+.climb{position:relative;display:flex;flex-direction:column;align-items:center}
+.climb svg{position:absolute;inset:34px 0 0 0;width:100%;height:calc(100% - 34px)}
+.climb span{position:relative;writing-mode:vertical-rl;font-size:13px;font-family:var(--display);font-weight:700;color:#fff;margin-top:auto;margin-bottom:12px;margin-left:24px;text-shadow:0 1px 3px #0005}
+.ladder{position:relative;display:grid;grid-template-columns:12% 17% repeat(4,minmax(0,1fr)) 14%;grid-template-rows:auto repeat(3,minmax(0,1fr)) auto;gap:.9vh .8vw;min-height:0}
+.stairs{position:absolute;inset:0;z-index:0;pointer-events:none}
+.ladder > *:not(.stairs){position:relative;z-index:1}
+.lh{display:flex;align-items:flex-end;gap:8px;padding:0 4px 2px;font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink-soft)}
+.lh b{font-family:var(--latin);font-weight:700;font-size:30px;line-height:1}
+.lh.up{flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;font-family:var(--display);font-weight:700;color:var(--ink);font-size:14px}
+.ladder-art{grid-column:1;grid-row:1 / 5;border-radius:18px;min-height:0}
+.ladder-art.has-img{border:0;background:none}
+.ladder-art.has-img img{object-fit:contain;object-position:center bottom}
+.ladder-art .tag{font-size:11px;gap:2px;padding:8px}
+.rung{position:relative;display:flex;align-items:center;justify-content:center}
+.rung::after{content:"";position:absolute;top:-1vh;bottom:-1vh;left:50%;width:62px;margin-left:-31px;border-left:5px solid #8A97AC;border-right:5px solid #8A97AC;background:repeating-linear-gradient(180deg,transparent 0 22px,#8A97AC 22px 27px);z-index:0;opacity:.55}
+.rung i{z-index:1}
+.rung::before{content:"";position:absolute;top:-1vh;bottom:-1vh;left:50%;width:62px;margin-left:-31px;background:color-mix(in srgb,var(--c) 18%,transparent);border-radius:4px}
+.rung i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;border:5px solid var(--c);display:grid;place-items:center;font-style:normal;font-family:var(--latin);font-weight:700;font-size:20px;color:var(--ink)}
+.rowlab{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-content:center;padding:1.2vh 14px;background:var(--c);color:#fff;border-radius:16px}
+.rowlab .lv{grid-row:span 2;font-family:var(--latin);font-weight:700;font-size:clamp(38px,6vh,56px);line-height:.9}
+.rowlab strong{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vh,22px);line-height:1.2;align-self:end}
+.rowlab small{font-size:13px;opacity:.95;line-height:1.4}
+.rowlab .ex{grid-column:1/-1;font-size:12px;line-height:1.45;opacity:.95}
+.rowlab .who{grid-column:1/-1;font-size:13px;line-height:1.5;margin-top:.4vh;padding-top:.6vh;border-top:1px solid #ffffff55}
+.cell{background:#fff;border-radius:14px;padding:1.4vh .9vw;font-size:clamp(14px,1.9vh,16px);line-height:1.6;color:var(--ink);box-shadow:0 1px 0 #1C24330d;border-top:4px solid var(--c)}
+.cell.tools{display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;font-size:13px;background:#FFF8E8;border-top-color:var(--dawn);padding:1.2vh .7vw}
+.promises{grid-column:2/-1;display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:1vw;align-items:center;background:#13213A;color:#EEF2F8;border-radius:14px;padding:1.2vh 1.2vw;font-size:13.5px;line-height:1.5}
+.promises b{font-family:var(--display);font-weight:700;color:var(--dawn);font-size:13px}
+.promises span{display:flex;gap:8px;align-items:flex-start}
+.promises i{font-style:normal;font-family:var(--display);font-weight:700;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--c);color:#fff;flex:none}
+.cell.tools span{padding:1px 8px;border-radius:999px;background:#fff;border:1px solid #EBD7A8;font-size:12px}
+.cell.promise{font-size:clamp(13px,1.75vh,14.5px)}
+.cell.promise b{display:block;font-size:12px;color:var(--ink-soft)}
+
+/* 5. 전시관 */
+.screen-bg{position:absolute;inset:var(--head) 0 0 0;border-radius:0;border-width:0;z-index:0}
+.screen-bg .tag{display:none!important}
+.screen-bg.has-img img{opacity:.22}
+.screen > *:not(.screen-bg):not(.hall-bg){position:relative;z-index:1}
+.bgtag{position:absolute!important;top:calc(var(--head) + 14px);right:5.5vw;font-size:12px;padding:3px 10px;border:1.5px dashed #9AA8BC;border-radius:8px;background:#ffffffcc;color:#4B566A}
+.night .bgtag{background:#13213Acc;color:#BAC6DA;border-color:#5B6E90}
+.hall-bg{position:absolute;inset:var(--head) 0 0 0;border-radius:0;border-width:0}
+.hall-bg.has-img img{opacity:.35}
+.hall-top{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.switch{display:flex;background:#fff;border-radius:999px;padding:6px;box-shadow:0 4px 16px #1C24331a}
+.switch button{border:0;background:none;padding:12px 30px;border-radius:999px;font-family:var(--sans);font-weight:700;font-size:18px;color:var(--ink-soft);cursor:pointer}
+.switch button:hover{color:var(--ink)}
+.switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.hall-body{position:relative;flex:1;min-height:0;margin-top:1.4vh;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:1.6vw}
+.hall-body.as-grid{grid-template-columns:1fr}
+#routeSvg{width:100%;height:100%;display:block}
+#routeSvg text{font-family:var(--sans)}
+#routeSvg text.hd,#routeSvg text.lname,#venn text.hd{font-family:var(--display)}
+#routeSvg text.lname{font-weight:600}
+#routeSvg .pname{font-family:var(--display);font-weight:700}
+#routeSvg .st{cursor:pointer}
+#routeSvg .st:hover .dot,#routeSvg .st:focus-visible .dot,#routeSvg .st.on .dot{stroke-width:10}
+#routeSvg .st:focus{outline:none}
+#routeSvg .st .lbox{transition:stroke-width .15s}
+#routeSvg .st:hover .lbox,#routeSvg .st:focus-visible .lbox,#routeSvg .st.on .lbox{stroke-width:3}
+#routeSvg .mark{cursor:pointer}
+.peek{align-self:center;background:#fff;border-radius:18px;padding:16px;box-shadow:0 12px 30px #1C24331a;display:flex;flex-direction:column;gap:10px}
+.peek .slot{aspect-ratio:16/10;border-radius:12px;border-width:1.5px}
+.peek .slot .tag{font-size:11px}.peek .slot .tag code{display:none}
+.peek .pl{font-family:var(--display);font-weight:700;font-size:13px;color:var(--c)}
+.peek h3{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.35;margin:0}
+.peek p{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.65}
+.peek .q{color:var(--ink);border-left:3px solid var(--c);padding-left:10px}
+.peek button{align-self:flex-start;border:0;background:var(--ink);color:#fff;border-radius:999px;padding:9px 18px;font-family:var(--display);font-weight:700;font-size:14px}
+.legend{display:grid;gap:8px;font-size:13px;color:var(--ink-soft)}
+.legend div{display:flex;align-items:center;gap:10px}
+.legend i{flex:none;width:28px;height:6px;border-radius:3px;background:var(--c)}
+.grid-band{display:none;position:relative;height:100%;border:2.5px dashed #D9A93A;border-radius:28px;background:#F6D58E33;padding:26px 18px 16px}
+.hall-body.as-grid .grid-band{display:block}
+.band-pill{position:absolute;top:-17px;left:50%;transform:translateX(-50%);border:2px solid #D9A93A;background:#fff;border-radius:999px;padding:4px 18px;font-family:var(--sans);font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+.band-pill:hover{background:#FFF4D6}
+.grid{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6vw;height:100%}
+.hall-body.as-grid #routeWrap{display:none}
+.hall-body.as-grid{margin-top:3vh}
+.hall-body.as-grid .grid{display:grid}
+#routeWrap{display:contents}
+.col{display:flex;flex-direction:column;gap:1.4vh;min-height:0}
+.col h3{margin:0;font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
+.col h3 i{width:26px;height:5px;border-radius:3px;background:var(--c)}
+.mini{all:unset;box-sizing:border-box;cursor:pointer;flex:1;min-height:0;display:grid;grid-template-columns:40% 1fr;gap:14px;align-items:center;background:#fff;border-radius:16px;padding:10px;border-left:5px solid var(--c)}
+.mini:hover{box-shadow:0 6px 18px #1C24331f}
+.mini:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.mini .slot{height:100%;min-height:70px;border-radius:12px;border-width:1.5px}
+.mini .slot .tag{font-size:11px;gap:2px}.mini .slot .tag code{display:none}
+.mini strong{display:block;font-family:var(--display);font-weight:700;font-size:clamp(15px,2vh,18px);line-height:1.4}
+.mini .club{display:inline-block;font-style:normal;font-family:var(--display);font-size:12px;color:#fff;background:var(--c);padding:1px 8px;border-radius:999px;margin-bottom:4px}
+.mini small{display:block;font-size:13px;color:var(--ink-soft);line-height:1.55;margin-top:4px}
+.bgnote{padding:2px 10px;border:1.5px dashed #9AA8BC;border-radius:8px;background:#ffffffcc}
+.totop{position:fixed;right:2.2vw;bottom:4.2vh;z-index:40;display:flex;flex-direction:column;align-items:center;gap:2px;width:64px;padding:10px 0 9px;border-radius:18px;background:var(--ink);color:#fff;font-size:15px;line-height:1;box-shadow:0 8px 22px #1C243340;opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .25s,transform .25s}
+.totop span{font-family:var(--sans);font-weight:700;font-size:12px}
+.totop.show{opacity:1;pointer-events:auto;transform:none}
+.totop:focus-visible{outline:3px solid var(--dawn);outline-offset:3px}
+.foot{position:relative;padding-right:88px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;color:var(--ink-soft);margin-top:1.4vh}
+
+/* 프로젝트 화면 */
+.full{position:fixed;inset:0;z-index:40;background:var(--mist);display:grid;grid-template-columns:42% 1fr;opacity:0;visibility:hidden;transition:opacity .25s}
+.full.open{opacity:1;visibility:visible}
+.full > .slot{border-radius:0;border-width:0 2px 0 0}
+.full-side{position:relative;overflow-y:auto;padding:4.6vh 4.6vw 4vh 3.6vw;display:flex;flex-direction:column}
+.full-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.6vh}
+.full-top .line{font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
+.full-top .line i{width:30px;height:6px;border-radius:3px;background:var(--c)}
+.full-ctrl{display:flex;gap:8px}
+.full-ctrl button{border:1.5px solid #C5CFDB;background:#fff;border-radius:999px;padding:7px 16px;font-size:14px;color:var(--ink)}
+.full-ctrl button:hover{border-color:var(--ink)}
+.full h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4.4vh,46px);line-height:1.3;letter-spacing:-1px;margin:0}
+.full .sub{font-size:clamp(16px,2.2vh,19px);color:var(--ink-soft);margin:1vh 0 2.2vh}
+.full .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2.4vh}
+.full .chips span{font-size:14px;padding:4px 12px;border-radius:999px;background:#fff;color:var(--ink-soft)}
+.question{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vh,21px);line-height:1.6;margin:0 0 2.8vh;padding-left:18px;border-left:5px solid var(--c)}
+.track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:relative;margin-bottom:2.8vh}
+.track::before{content:"";position:absolute;left:12px;right:12px;top:11px;height:4px;border-radius:2px;background:var(--c);opacity:.85}
+.track div{position:relative;padding-right:14px}
+.track div::before{content:"";display:block;width:26px;height:26px;border-radius:50%;background:#fff;border:5px solid var(--c);box-sizing:border-box;margin-bottom:10px;position:relative}
+.track b{font-family:var(--display);font-weight:700;font-size:20px;display:flex;align-items:baseline;gap:6px}
+.track b em{font-family:var(--latin);font-style:normal;font-weight:700;font-size:30px;line-height:1;color:var(--k)}
+.track p{margin:4px 0 0;font-size:16px;line-height:1.7;color:var(--ink)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:2.4vh}
+.pair h4,.res h4{margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink-soft)}
+.pair p{margin:0;font-size:16.5px;line-height:1.7}
+.res{margin-top:auto;padding-top:2vh;border-top:1px solid #C5CFDB}
+.res-list{display:flex;flex-wrap:wrap;gap:10px}
+.res-list a,.res-list span{display:inline-flex;flex-direction:column;padding:10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px}
+.res-list small{font-size:12px;color:var(--ink-soft)}
+.res-list span{color:#8A95A7}
+details{margin-top:1.4vh;font-size:15px}
+.eth{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:3vh}
+.eth div{background:#fff;border-radius:16px;padding:16px 18px;border-top:6px solid var(--c)}
+.eth b{display:block;font-family:var(--display);font-weight:700;font-size:19px}
+.eth span{font-size:13px;color:var(--ink-soft)}
+.eth p{margin:8px 0 0;font-size:15.5px;line-height:1.65}
+summary{cursor:pointer;color:var(--ink-soft)}
+details ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px}
+details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
+
+@media (max-width:899px), (max-height:619px){
+  .hero,.story,.steps,.hall-body,.signature,.m-head,.l-head{grid-template-columns:1fr}
+  .m-head .lede,.l-head .lede{justify-self:start}
+  .nowrap{white-space:normal}
+  .hero .slot{height:300px}
+  .ladder{display:flex;flex-direction:column}.lh,.stairs{display:none}
+  .ladder-art{min-height:280px}
+  .ladder-wrap{grid-template-columns:1fr}.climb{display:none}
+  .grid{grid-template-columns:1fr}
+  #routeSvg{min-height:420px}
+  .full{grid-template-columns:1fr;grid-template-rows:240px auto;overflow-y:auto}
+  .full-side{overflow:visible}
+  .pair,.track{grid-template-columns:1fr}.track::before{display:none}
+  header nav a{padding:6px 8px;font-size:13px}
+  header{gap:12px}.brand small,.dots{display:none}
+  .step .slot{flex-basis:200px}.step .glyph{top:150px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#top"><b>잇:다</b><small>AI 러닝랩</small></a>
+  <nav aria-label="주요 메뉴">
+    <a href="#story" data-for="story">동아리 소개</a>
+    <a href="#model" data-for="model ladder">잇:다 수업 모델</a>
+    <a href="#hall" data-for="hall">프로젝트 전시관</a>
+  </nav>
+</header>
+<nav class="dots" aria-label="화면 이동">
+  <a href="#top" data-for="top">처음<i></i></a>
+  <a href="#story" data-for="story">동아리 소개<i></i></a>
+  <a href="#model" data-for="model">네 걸음<i></i></a>
+  <a href="#ladder" data-for="ladder">AI 사다리<i></i></a>
+  <a href="#hall" data-for="hall">프로젝트 전시관<i></i></a>
+</nav>
+
+<main>
+  <!-- 1 -->
+  <section class="screen night" id="top">
+    <div class="hero">
+      <div>
+        <span class="motto">2026 부산광역시교육청 AI·디지털 교사 동아리 「잇:다 AI 러닝랩」</span>
+        <h1>수업을 잇다,<br>미래를 깨우다</h1>
+        <p class="lede">교육과정과 수업과 평가를 잇고, 교실과 부산을 잇고<br>그리고 선생님과 선생님을 잇습니다.</p>
+        <p class="lede" style="margin-top:2vh">저학년, 중학년, 고학년 교실에서 함께 설계한<br>아홉 개의 AI·디지털 프로젝트 수업을 소개합니다.</p>
+        <div class="btns">
+          <a class="btn solid" href="#story">잇:다 이야기</a>
+          <a class="btn" href="#hall">프로젝트 전시관</a>
+        </div>
+      </div>
+      <div class="slot" data-src="assets/hero-busan.png" data-size="1600×1200"></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="screen" id="story"><div class="slot screen-bg light" data-src="assets/bg-story.png" data-size="1920×1080"></div><span class="bgtag">배경 이미지 자리: assets/bg-story.png (1920×1080, 코덱스 제작)</span>
+    <div class="story">
+      <div>
+        <p class="team-motto">수업을 잇다, 미래를 깨우다</p>
+        <h2 class="team-name">잇:다<small>AI 러닝랩</small></h2>
+        <p class="lede">교육과정과 수업과 평가를 하나로 잇고,<br>선생님들 간의 협력으로<br>AI·디지털 기반 수업 혁신을 연결하는 실천 공동체입니다.</p>
+        <p class="lede">저학년, 중학년, 고학년의 교실을 고르게 담았습니다.</p>
+        <p class="lede">부산의 바다와 시장, 산복도로와 항구에서 출발한 수업이라<br>다른 학교에서도 자기 동네로 바꾸어 쓸 수 있습니다.</p>
+      </div>
+      <div class="venn-wrap"><div class="slot light venn-art" data-src="assets/venn-itda.png" data-size="1280×1120 투명 배경"></div><svg id="venn" viewBox="0 0 640 580" role="img" aria-label="잇:다가 잇는 세 가지: 교육과정·수업·평가, 교사와 교사, AI·디지털과 수업 혁신. 세 원이 겹치는 가운데에 잇:다가 있다."></svg></div>
+    </div>
+    <div class="signature">
+      <div class="sig-logo"><div class="sig-mark"><b><span>I</span><span>T</span><span>D</span><span>A</span></b><em>Inquire · Trace · Develop · Apply</em></div><strong>잇:다</strong></div>
+      <div class="sig-text"><span>묻고, 찾고, 짓고, 잇는 수업</span><span>2026 부산광역시교육청 AI·디지털 교사 동아리</span></div>
+      <div class="maker">제작: 동일중앙초등학교 김정지</div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="screen night" id="model"><div class="slot screen-bg" data-src="assets/bg-model.png" data-size="1920×1080"></div><span class="bgtag">배경 이미지 자리: assets/bg-model.png (1920×1080, 코덱스 제작)</span>
+    <div class="tabs"><a href="#model" aria-current="true">① 네 걸음</a><a href="#ladder">② AI 사다리</a></div>
+    <div class="m-head">
+      <div class="wordmark">
+        <div class="big" aria-hidden="true"><span>I</span><span>T</span><span>D</span><span>A</span></div>
+        <div><span class="eyebrow">잇:다 수업 모델</span><h2 class="title">묻고, 찾고,<br>짓고, 잇다</h2></div>
+      </div>
+      <p class="lede">걸음마다 잇는 것이 다릅니다.<br><span class="nowrap">질문은 삶과, 단서는 단서와, 생각은 결과물과, 배움은 세상과 이어집니다.</span><br>네 걸음마다 평가 장면을 두어 수업과 평가가 한 흐름으로 움직입니다.</p>
+    </div>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="screen" id="ladder"><div class="slot screen-bg light" data-src="assets/bg-ladder.png" data-size="1920×1080"></div><span class="bgtag">배경 이미지 자리: assets/bg-ladder.png (1920×1080, 코덱스 제작)</span>
+    <div class="tabs light-tabs"><a href="#model">① 네 걸음</a><a href="#ladder" aria-current="true">② AI 사다리</a></div>
+    <div class="l-head">
+      <div><span class="eyebrow">잇:다 AI 사다리</span><h2 class="title"><span class="itda-mini"><span>I</span><span>T</span><span>D</span><span>A</span></span> 한 칸씩 오르는 AI<small>학년군별 생성형 AI·디지털 도구 활용 단계</small></h2></div>
+      <p class="lede">같은 네 걸음을 걸어도 학년이 오를수록 AI를 쥐는 손이 달라집니다.<br>교사가 쥐던 AI를 모둠이 함께 쥐고, 마침내 학생이 직접 다룹니다.<br>단계마다 도구와 약속을 함께 정해 두었습니다.</p>
+    </div>
+    <div class="ladder-wrap">
+      <div class="ladder" id="ladderGrid"></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="screen" id="hall">
+    <div class="slot light corner hall-bg" data-src="assets/hall-bg.png" data-size="1920×1080"></div>
+    <div class="hall-top">
+      <div><span class="eyebrow">잇:다 노선도</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
+      <div class="switch" role="group" aria-label="보는 방법">
+        <button type="button" data-view="map" aria-pressed="true">노선도</button>
+        <button type="button" data-view="grid" aria-pressed="false">한눈에 보기</button>
+      </div>
+    </div>
+    <div class="hall-body" id="hallBody">
+      <div id="routeWrap">
+        <svg id="routeSvg" viewBox="10 10 960 480" preserveAspectRatio="xMidYMid meet" role="group" aria-label="잇:다 노선도"></svg>
+        <aside class="peek" id="peek" aria-live="polite"></aside>
+      </div>
+      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill">❤ 늘 함께 가는 약속 · AI 윤리와 디지털 시민성</button><div class="grid" id="grid"></div></div>
+    </div>
+    <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span id="bgNote" class="bgnote">배경 이미지 자리: assets/hall-bg.png (1920×1080, 코덱스 제작)</span><span>제작: 동일중앙초등학교 김정지</span></div>
+  </section>
+</main>
+
+<a href="#top" class="totop" id="toTop" aria-label="맨 위 첫 화면으로">▲<span>처음으로</span></a>
+
+<div class="full" id="full" role="dialog" aria-modal="true" aria-labelledby="fTitle"></div>
+
+<script>
+const LINES={
+  lo:{band:"저학년",name:"저학년 노선",grade:"1~2학년",ladder:"함께 보는 AI",lv:"1",c:"var(--lo)",hex:"#E8566A"},
+  mid:{band:"중학년",name:"중학년 노선",grade:"3~4학년",ladder:"대화하는 AI",lv:"2",c:"var(--mid)",hex:"#2BB3A6"},
+  hi:{band:"고학년",name:"고학년 노선",grade:"5~6학년",ladder:"만드는 AI",lv:"3",c:"var(--hi)",hex:"#F2B33D"}
+};
+const STEP=[["I","묻다"],["T","찾다"],["D","짓다"],["A","잇다"]];
+
+/* 네 걸음 (핵심역량: 2022 개정 교육과정 총론의 6가지 중에서) */
+const STEPS=[
+ {k:"I",w:"묻다",en:"Inquire",c:"#FF8A97",c2:"#E8566A",joins:"삶과 질문을 잇다",
+  d:"생활 속 장면에서 궁금한 것을 찾아 스스로 질문을 만듭니다. 반 전체의 질문을 모아 프로젝트의 핵심 질문으로 다듬습니다.",
+  comp:["자기관리"],assess:"질문 만들기 관찰"},
+ {k:"T",w:"찾다",en:"Trace",c:"#4FD1C5",c2:"#20A296",joins:"단서와 단서를 잇다",
+  d:"관찰, 책과 자료, 사람과의 인터뷰, 생성형 AI의 답처럼 여러 통로로 단서를 모읍니다. 모은 것을 서로 견주며 맞는지 따져 봅니다.",
+  comp:["지식정보처리"],assess:"탐구 기록"},
+ {k:"D",w:"짓다",en:"Develop",c:"#F6C35A",c2:"#E0A21E",joins:"생각과 결과물을 잇다",
+  d:"찾은 것을 바탕으로 그림책, 그래프, 포스터, 웹앱 같은 결과물을 만듭니다. 친구와 선생님의 피드백을 받아 고쳐 나갑니다.",
+  comp:["창의적 사고","심미적 감성"],assess:"루브릭 · AI 피드백"},
+ {k:"A",w:"잇다",en:"Apply",c:"#AFC0FF",c2:"#7D8FE0",joins:"배움과 세상을 잇다",
+  d:"만든 것을 가족, 이웃, 동생, 부산의 사람들과 나누고 실제 생활에서 써 봅니다. 나눈 경험에서 다음 질문을 찾습니다.",
+  comp:["협력적 소통","공동체"],assess:"자기·동료 평가"}
+];
+
+/* AI 사다리 */
+const LADDER={
+ hi:{who:"학생이 직접 프롬프트를 쓰고, 교사가 점검합니다.",ex:"태풍 대비 앱 · 독도 AI 가이드",
+   cells:["탐구 질문을 AI가 알아듣는 프롬프트로 바꾸어 탐구 계획을 세웁니다.","자료의 출처를 표시하고, AI의 답을 확인할 규칙을 스스로 만듭니다.","바이브코딩으로 앱과 가이드를 직접 만들고, 써 보며 고칩니다.","만든 앱을 가족과 이웃, 다른 학년이 실제 생활에서 쓰게 합니다."],
+   tools:["바이브코딩","생성형 AI 챗봇","엔트리","AI 글쓰기 피드백(교사)"],promise:"내가 만든 도구가 누구에게도 해가 되지 않게 살피고, AI로 만든 것은 밝힙니다."},
+ mid:{who:"모둠이 교사 계정으로 함께 AI와 대화합니다.",ex:"부산 자랑 박람회 · 푸드 마일리지",
+   cells:["모둠 질문을 생성형 AI에게 물어보고, 더 좋은 질문으로 다듬습니다.","AI의 답을 책, 사람, 현장 자료와 견주어 틀린 곳을 찾습니다.","AI 이미지와 카드뉴스로 표현하고, 모둠이 함께 다듬습니다.","박람회와 제안 활동으로 학교와 지역에 알립니다."],
+   tools:["대화형 생성형 AI","AI 이미지 생성","캔바","패들렛"],promise:"AI의 말은 다른 자료와 견주어 보고, 어디서 가져왔는지 밝힙니다."},
+ lo:{who:"교사가 AI로 도구를 만들고, 반 전체가 함께 봅니다.",ex:"바다 그림책 · 시장 탐정단",
+   cells:["교사가 만든 전자칠판 질문 놀이로 반 전체가 질문을 뽑습니다.","교사가 AI로 준비한 자료를 함께 보며 실제 경험과 견주어 봅니다.","반이 지은 말과 가사를 교사가 AI 노래와 전자 그림책으로 엮습니다.","가족과 이웃 앞에서 발표하고 전시합니다."],
+   tools:["전자칠판 웹앱","AI 노래 생성","애니메이티드 드로잉","크롬 뮤직랩"],promise:"내 그림과 목소리는 허락받고 나누고, 이름과 얼굴은 넣지 않습니다."}
+};
+
+const P=[
+ {id:"lo-1",line:"lo",no:1,name:"파도에게 말 걸기",sub:"글 없는 그림책에 우리 반의 말과 노래를 입혀요",
+  grade:"1학년 2학기",subj:"통합, 국어, 미술, 음악",theme:"그림책 읽기와 표현",
+  q:"글이 없는 그림책에 우리 반의 말과 노래를 입히면 어떤 이야기가 될까?",
+  flow:["『파도야 놀자』 장면을 보며 전자칠판 질문 놀이로 질문을 뽑아요.","부산 바닷가에서 겪은 일과 사진을 장면과 견주어요.","장면마다 말을 붙여 녹음하고, 반이 지은 가사로 AI 노래를 만들어요.","전자 그림책 발표회를 열고 가족과 나눠요."],
+  out:"전자 그림책, 낭독 녹음, 우리 반 AI 노래",ai:"교사가 만든 질문 놀이 웹앱과 AI 노래를 반 전체가 전자칠판에서 함께 써요.",
+  std:[["2국05-02","작품을 듣거나 읽고 느낌과 생각 말하기"],["2국05-03","작품 속 인물을 상상해 다양한 방식으로 표현하기"],["2바02-04","새로운 활동에 대한 호기심과 도전"],["2즐02-06","관찰하고 상상하여 표현하는 과정 즐기기"],["2즐02-03","목소리와 악기, 몸으로 표현 즐기기"]],
+  res:[["웹앱","장면 질문 놀이"],["결과물","우리 반 그림책과 노래"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"lo-2",line:"lo",no:2,name:"꼬마 시장 탐정단",sub:"우리 동네 시장을 세고 나누어 그래프로 말해요",
+  grade:"2학년 2학기",subj:"통합, 수학, 국어",theme:"마을 탐구와 표·그래프",
+  q:"우리 동네 시장에는 무엇이 가장 많을까? 그래프로 말하면 무엇이 보일까?",
+  flow:["전자칠판 가르기·모으기 놀이로 몸을 풀고 시장 질문을 만들어요.","시장 사진과 가게 목록을 기준을 정해 나누고 세어요.","반 전체가 입력하면 그래프가 자라는 웹앱으로 표와 그래프를 완성해요.","시장 소개 그림 카드를 만들어 가족과 상인께 전해요."],
+  out:"그래프 웹앱 결과, 시장 소개 그림 카드",ai:"교사가 만든 그래프 웹앱을 반 전체가 전자칠판에서 함께 써요.",
+  std:[["2슬02-01","마을과 사람들이 생활하는 모습 살펴보기"],["2수04-01","기준에 따라 분류하여 개수 세기"],["2수04-02","자료를 분류하여 표로 나타내기"],["2수04-03","자료를 ○, ×, / 등을 이용한 그래프로 나타내기"],["2국03-03","주변 소재를 소개하는 글쓰기"]],
+  res:[["웹앱","자라는 그래프"],["결과물","시장 소개 그림 카드"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"lo-3",line:"lo",no:3,name:"말 없는 편지",sub:"움직이는 그림과 멜로디로 세계 친구에게 마음을 전해요",
+  grade:"1~2학년 예술 동아리",subj:"창체(동아리), 통합, 국어",theme:"세계시민교육",
+  q:"말이 통하지 않는 친구에게 내 마음을 어떻게 전할 수 있을까?",
+  flow:["부산항의 외국 배와 외국어 간판을 보고 질문 놀이를 해요.","세계의 인사와 놀이, 음악과 그림을 살피고 그림이 소리가 되는 놀이를 해요.","내 그림을 움직이게 하고 모둠 멜로디를 지어 그림 편지를 만들어요.","말 없는 전시회를 열고 세계 친구에게 편지를 보내요."],
+  out:"움직이는 그림 편지, 모둠 멜로디",ai:"애니메이티드 드로잉은 교사가 조작하고, 크롬 뮤직랩은 학생이 모둠으로 직접 써요.",
+  std:[["2바02-03","차이와 다양성을 존중하는 생활 태도"],["2슬02-03","알고 싶은 나라를 탐구하며 관심 넓히기"],["2슬02-04","궁금한 세계를 여러 매체로 탐색하기"],["2즐03-06","음악과 미술 작품 감상으로 다양성 받아들이기"],["2국01-04","경험과 생각을 바른 자세로 발표하기"]],
+  res:[["결과물","움직이는 그림 편지"],["안내","크롬 뮤직랩과 애니메이티드 드로잉"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"mid-1",line:"mid",no:1,name:"꼬마 큐레이터",sub:"부산의 자랑거리를 고르고 확인해 우리 반 박람회를 열어요",
+  grade:"4학년",subj:"사회, 국어, 미술, 영어",theme:"우리 지역 알리기",
+  q:"부산에 처음 오는 사람에게 부산의 자랑거리를 어떻게 알릴까?",
+  flow:["'부산에 처음 온 친구가 묻는다면?' 하고 모둠 질문을 만들어요.","AI에게 묻고, 관광 자료와 가족 인터뷰와 견주어 틀린 곳을 찾아요.","소개 글, AI 홍보 포스터, 영어 소개말, 박람회 웹앱을 만들어요.","갤러리 워크 박람회를 열고 서로 피드백해요."],
+  out:"박람회 웹앱, AI 홍보 포스터, 영어 소개말",ai:"모둠이 AI에게 묻고, 답은 다른 자료로 확인해요.",
+  std:[["4사09-02","지역을 알리려는 지역사회의 노력을 알고 관심을 갖는다."],["4국01-05","자료를 정리하여 자신감 있게 발표한다."],["4국06-02","매체를 활용하여 간단한 발표 자료를 만든다."],["4미02-04","표현 의도를 담아 작품을 제작하기"],["4영02-05","주변 사람이나 사물을 쉽고 간단한 문장으로 소개한다."]],
+  res:[["웹앱","부산 박람회"],["결과물","AI 홍보 포스터 모음"],["수업 이야기","갤러리 워크 공개수업"]]},
+ {id:"mid-2",line:"mid",no:2,name:"바다로 간 그림책",sub:"그림책 한 권에서 출발해 부산 바다의 문제를 따라가요",
+  grade:"4학년",subj:"[교사 입력: 융합 교과]",theme:"생태전환교육",
+  q:"[교사 입력: 핵심 질문]",flow:["[교사 입력]","[교사 입력]","[교사 입력]","[교사 입력]"],
+  out:"[교사 입력]",ai:"모둠이 AI에게 묻고, 답은 다른 자료로 확인해요.",std:[],
+  res:[["수업 자료","10차시 수업 흐름"]]},
+ {id:"mid-3",line:"mid",no:3,name:"토마토의 먼 여행",sub:"급식 재료가 달려온 길에서 기후를 물어요",
+  grade:"3~4학년 그린에코 동아리",subj:"창체(동아리), 과학, 사회, 수학, 국어",theme:"기후위기와 생태전환",
+  q:"대저토마토는 몇 km를 달려왔을까? 가까운 재료를 먹으면 지구에 무엇이 달라질까?",
+  flow:["급식 식단표를 보며 재료가 어디서 왔는지 질문해요.","원산지를 찾고 영양 선생님을 인터뷰하며, AI가 말한 수치를 자료로 확인해요.","푸드 마일리지 그래프와 '가까운 먹거리 급식' 제안 카드를 만들어요.","영양 선생님께 제안하고 가족 장보기에서 실천해요."],
+  out:"푸드 마일리지 그래프와 지도, 제안 카드뉴스",ai:"모둠이 AI에게 묻고, 수치는 출처 있는 자료로 확인해요.",
+  std:[["4과16-01","기후변화가 인간의 활동과 관련되어 있음을 토의할 수 있다."],["4과16-03","기후 위기에 맞설 방법을 조사해 실천하기"],["4사07-02","생산·소비와 지역 간 상호 의존 관계 탐색하기"],["4수04-01","자료를 막대그래프로 나타내고 해석할 수 있다."],["4국03-03","의견과 이유가 드러나게 글을 쓴다."]],
+  res:[["결과물","푸드 마일리지 지도"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"hi-1",line:"hi",no:1,name:"태풍 대비 작전",sub:"가짜 정보를 가려내고 우리 집 재난 대비 앱을 만들어요",
+  grade:"5~6학년",subj:"과학, 사회, 국어, 실과",theme:"재난안전교육",
+  q:"태풍이 온다는 소식이 들리면 우리 집은 무엇부터 해야 할까?",
+  flow:["부산을 지나간 태풍의 기억에서 질문을 만들어요.","기상 자료, 뉴스, 가족 인터뷰, AI의 답을 견주며 가짜뉴스를 가려내요.","프롬프트로 가족 재난 대비 체크 앱을 만들고 고쳐요.","가족과 써 보고, 동생들에게 안내해요."],
+  out:"우리 가족 재난 대비 체크 앱",ai:"학생이 프롬프트로 앱을 직접 만들고, 정보는 공식 자료로 확인해요.",
+  std:[["6과06-01","기상 요소를 조사하고, 날씨가 생활에 주는 영향을 인식할 수 있다."],["6사02-01","기후변화로 인한 자연재해의 심각성을 이해한다."],["6국06-02","정보 매체 자료의 신뢰성을 평가한다."],["6실05-03","실생활 문제를 해결하는 프로그램을 협력하여 작성하고 공유한다."]],
+  res:[["웹앱","가족 재난 대비 앱 예시"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"hi-2",line:"hi",no:2,name:"안용복의 바다",sub:"동래 사람의 이야기로 독도를 바르게 알려요",
+  grade:"5~6학년",subj:"사회, 국어, 영어, 미술",theme:"독도교육",
+  q:"부산 동래 사람 안용복은 왜 먼 바다의 섬을 지키려 했을까?",
+  flow:["수영사적공원의 안용복 이야기에서 질문을 만들어요.","역사 기록과 지도, AI의 답을 견주고 기록마다 다른 부분을 따져요.","독도 퀴즈와 영어 소개를 담은 AI 가이드를 만들어요.","영어 소개 카드와 가이드로 세계와 다른 학년에 알려요."],
+  out:"독도 AI 가이드, 영어 소개 카드",ai:"학생이 프롬프트로 가이드를 만들고, AI의 답은 역사 자료로 확인해요.",
+  std:[["6사01-02","독도의 지리적 특성과 역사 기록을 바탕으로 영토로서 독도의 중요성을 이해한다."],["6국06-02","정보 매체 자료의 신뢰성을 평가한다."],["6국03-02","근거를 사용하고 출처를 밝히며 주장하는 글을 쓴다."],["6영02-04","주변 사람이나 사물을 간단한 문장으로 소개한다."],["6미01-04","이미지의 의미를 비판적으로 이해하고 활용하기"]],
+  res:[["웹앱","독도 AI 가이드 예시"],["결과물","영어 소개 카드"],["수업 자료","10차시 수업 흐름"]]},
+ {id:"hi-3",line:"hi",no:3,name:"동생 앱 공방",sub:"1학년 동생을 위해 전자칠판 앱을 만들어 선물해요",
+  grade:"5~6학년 SW·AI 메이커스 동아리",subj:"창체(동아리), 실과, 국어, 도덕",theme:"배려와 나눔",
+  q:"1학년 동생들이 전자칠판에서 즐겁게 배우려면 어떤 앱이 필요할까?",
+  flow:["저학년 선생님과 동생들을 면담하며 질문을 만들어요.","동생 교실을 관찰하고 쓰고 있는 앱들을 견주어요.","엔트리로 설계하고 바이브코딩으로 앱을 만든 뒤, 동생 반에서 시험하고 고쳐요.","앱과 사용 안내서를 동생 교실에 선물해요."],
+  out:"저학년 전자칠판 앱, 사용 안내서",ai:"학생이 프롬프트로 코드를 만들고, 직접 시험하며 검토해요.",
+  std:[["6실05-01","생활 속 문제를 해결하기 위한 알고리즘을 다양한 방법으로 표현한다."],["6실05-02","주어진 문제를 해결하는 프로그램을 작성한다."],["6실05-03","실생활 문제를 해결하는 프로그램을 협력하여 작성하고 공유한다."],["6국01-04","상대와 매체를 고려하여 면담한다."],["6도02-01","타인의 상황에 관심을 두고 봉사를 실천한다."]],
+  res:[["웹앱","동생 교실 앱 모음"],["수업 자료","10차시 수업 흐름"]]}
+];
+
+/* 프로젝트 이름 (사이트 표시용) */
+const NAMES={
+ "lo-1":["우리 반 목소리로 다시 쓰는 바다 그림책",["우리 반 목소리로","다시 쓰는 바다 그림책"]],
+ "lo-2":["시장 탐정단의 그래프 수사 일지",["시장 탐정단의","그래프 수사 일지"]],
+ "lo-3":["세계 친구에게 띄우는 움직이는 그림 편지",["세계 친구에게 띄우는","움직이는 그림 편지"]],
+ "mid-1":["꼬마 큐레이터의 부산 자랑 박람회",["꼬마 큐레이터의","부산 자랑 박람회"]],
+ "mid-2":["그림책 한 권으로 시작하는 부산 바다 지킴이",["그림책 한 권으로 시작하는","부산 바다 지킴이"]],
+ "mid-3":["푸드 마일리지 탐사대: 우리 급식은 어디서 왔을까",["푸드 마일리지 탐사대","우리 급식은 어디서 왔을까"]],
+ "hi-1":["우리 가족을 지키는 태풍 대비 앱 프로젝트",["우리 가족을 지키는","태풍 대비 앱 프로젝트"]],
+ "hi-2":["동래 사람 안용복이 들려주는 독도 AI 가이드",["동래 사람 안용복이 들려주는","독도 AI 가이드"]],
+ "hi-3":["생활 속 문제를 푸는 우리들의 앱 디자인 랩",["생활 속 문제를 푸는","우리들의 앱 디자인 랩"]]
+};
+P.forEach(p=>{p.name=NAMES[p.id][0];p.map=NAMES[p.id][1];});
+Object.assign(P.find(p=>p.id==="hi-2"),{
+  flow:["수영사적공원의 안용복 이야기에서 질문을 만들어요.","역사 기록과 지도, AI의 답을 견주고 기록마다 다른 부분을 따져요.","근거와 출처를 밝힌 '독도를 알리는 글'을 쓰고, 교사가 AI 글쓰기 피드백 도구로 고칠 점을 알려 주면 다시 고쳐 써요. 글을 바탕으로 독도 AI 가이드를 만들어요.","영어 소개 카드와 AI 가이드로 세계와 다른 학년에 알려요."],
+  out:"독도를 알리는 글, 독도 AI 가이드, 영어 소개 카드",
+  ai:"학생이 프롬프트로 가이드를 만들고, 교사는 루브릭을 넣어 만든 AI 글쓰기 피드백 도구로 학생 글의 고칠 점을 짚어 줘요."
+});
+Object.assign(P.find(p=>p.id==="hi-3"),{
+  sub:"생활 속 불편을 찾아 앱으로 설계하고, 가족과 이웃과 나누어 써요",theme:"디지털 나눔과 공동체",
+  q:"우리 학교와 집과 동네의 불편함을 앱으로 풀 수 있을까? 만든 앱은 누구에게 어떻게 쓰일까?",
+  flow:["학교와 집과 동네에서 불편한 장면을 찾아 질문으로 바꿔요.","쓸 사람을 인터뷰하고 관찰하며, 비슷한 앱들을 견주어요.","엔트리로 알고리즘을 설계하고 바이브코딩으로 앱을 만든 뒤, 쓸 사람과 함께 시험하며 고쳐요.","가족과 이웃, 다른 학년과 앱을 나누고 사용 후기를 받아 다시 다듬어요."],
+  out:"생활 문제를 해결하는 웹앱, 사용 안내서",ai:"학생이 프롬프트로 코드를 만들고, 직접 시험하며 검토해요.",
+  res:[["웹앱","우리들의 앱 모음"],["수업 자료","10차시 수업 흐름"]]
+});
+const ZEP={name:"우리들의 전시관",sub:"아홉 개 프로젝트의 작품과 웹앱이 모이는 ZEP 메타버스 전시관",url:""};
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const NS="http://www.w3.org/2000/svg";
+function mk(svg,n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function tx(svg,p,x,y,s,a){const e=mk(svg,"text",Object.assign({x,y,"text-anchor":"middle"},a||{}),p);e.textContent=s;return e;}
+function fillSlots(root){
+  (root||document).querySelectorAll(".slot[data-src]:not([data-done])").forEach(s=>{
+    s.dataset.done=1;
+    s.insertAdjacentHTML("afterbegin",`<div class="tag"><b>이미지 들어갈 자리</b><code>${s.dataset.src}</code><span>${s.dataset.size||""} · 코덱스 제작</span></div>`);
+    const img=new Image(); img.alt=""; img.onload=()=>{s.appendChild(img);s.classList.add("has-img");if(s.classList.contains("screen-bg")){const t=s.nextElementSibling;if(t&&t.classList.contains("bgtag"))t.remove();}if(s.classList.contains("hall-bg")){const n=document.getElementById("bgNote");if(n)n.remove();}}; img.src=s.dataset.src;
+  });
+}
+
+/* 동아리 소개: 세 원 */
+(function(){
+  const svg=document.getElementById("venn");
+  const defs=mk(svg,"defs",{});
+  const C=[
+    {id:"g1",x:320,y:205,c:"#E8566A",l:"#FFD3D9",t:"교육과정·수업·평가",d1:"성취기준에서 출발해",d2:"수업과 평가를 한 흐름으로",tx:320,ty:92},
+    {id:"g2",x:222,y:362,c:"#2BB3A6",l:"#CDF3EE",t:"선생님과 선생님",d1:"학교를 넘어",d2:"함께 설계하고 나누는 협력",tx:150,ty:478},
+    {id:"g3",x:418,y:362,c:"#F2B33D",l:"#FFEFC8",t:"AI·디지털과 수업 혁신",d1:"도구보다 배움이 먼저인",d2:"생성형 AI 활용",tx:490,ty:478}];
+  const f=mk(svg,"filter",{id:"sh",x:"-20%",y:"-20%",width:"140%",height:"140%"},defs);
+  mk(svg,"feDropShadow",{dx:0,dy:6,stdDeviation:8,"flood-color":"#1C2433","flood-opacity":.12},f);
+  C.forEach(o=>{const g=mk(svg,"radialGradient",{id:o.id,cx:"40%",cy:"35%",r:"70%"},defs);
+    mk(svg,"stop",{offset:"0","stop-color":"#fff","stop-opacity":.9},g);mk(svg,"stop",{offset:"1","stop-color":o.l,"stop-opacity":.85},g);});
+  const gg=mk(svg,"g",{filter:"url(#sh)",class:"shape"});
+  C.forEach(o=>mk(svg,"circle",{cx:o.x,cy:o.y,r:168,fill:`url(#${o.id})`,"fill-opacity":.75},gg));
+  C.forEach(o=>mk(svg,"circle",{cx:o.x,cy:o.y,r:168,fill:"none",stroke:o.c,"stroke-width":4,"stroke-opacity":.85,class:"shape"}));
+  C.forEach(o=>{
+    const w=o.t.length*18+30;
+    mk(svg,"rect",{x:o.tx-w/2,y:o.ty-24,width:w,height:36,rx:18,fill:o.c});
+    tx(svg,svg,o.tx,o.ty+2,o.t,{"font-size":18,fill:"#fff","font-weight":700});
+    tx(svg,svg,o.tx,o.ty+36,o.d1,{"font-size":15,fill:"#3C4658"});
+    tx(svg,svg,o.tx,o.ty+57,o.d2,{"font-size":15,fill:"#3C4658"});
+  });
+  [[228,262,"함께 짜는 수업","#E8566A","#2BB3A6"],[412,262,"AI로 넓히는 평가","#E8566A","#F2B33D"],[320,425,"함께 배우는 AI","#2BB3A6","#F2B33D"]].forEach(([x,y,t,c1,c2],i)=>{
+    const gid="ov"+i, lg=mk(svg,"linearGradient",{id:gid,x1:"0",x2:"1"},defs);
+    mk(svg,"stop",{offset:"0","stop-color":c1},lg); mk(svg,"stop",{offset:"1","stop-color":c2},lg);
+    const w=t.length*14+24;
+    mk(svg,"rect",{x:x-w/2,y:y-19,width:w,height:30,rx:15,fill:`url(#${gid})`});
+    tx(svg,svg,x,y+2,t,{"font-size":14,fill:"#fff","font-weight":800});});
+  mk(svg,"circle",{cx:320,cy:312,r:62,fill:"#13213A",class:"shape"});
+  const m=tx(svg,svg,320,306,"",{"font-size":26,"font-family":"Fredoka, sans-serif","font-weight":700});
+  [["I","#FF8A97"],["T","#4FD1C5"],["D","#F6C35A"],["A","#AFC0FF"]].forEach(([c,col])=>{const t=mk(svg,"tspan",{fill:col},m);t.textContent=c;});
+  tx(svg,svg,320,336,"잇:다",{"font-size":22,fill:"#fff","font-weight":700});
+})();
+
+/* 네 걸음 */
+document.getElementById("steps").innerHTML=STEPS.map(s=>`
+  <article class="step" style="--c:${s.c}">
+    <div class="slot" data-src="assets/step-${s.k}.png" data-size="1200×900"></div>
+    <span class="glyph" aria-hidden="true">${s.k}</span>
+    <div class="step-body">
+      <div class="step-name"><strong>${s.w}</strong><small>${s.en}</small></div>
+      <div class="joins">${s.joins}</div>
+      <p>${s.d}</p>
+      <div class="step-foot">
+        <div class="fl">핵심역량</div><div class="chips2">${s.comp.map(c=>`<span>${c}</span>`).join("")}</div>
+        <div class="fl">평가 장면</div><div class="chips2"><span>${s.assess}</span></div>
+      </div>
+    </div>
+  </article>`).join("");
+
+/* AI 사다리 */
+(function(){
+  const g=document.getElementById("ladderGrid");
+  let h=``;
+  h+=`<div class="slot light ladder-art" data-src="assets/ladder-kids.png" data-size="600×1500"></div><div class="lh">학년군과 단계</div>`+STEPS.map(s=>`<div class="lh"><b style="color:${s.c2}">${s.k}</b>${s.w}</div>`).join("")+`<div class="lh">대표 도구</div>`;
+  ["hi","mid","lo"].forEach(k=>{
+    const L=LINES[k], R=LADDER[k];
+    h+=`<div class="rowlab" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
+    h+=R.cells.map(c=>`<div class="cell" style="--c:${L.c}">${esc(c)}</div>`).join("");
+    h+=`<div class="cell tools">${R.tools.map(t=>`<span>${t}</span>`).join("")}</div>`;
+  });
+  h+=`<div class="promises"><b>모든 단계가 지나는 약속</b>${["lo","mid","hi"].map(k=>`<span style="--c:${LINES[k].c}"><i>${LINES[k].lv}단</i>${esc(LADDER[k].promise)}</span>`).join("")}</div>`;
+  g.innerHTML=h;
+})();
+
+/* 노선도 */
+const peek=document.getElementById("peek");
+const LEGEND=`<div class="legend">
+  <div style="--c:var(--lo)"><i></i>저학년 · 함께 보는 AI</div>
+  <div style="--c:var(--mid)"><i></i>중학년 · 대화하는 AI</div>
+  <div style="--c:var(--hi)"><i></i>고학년 · 만드는 AI</div>
+  <div><svg width="28" height="24" viewBox="0 0 28 24"><circle cx="14" cy="12" r="10" fill="#8D9AB0"/><path d="M14 5.5l1.9 4 4.3.5-3.2 2.9.9 4.3L14 15l-3.9 2.2.9-4.3-3.2-2.9 4.3-.5z" fill="#fff"/></svg>별 표시 역은 동아리 프로젝트</div>
+  <div><svg width="28" height="24" viewBox="0 0 28 24"><rect x="1" y="3" width="26" height="18" rx="9" fill="#F6D58E" opacity=".45" stroke="#D9A93A" stroke-dasharray="3 2"/></svg>모든 노선을 감싸는 약속(AI 윤리)</div>
+</div>`;
+function showPeek(p){
+  const L=LINES[p.line];
+  peek.style.setProperty("--c",L.c);
+  peek.innerHTML=`<div class="slot light" data-src="assets/thumbs/${p.id}.png" data-size="1600×1000"></div>
+    <span class="pl">${L.band} · ${L.ladder}${p.no===3?" · 동아리":""}</span><h3>${esc(p.name)}</h3><p>${esc(p.sub)}</p>
+    <p class="q">${esc(p.q)}</p><button type="button">프로젝트 열기</button>`;
+  fillSlots(peek);
+  peek.querySelector("button").addEventListener("click",()=>openP(p.id));
+}
+(function(){
+  const svg=document.getElementById("routeSvg");
+  const Y={lo:425,mid:300,hi:175}, XS=[245,450,655], END={x:930,y:300};
+  // 모든 노선을 감싸는 약속 띠
+  const band=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"모든 노선을 감싸는 약속, AI 윤리와 디지털 시민성 열기"});
+  mk(svg,"rect",{x:112,y:42,width:760,height:440,rx:60,fill:"#F6D58E","fill-opacity":.22,stroke:"#D9A93A","stroke-width":2.5,"stroke-dasharray":"8 7"},band);
+  const pill=mk(svg,"g",{},band);
+  mk(svg,"rect",{x:300,y:22,width:384,height:38,rx:19,fill:"#fff",stroke:"#D9A93A","stroke-width":2},pill);
+  mk(svg,"path",{d:"M322 48 l-9 -8 c-4 -6 3 -11 9 -4 c6 -7 13 -2 9 4z",fill:"#E8566A"},pill);
+  tx(svg,pill,505,47,"늘 함께 가는 약속 · AI 윤리와 디지털 시민성",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});
+  band.addEventListener("click",openEthics); band.addEventListener("keydown",e=>{if(e.key==="Enter")openEthics();});
+  ["lo","mid","hi"].forEach(k=>{
+    const y=Y[k], L=LINES[k], ty=END.y+{lo:14,mid:0,hi:-14}[k];
+    const d=k==="mid"?`M150 ${y} H${END.x-30}`:`M150 ${y} H740 C810 ${y} 800 ${ty} ${END.x-60} ${ty} H${END.x-30}`;
+    mk(svg,"path",{d,stroke:"#fff","stroke-width":19,fill:"none","stroke-linecap":"round",opacity:.9});
+    mk(svg,"path",{d,stroke:L.hex,"stroke-width":11,fill:"none","stroke-linecap":"round"});
+    const g=mk(svg,"g",{});
+    mk(svg,"rect",{x:22,y:y-30,width:104,height:60,rx:16,fill:L.hex},g);
+    tx(svg,g,74,y-3,L.band,{"font-size":21,fill:"#fff",class:"hd","font-weight":700});
+    tx(svg,g,74,y+18,L.grade,{"font-size":13,fill:"#fff"});
+  });
+  const LBOX=[]; let HOME=null;
+  P.forEach(p=>{
+    const x=XS[p.no-1], y=Y[p.line], L=LINES[p.line], club=p.no===3;
+    const g=mk(svg,"g",{class:"st",tabindex:0,role:"button","aria-label":`${p.name} 열기`});
+    mk(svg,"circle",{cx:x,cy:y,r:30,fill:"transparent"},g);
+    if(club){
+      mk(svg,"circle",{cx:x,cy:y,r:21,fill:L.hex,stroke:"#fff","stroke-width":4,class:"dot"},g);
+      mk(svg,"path",{d:`M${x} ${y-11} l3.4 7 7.6.9 -5.6 5.1 1.6 7.5 -7 -3.9 -7 3.9 1.6 -7.5 -5.6 -5.1 7.6 -.9z`,fill:"#fff"},g);
+    }else{
+      mk(svg,"circle",{cx:x,cy:y,r:14,fill:"#fff",stroke:L.hex,"stroke-width":6,class:"dot"},g);
+    }
+    const r0=club?21:14;
+    mk(svg,"line",{x1:x,y1:y-27,x2:x,y2:y-r0-2,stroke:L.hex,"stroke-width":2.5,class:"stem"},g);
+    const box=mk(svg,"rect",{x:x-90,y:y-73,width:180,height:46,rx:12,fill:"#fff",stroke:L.hex,"stroke-width":1.5,class:"lbox"},g);
+    const st={fill:"#1C2433","font-weight":600,"font-size":15.5,"letter-spacing":"-0.3",class:"lname"};
+    tx(svg,g,x,y-55,p.map[0],st);
+    tx(svg,g,x,y-35,p.map[1],st);
+    tx(svg,g,x,y+(club?40:34),club?`동아리 · ${p.theme}`:p.theme,{"font-size":13,"letter-spacing":"-0.2",fill:club?L.hex:"#5B667A","font-family":"Gothic A1, sans-serif","font-weight":club?700:500,stroke:"#F3F0E4","stroke-width":4,"paint-order":"stroke"});
+    LBOX.push([box,g]); if(p.id==="mid-1")HOME=g;
+    const on=()=>{svg.querySelectorAll(".st").forEach(s=>s.classList.remove("on"));g.classList.add("on");showPeek(p);};
+    g.addEventListener("mouseenter",on); g.addEventListener("focus",on);
+    g.addEventListener("click",()=>openP(p.id));
+    g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openP(p.id);}});
+  });
+  const z=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"ZEP 우리들의 전시관 열기"});
+  mk(svg,"circle",{cx:END.x,cy:END.y,r:40,fill:"#1C2433"},z);
+  mk(svg,"path",{d:`M${END.x-16} ${END.y+12} V${END.y-4} L${END.x} ${END.y-17} L${END.x+16} ${END.y-4} V${END.y+12} Z`,fill:"#F6D58E"},z);
+  tx(svg,z,END.x,END.y+66,"ZEP 전시관",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});
+  z.addEventListener("click",openZep); z.addEventListener("keydown",e=>{if(e.key==="Enter")openZep();});
+  const fit=()=>LBOX.forEach(([b,g])=>{let w=0;g.querySelectorAll(".lname").forEach(t=>{try{w=Math.max(w,t.getBBox().width)}catch(e){}});if(w>0){const cx=+b.getAttribute("x")+ +b.getAttribute("width")/2;b.setAttribute("width",w+28);b.setAttribute("x",cx-(w+28)/2);}});
+  fit(); if(document.fonts)document.fonts.ready.then(fit);
+  window.resetPeek=()=>{svg.querySelectorAll(".st").forEach(s=>s.classList.remove("on"));if(HOME)HOME.classList.add("on");showPeek(P.find(p=>p.id==="mid-1"));};
+  resetPeek();
+})();
+
+/* 한눈에 보기 */
+document.getElementById("grid").innerHTML=["lo","mid","hi"].map(k=>{
+  const L=LINES[k];
+  return `<div class="col" style="--c:${L.c}"><h3><i></i>${L.band} · ${L.grade} · ${L.ladder}</h3>${P.filter(p=>p.line===k).map(p=>`
+    <button class="mini" type="button" data-id="${p.id}"><div class="slot light" data-src="assets/thumbs/${p.id}.png" data-size="1600×1000"></div>
+    <div>${p.no===3?`<em class="club">★ 동아리</em>`:""}<strong>${esc(p.name)}</strong><small>${esc(p.sub)}</small></div></button>`).join("")}</div>`;
+}).join("");
+document.querySelectorAll(".mini").forEach(b=>b.addEventListener("click",()=>openP(b.dataset.id)));
+document.getElementById("bandPill").addEventListener("click",openEthics);
+document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".switch button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+  document.getElementById("hallBody").classList.toggle("as-grid",b.dataset.view==="grid");
+  if(b.dataset.view==="map"&&window.resetPeek)resetPeek();
+}));
+
+/* 프로젝트 화면 */
+const full=document.getElementById("full"); let back=null, cur=0;
+function openP(id){
+  cur=P.findIndex(x=>x.id===id); const p=P[cur], L=LINES[p.line];
+  if(!full.classList.contains("open")) back=document.activeElement;
+  full.style.setProperty("--c",L.c);
+  full.innerHTML=`
+    <div class="slot" data-src="assets/thumbs/${p.id}.png" data-size="1600×1000"></div>
+    <div class="full-side">
+      <div class="full-top"><span class="line"><i></i>${L.band} · ${L.grade} · ${L.ladder}</span>
+        <div class="full-ctrl"><button type="button" data-go="-1">이전</button><button type="button" data-go="1">다음</button><button type="button" data-close>닫기</button></div></div>
+      <h2 id="fTitle">${esc(p.name)}</h2>
+      <p class="sub">${esc(p.sub)}</p>
+      <div class="chips">${p.no===3?`<span style="background:var(--c);color:#fff">★ 동아리 프로젝트</span>`:""}<span>${esc(p.grade)}</span><span>${esc(p.subj)}</span><span>${esc(p.theme)}</span><span>10차시</span></div>
+      <p class="question">${esc(p.q)}</p>
+      <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
+      <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
+      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u])=>u?`<a href="${u}" target="_blank" rel="noopener"><small>${esc(t)}</small>${esc(n)}</a>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
+      ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
+    </div>`;
+  fillSlots(full);
+  full.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>openP(P[(cur+Number(b.dataset.go)+P.length)%P.length].id)));
+  full.querySelector("[data-close]").addEventListener("click",closeFull);
+  full.classList.add("open"); document.body.style.overflow="hidden";
+  full.querySelector("[data-close]").focus();
+}
+function openZep(){
+  back=document.activeElement; full.style.setProperty("--c","var(--dawn)");
+  full.innerHTML=`<div class="slot" data-src="assets/zep-hall.png" data-size="1600×1000"></div>
+    <div class="full-side"><div class="full-top"><span class="line"><i></i>노선의 끝</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
+    <h2 id="fTitle">${ZEP.name}</h2><p class="sub">${ZEP.sub}</p>
+    <p class="question">세 노선의 아이들이 만든 그림 편지와 그래프와 앱이 한 공간에 모입니다.<br>부스에 들어가면 작품을 보고, 웹앱을 바로 열어 볼 수 있습니다.</p>
+    <div class="res"><div class="res-list">${ZEP.url?`<a href="${ZEP.url}" target="_blank" rel="noopener"><small>ZEP</small>전시관 입장</a>`:`<span><small>ZEP · 준비 중</small>전시관 입장</span>`}</div></div></div>`;
+  fillSlots(full);
+  full.querySelector("[data-close]").addEventListener("click",closeFull);
+  full.classList.add("open"); document.body.style.overflow="hidden"; full.querySelector("[data-close]").focus();
+}
+function openEthics(){
+  back=document.activeElement; full.style.setProperty("--c","#D9A93A");
+  full.innerHTML=`<div class="slot" data-src="assets/ethics.png" data-size="1600×1000"></div>
+    <div class="full-side"><div class="full-top"><span class="line"><i></i>모든 노선을 감싸는 약속</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
+    <h2 id="fTitle">AI 윤리와 디지털 시민성</h2><p class="sub">어느 역에 있든 늘 함께 가는 약속입니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있습니다.</p>
+    <div class="eth">${["lo","mid","hi"].map(k=>`<div style="--c:${LINES[k].c}"><b>${LINES[k].lv}단 ${LINES[k].ladder}</b><span>${LINES[k].band} · ${LINES[k].grade}</span><p>${esc(LADDER[k].promise)}</p></div>`).join("")}</div>
+    <div class="pair"><div><h4>프로젝트 속 윤리 활동</h4><p>그림책 그림의 저작권, 상인 얼굴의 초상권, AI 이미지 표시, AI 답의 출처 확인, 재난 가짜뉴스 가려내기, 앱 사용자의 개인정보 지키기</p></div><div><h4>함께 쓰는 원칙</h4><p>학생 이름과 얼굴은 싣지 않고, AI로 만든 것은 밝히며, AI의 답은 다른 자료로 확인합니다.</p></div></div></div>`;
+  fillSlots(full);
+  full.querySelector("[data-close]").addEventListener("click",closeFull);
+  full.classList.add("open"); document.body.style.overflow="hidden"; full.querySelector("[data-close]").focus();
+}
+function closeFull(){full.classList.remove("open");document.body.style.overflow="";if(back)back.focus();}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open"))closeFull();});
+
+/* 지금 보는 화면 표시 */
+const marks=[...document.querySelectorAll("[data-for]")];
+const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#hall"]').forEach(a=>a.addEventListener("click",()=>window.resetPeek&&resetPeek()));new IntersectionObserver(es=>es.forEach(e=>{tt.classList.toggle("show",e.isIntersecting);if(!e.isIntersecting&&window.resetPeek)resetPeek();}),{threshold:.5}).observe(document.getElementById("hall"));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)marks.forEach(a=>a.setAttribute("aria-current",String(a.dataset.for.split(" ").includes(e.target.id))));}),{threshold:.6});
+document.querySelectorAll(".screen").forEach(s=>io.observe(s));
+fillSlots();
+</script>
+</body>
+</html>
