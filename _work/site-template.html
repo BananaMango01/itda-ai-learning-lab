@@ -77,14 +77,20 @@ header nav{align-items:center}
 .close-art{width:clamp(220px,30vh,340px);aspect-ratio:16/10;border-radius:16px}
 .close-art.has-img img{object-fit:contain}
 .close-head .lede{margin-top:1.4vh}
-.close-cols{position:relative;flex:1;min-height:0;align-items:start;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6vw;margin-top:2.4vh}
+.close-cols{position:relative;flex:1;min-height:0;align-items:stretch;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6vw;margin-top:2.4vh}
 .close-cols article{background:#ffffffe8;border-radius:20px;padding:2.4vh 1.6vw;border-top:7px solid var(--c);box-shadow:0 8px 24px #1C24331a;display:flex;flex-direction:column;min-height:0}
 .close-cols .ck{align-self:flex-start;font-family:var(--display);font-weight:700;font-size:14px;color:#fff;background:var(--c);padding:4px 12px;border-radius:999px}
-.close-cols h3{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.8vh,26px);margin:1vh 0 1.2vh}
-.close-cols ol{margin:0;padding:0;list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1.3vh}
-.close-cols li{counter-increment:n;position:relative;padding-left:34px;font-size:clamp(14px,1.85vh,16px);line-height:1.6;color:var(--ink-soft)}
+.close-cols h3{font-family:var(--display);font-weight:700;font-size:clamp(19px,2.6vh,24px);margin:.8vh 0 1.2vh}
+.close-cols ol{margin:0;padding:0;list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1.2vh}
+.close-cols li{counter-increment:n;position:relative;padding-left:34px;font-size:clamp(14px,1.8vh,15.5px);line-height:1.6;color:var(--ink-soft)}
 .close-cols li::before{content:counter(n);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:color-mix(in srgb,var(--c) 22%,#fff);color:var(--ink);font-family:var(--latin);font-weight:700;font-size:14px;display:grid;place-items:center}
 .close-cols li b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(15px,2vh,17px);color:var(--ink)}
+.close-cols .sl{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:1px}
+.close-cols .sl li{counter-increment:none;padding-left:14px;font-size:clamp(13.5px,1.75vh,15px);line-height:1.55}
+.close-cols .sl li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);top:.62em;left:2px}
+.close-cols .sl i{font-style:normal;font-family:var(--display);font-weight:500;font-size:.88em;color:var(--ink);margin-right:6px;padding:0 6px;border-radius:5px;background:color-mix(in srgb,var(--c) 16%,#fff)}
+.close-cols li.key{background:color-mix(in srgb,var(--c) 14%,#fff);border-radius:12px;padding:8px 10px 8px 42px;margin:0 -10px}
+.close-cols li.key::before{left:10px;top:9px}
 .close-cols em{font-style:normal;font-size:.92em;background:#FFF3C8;border:1.5px dashed #E0B341;border-radius:6px;padding:0 6px;color:#7A5A00;white-space:nowrap}
 .close-foot{position:relative;display:flex;justify-content:space-between;padding-right:88px;font-size:12px;color:var(--ink-soft);margin-top:1.6vh}
 
@@ -221,12 +227,10 @@ header nav{align-items:center}
 .rung i{z-index:1}
 .rung::before{content:"";position:absolute;top:-1vh;bottom:-1vh;left:50%;width:62px;margin-left:-31px;background:color-mix(in srgb,var(--c) 18%,transparent);border-radius:4px}
 .rung i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;border:5px solid var(--c);display:grid;place-items:center;font-style:normal;font-family:var(--latin);font-weight:700;font-size:20px;color:var(--ink)}
-/* 학년 칸을 사다리 발판처럼: 양옆 나무 기둥 */
-.ladder > .rowlab{margin:0 12px;box-shadow:0 6px 14px #1C243326;overflow:visible}
-.rowlab::before,.rowlab::after{content:"";position:absolute;top:-1.1vh;bottom:-1.1vh;width:13px;border-radius:3px;background:linear-gradient(90deg,#E4CFA2,#F7ECD3 45%,#D6BC86);box-shadow:inset 0 0 0 1.5px #CDB07A;z-index:-1}
-.rowlab::before{left:-19px}.rowlab::after{right:-19px}
-.rowlab.top::before,.rowlab.top::after{top:-1.4vh;border-radius:8px 8px 3px 3px}
-.rowlab.bot::before,.rowlab.bot::after{bottom:-2vh;border-radius:3px 3px 8px 8px}
+/* 학년 칸을 큰 사다리로(나안): 기둥과 가로대는 JS가 SVG로 그림 */
+.ladder{grid-template-columns:9% 20% repeat(4,minmax(0,1fr)) 14%!important;row-gap:1.8vh!important}
+.ladder > .rowlab{margin:0 24px;box-shadow:0 6px 14px #1C243326}
+.bigladder{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
 .rowlab{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-content:center;padding:1.2vh 14px;background:var(--c);color:#fff;border-radius:16px}
 .rowlab .lv{grid-row:span 2;font-family:var(--latin);font-weight:700;font-size:clamp(38px,6vh,56px);line-height:.9}
 .rowlab strong{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vh,22px);line-height:1.2;align-self:end}
@@ -281,9 +285,12 @@ header nav{align-items:center}
 .legend{display:grid;gap:8px;font-size:13px;color:var(--ink-soft)}
 .legend div{display:flex;align-items:center;gap:10px}
 .legend i{flex:none;width:28px;height:6px;border-radius:3px;background:var(--c)}
-.grid-band{display:none;position:relative;height:100%;border:2.5px dashed #D9A93A;border-radius:28px;background:#F6D58E33;padding:26px 18px 16px}
+.grid-band{display:none;position:relative;height:100%;border:2.5px dashed #D9A93A;border-radius:28px;background:#F6D58E33;padding:34px 18px 16px;margin-top:14px}
 .hall-body.as-grid .grid-band{display:block}
-.band-pill{position:absolute;top:-17px;left:50%;transform:translateX(-50%);border:2px solid #D9A93A;background:#fff;border-radius:999px;padding:4px 18px;font-family:var(--sans);font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap}
+.band-pill{position:absolute;top:-28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;border:2.5px solid #D9A93A;background:#fff;border-radius:999px;padding:5px 20px 5px 6px;font-family:var(--display);font-weight:700;font-size:17px;color:var(--ink);white-space:nowrap;text-align:left;line-height:1.25}
+.band-pill i{font-style:normal;width:38px;height:38px;border-radius:50%;background:#F6D58E;border:3px solid #D9A93A;display:grid;place-items:center;color:#E8566A;font-size:17px}
+.band-pill small{display:block;font-size:11.5px;color:#A0700A}
+.band-pill em{font-style:normal;font-size:13px;color:#A0700A;margin-left:8px}
 .band-pill:hover{background:#FFF4D6}
 .grid{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6vw;height:100%}
 .hall-body.as-grid #routeWrap{display:none}
@@ -470,7 +477,7 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
         <svg id="routeSvg" viewBox="10 10 960 480" preserveAspectRatio="xMidYMid meet" role="group" aria-label="잇:다 노선도"></svg>
         <aside class="peek" id="peek" aria-live="polite"></aside>
       </div>
-      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill">❤ 늘 함께 가는 약속 · AI 윤리와 디지털 시민성</button><div class="grid" id="grid"></div></div>
+      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill"><i>❤</i><span><small>공통 프로젝트 · 모든 노선을 감싸는 열 번째 역</small>AI 윤리와 디지털 시민성</span><em>열기 ›</em></button><div class="grid" id="grid"></div></div>
     </div>
     <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span id="bgNote" class="bgnote">배경 이미지 자리: assets/hall-bg.png (1920×1080, 코덱스 제작)</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
@@ -479,25 +486,25 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   <section class="screen" id="close"><div class="slot screen-bg light" data-src="assets/bg-story.png" data-size="1920×1080"></div>
     <div class="close-head">
       <div><span class="eyebrow">성과와 제언</span><h2 class="title">잇:다가 남긴 것, 이어 갈 길</h2>
-        <p class="lede">아홉 개의 역을 지나 노선의 끝에 닿았습니다.<br>우리가 만든 것을 정리하고, 다른 학교 교실로 이어 가는 길을 제안합니다.</p></div>
+        <p class="lede">아홉 개의 역과, 그 모두를 감싼 윤리 프로젝트를 지나 노선의 끝에 닿았습니다.<br>우리가 만든 것을 정리하고, 다른 학교 교실로 이어 가는 길을 제안합니다.</p></div>
       <div class="slot light close-art" data-src="assets/zep-hall.png" data-size="1600×1000"></div>
     </div>
     <div class="close-cols">
       <article style="--c:var(--lo)"><span class="ck">성과</span><h3>무엇을 만들었나</h3><ol>
-        <li><b>수업 모델</b>ITDA 수업 단계(묻다·찾다·짓다·잇다)와 학년군별 AI 활용 단계(함께 보는 AI·대화하는 AI·만드는 AI)</li>
-        <li><b>프로젝트 9개</b>저·중·고학년 각 3개, 모두 10차시. 교과 융합 6개와 특색 동아리 3개</li>
-        <li><b>수업·평가 자료</b>과정안, 활동지, 루브릭, 생활기록부 기록 예시 <em>[교사 입력: 자료 수]</em></li>
-        <li><b>수업용 웹앱</b>전자칠판에서 바로 여는 한 파일 웹앱 <em>[교사 입력: 웹앱 수]</em></li></ol></article>
+        <li><b>수업 모델</b><ul class="sl"><li><i>수업 단계</i>ITDA: 묻다 → 찾다 → 짓다 → 잇다</li><li><i>학년군별 활용 단계</i>함께 보는 AI → 대화하는 AI → 만드는 AI</li></ul></li>
+        <li><b>프로젝트 10개</b>학년군별 CBL 프로젝트 9개(교과 융합 6 · 특색 동아리 3)와, 모든 노선을 감싸는 공통 프로젝트 「AI 윤리와 디지털 시민성」</li>
+        <li><b>수업·평가 자료</b><ul class="sl"><li>CBL 과정안과 루브릭</li><li>학생용 활동지(PDF 인쇄물)</li><li>캔바·북크리에이터 예제 파일</li><li>HTML 웹앱 디지털 활동지</li></ul></li>
+        <li><b>맞춤형 수업용 웹앱</b><ul class="sl"><li><i>저학년</i>반 전체가 함께 쓰는 전자칠판 웹앱</li><li><i>모둠</i>태블릿 하나로 함께 쓰는 웹앱</li><li><i>중학년 이상</i>학생이 혼자 쓰는 개인 웹앱</li><li><i>교사</i>AI 피드백 도우미 웹앱</li></ul></li></ol></article>
       <article style="--c:var(--mid)"><span class="ck">일반화 방안</span><h3>우리 학교로 가져가려면</h3><ol>
-        <li><b>장소만 바꾸기</b>부산의 바다·시장·산복도로 자리에 우리 동네 장소를 넣으면 같은 흐름으로 운영할 수 있습니다.</li>
-        <li><b>사다리 한 칸 옮기기</b>학년이 달라도 AI 활용 단계를 한 칸 올리거나 내려 같은 프로젝트를 쓸 수 있습니다.</li>
-        <li><b>웹앱 그대로 열기</b>로그인 없이 파일 하나로 열려 기기 사정이 다른 학교에서도 바로 씁니다.</li>
-        <li><b>평가 도구 고쳐 쓰기</b>루브릭과 활동지를 내려받아 우리 반에 맞게 고칩니다.</li></ol></article>
+        <li><b>성취기준을 넣어 쓰는 설계 틀</b>ITDA 단계마다 '핵심 질문 · 탐구 기록 · 산출물 루브릭 · 자기·동료 평가'를 짝지은 CBL 설계 양식을 나눕니다. 다른 학년·교과의 성취기준을 넣어도 수업과 평가가 함께 설계됩니다.</li>
+        <li><b>기기 여건에 맞춘 AI 활용 단계</b>1인 1기기가 없으면 전자칠판(1단), 모둠 태블릿이 있으면 2단, 개인 기기와 교사가 관리하는 계정이 있으면 3단으로, 학교 여건에 맞게 AI 활용 수준을 고릅니다.</li>
+        <li><b>웹앱과 만든 지시문 함께 공개</b>로그인·설치 없는 HTML 한 파일 웹앱과, 그 앱을 만든 프롬프트(지시문)를 함께 나눕니다. 교사가 문제·카드 같은 내용만 바꾸거나 직접 고쳐 만들 수 있습니다.</li>
+        <li><b>인쇄본과 편집 원본 함께 제공</b>활동지·루브릭을 PDF 인쇄본과 고쳐 쓸 수 있는 원본(캔바·북크리에이터·한글)으로 나누고, 생활기록부 기록 예시까지 이어 평가 업무를 덜어 줍니다.</li></ol></article>
       <article style="--c:var(--hi)"><span class="ck">제언</span><h3>이어 갈 길</h3><ol>
-        <li><b>학교에</b>학년군 협의회에서 ITDA 네 단계로 프로젝트 하나를 함께 설계해 보기를 권합니다.</li>
+        <li><b>학교에</b>동아리 시간에 운영한 CBL 프로젝트는 학교 동아리, 학교자율시간, 방과후 프로그램으로 옮겨 운영할 수 있습니다. 학년군 협의회에서 ITDA 단계로 함께 설계해 보기를 권합니다.</li>
         <li><b>교육청에</b>학생이 안전하게 쓸 수 있는 생성형 AI 환경과, 교사가 만든 웹앱·자료를 나누는 공간을 바랍니다.</li>
-        <li><b>모든 교실에</b>'허락받고 나누기, 견주어 확인하기, AI로 만든 것 밝히기'를 수업의 기본 약속으로 두기를 제안합니다.</li>
-        <li><b>다음 해</b><em>[교사 입력: 2027년 이어 갈 계획]</em></li></ol></article>
+        <li class="key"><b>무엇보다, 윤리 교육</b>AI·디지털을 많이 쓰는 수업일수록 윤리 교육을 소홀히 해서는 안 됩니다. 도구 쓰는 법보다 '허락받고 나누기, 견주어 확인하기, AI로 만든 것 밝히기'를 먼저 가르쳐야 합니다.</li>
+        <li><b>다음 해</b>학년군별 AI 윤리·디지털 시민성 교육의 내용과 평가 방법을 더 깊이 연구해 이어 가고자 합니다.</li></ol></article>
     </div>
     <div class="close-foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
@@ -643,12 +650,33 @@ document.getElementById("steps").innerHTML=STEPS.map(s=>`
   h+=`<div class="slot light ladder-art" data-src="assets/ladder-kids.png" data-size="600×1500"></div><div class="lh">학년군과 단계</div>`+STEPS.map(s=>`<div class="lh"><b style="color:${s.c2}">${s.k}</b>${s.w}</div>`).join("")+`<div class="lh">대표 도구</div>`;
   ["hi","mid","lo"].forEach(k=>{
     const L=LINES[k], R=LADDER[k];
-    h+=`<div class="rowlab${k==="hi"?" top":k==="lo"?" bot":""}" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
+    h+=`<div class="rowlab" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
     h+=R.cells.map(c=>`<div class="cell" style="--c:${L.c}">${esc(c)}</div>`).join("");
     h+=`<div class="cell tools">${R.tools.map(t=>`<span>${t}</span>`).join("")}</div>`;
   });
   h+=`<div class="promises"><b>모든 단계가 지나는 약속</b>${["lo","mid","hi"].map(k=>`<span style="--c:${LINES[k].c}"><i>${LINES[k].lv}단</i>${esc(LADDER[k].promise)}</span>`).join("")}</div>`;
   g.innerHTML=h;
+  /* 큰 사다리 그리기: 학년 칸 세 개를 발판으로 삼아 양옆 기둥과 사이 가로대를 그림 */
+  const NS="http://www.w3.org/2000/svg";
+  const sv=document.createElementNS(NS,"svg"); sv.setAttribute("class","stairs bigladder"); sv.setAttribute("aria-hidden","true"); g.prepend(sv);
+  function draw(){
+    const gr=g.getBoundingClientRect(), rs=[...g.querySelectorAll(".rowlab")].map(r=>r.getBoundingClientRect());
+    if(!rs.length||!rs[0].width)return;
+    const L=rs[0].left-gr.left, Rr=rs[0].right-gr.left, top=rs[0].top-gr.top, bot=rs[rs.length-1].bottom-gr.top;
+    const W=18, lx=L-22, rx=Rr+4, y0=top-34, y1=bot+16;
+    let o=`<defs><linearGradient id="wdV" x1="0" x2="1"><stop offset="0" stop-color="#D9BF88"/><stop offset=".45" stop-color="#F8EDD3"/><stop offset="1" stop-color="#CDB07A"/></linearGradient>
+      <linearGradient id="wdH" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F3E4C0"/><stop offset="1" stop-color="#CFB27C"/></linearGradient>
+      <filter id="lsh" x="-20%" y="-5%" width="140%" height="110%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#6B5524" flood-opacity=".25"/></filter></defs><g filter="url(#lsh)">`;
+    const rung=y=>`<rect x="${lx+W/2}" y="${y-6}" width="${rx-lx}" height="12" rx="6" fill="url(#wdH)" stroke="#C4A56B" stroke-width="1.2"/>`;
+    o+=rung(y0+14);
+    for(let i=0;i<rs.length-1;i++){o+=rung(((rs[i].bottom+rs[i+1].top)/2)-gr.top);}
+    o+=`<rect x="${lx}" y="${y0}" width="${W}" height="${y1-y0}" rx="9" fill="url(#wdV)" stroke="#C4A56B" stroke-width="1.5"/>`;
+    o+=`<rect x="${rx}" y="${y0}" width="${W}" height="${y1-y0}" rx="9" fill="url(#wdV)" stroke="#C4A56B" stroke-width="1.5"/>`;
+    rs.forEach(r=>{const cy=(r.top+r.bottom)/2-gr.top;[lx+W/2,rx+W/2].forEach(cx=>{o+=`<circle cx="${cx}" cy="${cy}" r="4.5" fill="#B8955A"/>`;});});
+    sv.innerHTML=o+"</g>";
+  }
+  draw(); addEventListener("resize",draw); if(document.fonts)document.fonts.ready.then(draw);
+  new ResizeObserver(draw).observe(g);
 })();
 
 /* 노선도 */
@@ -673,12 +701,15 @@ function showPeek(p){
   const svg=document.getElementById("routeSvg");
   const Y={lo:425,mid:300,hi:175}, XS=[245,450,655], END={x:930,y:300};
   // 모든 노선을 감싸는 약속 띠
-  const band=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"모든 노선을 감싸는 약속, AI 윤리와 디지털 시민성 열기"});
+  const band=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"공통 프로젝트, 모든 노선을 감싸는 AI 윤리와 디지털 시민성 열기"});
   mk(svg,"rect",{x:112,y:42,width:760,height:440,rx:60,fill:"#F6D58E","fill-opacity":.22,stroke:"#D9A93A","stroke-width":2.5,"stroke-dasharray":"8 7"},band);
   const pill=mk(svg,"g",{},band);
-  mk(svg,"rect",{x:300,y:22,width:384,height:38,rx:19,fill:"#fff",stroke:"#D9A93A","stroke-width":2},pill);
-  mk(svg,"path",{d:"M322 48 l-9 -8 c-4 -6 3 -11 9 -4 c6 -7 13 -2 9 4z",fill:"#E8566A"},pill);
-  tx(svg,pill,505,47,"늘 함께 가는 약속 · AI 윤리와 디지털 시민성",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});
+  mk(svg,"rect",{x:268,y:13,width:448,height:58,rx:29,fill:"#fff",stroke:"#D9A93A","stroke-width":2.5},pill);
+  mk(svg,"circle",{cx:300,cy:42,r:20,fill:"#F6D58E",stroke:"#D9A93A","stroke-width":3},pill);
+  mk(svg,"path",{d:"M300 52 l-10 -9 c-5 -6 3 -13 10 -5 c7 -8 15 -1 10 5z",fill:"#E8566A"},pill);
+  tx(svg,pill,330,35,"공통 프로젝트 · 모든 노선을 감싸는 열 번째 역",{"font-size":12.5,fill:"#A0700A","text-anchor":"start","font-weight":700});
+  tx(svg,pill,330,60,"AI 윤리와 디지털 시민성",{"font-size":20,fill:"#1C2433",class:"hd","font-weight":700,"text-anchor":"start"});
+  tx(svg,pill,700,48,"열기 ›",{"font-size":13,fill:"#A0700A","text-anchor":"end","font-weight":700});
   band.addEventListener("click",openEthics); band.addEventListener("keydown",e=>{if(e.key==="Enter")openEthics();});
   ["lo","mid","hi"].forEach(k=>{
     const y=Y[k], L=LINES[k], ty=END.y+{lo:14,mid:0,hi:-14}[k];
@@ -717,7 +748,7 @@ function showPeek(p){
   const z=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"ZEP 우리들의 전시관 열기"});
   mk(svg,"circle",{cx:END.x,cy:END.y,r:40,fill:"#1C2433"},z);
   mk(svg,"path",{d:`M${END.x-16} ${END.y+12} V${END.y-4} L${END.x} ${END.y-17} L${END.x+16} ${END.y-4} V${END.y+12} Z`,fill:"#F6D58E"},z);
-  tx(svg,z,END.x,END.y+66,"ZEP 전시관",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});
+  tx(svg,z,END.x,END.y+64,"ZEP",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});tx(svg,z,END.x,END.y+84,"전시관",{"font-size":16,fill:"#1C2433",class:"hd","font-weight":700});
   z.addEventListener("click",openZep); z.addEventListener("keydown",e=>{if(e.key==="Enter")openZep();});
   const fit=()=>LBOX.forEach(([b,g])=>{let w=0;g.querySelectorAll(".lname").forEach(t=>{try{w=Math.max(w,t.getBBox().width)}catch(e){}});if(w>0){const cx=+b.getAttribute("x")+ +b.getAttribute("width")/2;b.setAttribute("width",w+28);b.setAttribute("x",cx-(w+28)/2);}});
   fit(); if(document.fonts)document.fonts.ready.then(fit);
@@ -781,8 +812,8 @@ function openZep(){
 function openEthics(){
   back=document.activeElement; full.style.setProperty("--c","#D9A93A");
   full.innerHTML=`<div class="slot" data-src="assets/ethics.png" data-size="1600×1000"></div>
-    <div class="full-side"><div class="full-top"><span class="line"><i></i>모든 노선을 감싸는 약속</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
-    <h2 id="fTitle">AI 윤리와 디지털 시민성</h2><p class="sub">어느 역에 있든 늘 함께 가는 약속입니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있습니다.</p>
+    <div class="full-side"><div class="full-top"><span class="line"><i></i>공통 프로젝트 · 모든 노선을 감싸는 열 번째 역</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
+    <h2 id="fTitle">AI 윤리와 디지털 시민성</h2><p class="sub">아홉 개 프로젝트 모두를 감싸는 공통 프로젝트입니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있고, 학년군마다 지켜야 할 약속이 있습니다.</p><div class="chips"><span>전 학년</span><span>모든 프로젝트에 윤리 활동 1개 이상</span><span>AI 윤리 · 디지털 시민성</span></div>
     <div class="eth">${["lo","mid","hi"].map(k=>`<div style="--c:${LINES[k].c}"><b>${LINES[k].lv}단 ${LINES[k].ladder}</b><span>${LINES[k].band} · ${LINES[k].grade}</span><p>${esc(LADDER[k].promise)}</p></div>`).join("")}</div>
     <div class="pair"><div><h4>프로젝트 속 윤리 활동</h4><p>그림책 그림의 저작권, 상인 얼굴의 초상권, AI 이미지 표시, AI 답의 출처 확인, 재난 가짜뉴스 가려내기, 앱 사용자의 개인정보 지키기</p></div><div><h4>함께 쓰는 원칙</h4><p>학생 이름과 얼굴은 싣지 않고, AI로 만든 것은 밝히며, AI의 답은 다른 자료로 확인합니다.</p></div></div></div>`;
   fillSlots(full);
