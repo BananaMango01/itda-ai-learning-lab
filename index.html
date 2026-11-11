@@ -360,10 +360,11 @@ header nav{align-items:center}
 .res-list a,.res-list span{display:inline-flex;flex-direction:column;padding:10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px}
 .res-list small{font-size:12px;color:var(--ink-soft)}
 .res-list span{color:#8A95A7}
-.res-list button.res-open{display:inline-flex;flex-direction:column;align-items:flex-start;text-align:left;padding:10px 42px 10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px;position:relative;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;font-family:var(--sans);transition:background .15s,transform .15s}
-.res-list button.res-open small{font-weight:400}
-.res-list button.res-open::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
-.res-list button.res-open:hover{background:color-mix(in srgb,var(--c,#2BB3A6) 12%,#fff);transform:translateY(-2px)}
+.res-list .res-open{text-decoration:none;box-sizing:border-box;display:inline-flex;flex-direction:column;align-items:flex-start;text-align:left;padding:10px 42px 10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px;position:relative;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;font-family:var(--sans);transition:background .15s,transform .15s}
+.res-list .res-open small{font-weight:400}
+.res-list .res-open .res-note{font-style:normal;font-weight:400;font-size:12.5px;color:#5b6472;margin-top:3px;max-width:260px;line-height:1.4}
+.res-list .res-open::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
+.res-list .res-open:hover{background:color-mix(in srgb,var(--c,#2BB3A6) 12%,#fff);transform:translateY(-2px)}
 /* 자료 보기 창 */
 .viewer{position:fixed;inset:0;z-index:60;background:#0D1526f2;display:none;flex-direction:column;padding:14px 2.4vw 12px;color:#fff}
 .viewer.open{display:flex}
@@ -672,13 +673,14 @@ const P=[
   q:"우리 지역을 제대로 알린다는 것은 무엇일까? 자랑하는 것과 알리는 것은 어떻게 다를까?",
   flow:["다른 지역 친구의 편지로 문제를 만나고, 부산을 알리기 위한 질문을 만들어요. (1차시)","어른들의 노력, 도감 웹앱, 공식 자료, AI의 답을 견주며 맞는 단서를 찾아요. (2~4차시)","큐레이터 노트, 발표 슬라이드와 대본, 영어 소개 카드를 짓고 고쳐요. (5·6·8차시)","교실 박람회 → ZEP 온라인 박람회 → 퀴즈쇼로 다른 지역·세계 친구와 이어요. (7·9·10차시)"],
   out:"큐레이터 노트(보고하는 글) · 발표 슬라이드 10장 · 관람객 퀴즈 3문제 · 영어 소개 카드(Busan Treasure Card)",
-  ai:"4차시에 모둠이 선생님이 미조우(Mizou)로 만든 「부산 안내 챗봇」을 인터뷰하고, 그 답을 도감·공식 누리집과 견주는 '단서 하나'로 써요. 8차시에는 영어 문장을 AI 번역으로 되돌려 뜻을 확인하고, AI 펭톡으로 영어 소개 말하기를 연습해요.",
+  ai:"4차시에 모둠이 선생님이 미조우(Mizou)로 만든 「꼬마 큐레이터의 단서 갈매기」 챗봇을 인터뷰하고, 그 답을 도감·공식 누리집과 견주는 '단서 하나'로 써요. 8차시에는 영어 문장을 AI 번역으로 되돌려 뜻을 확인하고, AI 펭톡으로 영어 소개 말하기를 연습해요.",
   std:[["4사09-02","지역의 자연환경, 역사, 문화, 생산물 등을 알리려는 지역사회의 노력을 알고 관심을 갖는다."],["4국01-05","목적과 주제에 알맞게 자료를 정리하여 자신감 있게 발표한다."],["4국03-02","절차와 결과가 드러나게 정확한 표현으로 보고하는 글을 쓴다."],["4미03-03","미술 문화에 관심을 가지고 전시 및 행사에 참여할 수 있다."],["4영02-05","자신, 주변 사람이나 사물의 소개나 묘사를 쉽고 간단한 문장으로 말하거나 보고 쓴다."],["4영02-09","적절한 매체나 전략을 활용하여 창의적으로 의미를 표현한다."]],
   res:[["수업 자료","박람회 수업 PPT (7차시)",{img:Array.from({length:26},(_,i)=>`materials/mid-1/ppt/${String(i+1).padStart(2,"0")}.jpg`),note:"학생 이름은 ○○○로 가렸습니다."}],
        ["학생 활동지","부산 보물찾기 지도",{img:["materials/mid-1/sheets/busan-treasure-map.jpg"],note:"학생 이름은 가렸습니다."}],
        ["학생 활동지","부산 보물찾기 탐방 여권",{img:["materials/mid-1/sheets/busan-treasure-passport.jpg"]}],
        ["수업용 웹앱","부산을 자랑해! 도감 (조사할 때)","https://bejewelled-alfajores-71feff.netlify.app/"],
        ["수업용 웹앱","부산 보물찾기 탐방대 (확인·퀴즈)","https://busantreasure.netlify.app/"],
+       ["수업용 챗봇","꼬마 큐레이터의 단서 갈매기 (4차시 인터뷰)",{ext:"https://mizou.com/preview-bot?ID=168225",note:"미조우(Mizou) 선생님용 미리보기 링크예요. 학생 링크는 수업 때 New Session으로 만들어요."}],
        ["수업 결과물","박람회 장면과 학생 작품"]]},
  {id:"mid-2",line:"mid",no:2,name:"바다로 간 그림책",sub:"그림책 한 권에서 출발해 부산 바다의 문제를 따라가요",
   grade:"4학년",subj:"[교사 입력: 융합 교과]",theme:"생태전환교육",
@@ -930,7 +932,7 @@ function openP(id){
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
-      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u],i)=>u?`<button type="button" class="res-open" data-ri="${i}"><small>${esc(t)}${typeof u==="string"?" · 웹앱":u.img.length>1?` · ${u.img.length}쪽`:""}</small>${esc(n)}</button>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
+      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u],i)=>u&&u.ext?`<a class="res-open" href="${u.ext}" target="_blank" rel="noopener"><small>${esc(t)} · 새 창</small>${esc(n)}${u.note?`<em class="res-note">${esc(u.note)}</em>`:""}</a>`:u?`<button type="button" class="res-open" data-ri="${i}"><small>${esc(t)}${typeof u==="string"?" · 웹앱":u.img.length>1?` · ${u.img.length}쪽`:""}</small>${esc(n)}</button>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
       ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
     </div>`;
   fillSlots(full);
