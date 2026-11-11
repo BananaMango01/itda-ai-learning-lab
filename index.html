@@ -190,6 +190,11 @@ header nav{align-items:center}
 .step .slot{flex:0 0 28vh;border-radius:0;border-width:0 0 2px 0}
 .step .slot img{object-fit:contain;padding:1.6vh 1vw .6vh}
 .hero .slot img{object-fit:contain}
+.hero .slot.has-img{animation:heroFloat 7s ease-in-out infinite}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+.hero-fx .tw{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(20deg)}70%{opacity:.25;transform:scale(.7) rotate(35deg)}}
 .step .glyph{position:absolute;left:18px;top:calc(28vh - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
 .step-body{padding:2vh 1.2vw 1.6vh;display:flex;flex-direction:column;gap:.7vh;flex:1;min-height:0}
 .step-name{display:flex;align-items:baseline;gap:10px;padding-left:min(70px,5vw)}
@@ -350,6 +355,27 @@ header nav{align-items:center}
 .res-list a,.res-list span{display:inline-flex;flex-direction:column;padding:10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px}
 .res-list small{font-size:12px;color:var(--ink-soft)}
 .res-list span{color:#8A95A7}
+.res-list button.res-open{display:inline-flex;flex-direction:column;align-items:flex-start;text-align:left;padding:10px 42px 10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px;position:relative;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;font-family:var(--sans);transition:background .15s,transform .15s}
+.res-list button.res-open small{font-weight:400}
+.res-list button.res-open::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
+.res-list button.res-open:hover{background:color-mix(in srgb,var(--c,#2BB3A6) 12%,#fff);transform:translateY(-2px)}
+/* 자료 보기 창 */
+.viewer{position:fixed;inset:0;z-index:60;background:#0D1526f2;display:none;flex-direction:column;padding:14px 2.4vw 12px;color:#fff}
+.viewer.open{display:flex}
+.v-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:10px}
+.v-title small{display:block;font-size:13px;color:#BAC6DA}.v-title b{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.4vh,24px)}
+.v-ctrl{display:flex;align-items:center;gap:8px}
+.v-btn{border:1.5px solid #ffffff55;background:#ffffff14;color:#fff;border-radius:999px;padding:8px 16px;font-size:15px;font-family:var(--display);font-weight:500;cursor:pointer}
+.v-btn:hover{background:#ffffff2a}.v-close{background:#fff;color:var(--ink)}
+.v-count{font-family:var(--latin);font-weight:600;min-width:64px;text-align:center}
+.v-body{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.v-body img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;box-shadow:0 10px 40px #0008;-webkit-user-drag:none;user-select:none;background:#fff}
+.v-body iframe{width:100%;height:100%;border:0;border-radius:10px;background:#fff}
+.v-strip{display:flex;gap:6px;overflow-x:auto;padding:10px 2px 2px;margin-top:8px}
+.v-strip button{flex:0 0 auto;border:2px solid transparent;border-radius:6px;padding:0;background:none;cursor:pointer;opacity:.55}
+.v-strip button.on{border-color:var(--dawn);opacity:1}
+.v-strip img{display:block;height:54px;width:auto;border-radius:4px}
+.v-note{margin:6px 0 0;font-size:12.5px;color:#BAC6DA;text-align:center}
 .res-list a{position:relative;padding-right:42px;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;transition:background .15s,transform .15s}
 .res-list a::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
 .res-list a:hover{background:color-mix(in srgb,var(--c,#2BB3A6) 12%,#fff);transform:translateY(-2px)}
@@ -482,7 +508,7 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
         <svg id="routeSvg" viewBox="10 10 960 480" preserveAspectRatio="xMidYMid meet" role="group" aria-label="잇:다 노선도"></svg>
         <aside class="peek" id="peek" aria-live="polite"></aside>
       </div>
-      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill"><i>❤</i><span><small>공통 프로젝트 · 모든 노선을 감싸는 열 번째 역</small>AI 윤리와 디지털 시민성</span><em>열기 ›</em></button><div class="grid" id="grid"></div></div>
+      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill"><i>❤</i><span><small>공통 프로젝트 · 열 번째 역 · 생각은 내가, AI는 도구로</small>잇:다 노선의 약속 승차권</span><em>열기 ›</em></button><div class="grid" id="grid"></div></div>
     </div>
     <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span id="bgNote" class="bgnote">배경 이미지 자리: assets/hall-bg.png (1920×1080, 코덱스 제작)</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
@@ -497,7 +523,7 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
     <div class="close-cols">
       <article style="--c:var(--lo)"><span class="ck">성과</span><h3>무엇을 만들었나</h3><ol>
         <li><b>수업 모델</b><ul class="sl"><li><i>수업 단계</i>ITDA: 묻다 → 찾다 → 짓다 → 잇다</li><li><i>학년군별 활용 단계</i>함께 보는 AI → 대화하는 AI → 만드는 AI</li></ul></li>
-        <li><b>프로젝트 10개</b>학년군별 CBL 프로젝트 9개(교과 융합 6 · 특색 동아리 3)와, 모든 노선을 감싸는 공통 프로젝트 「AI 윤리와 디지털 시민성」</li>
+        <li><b>프로젝트 10개</b>학년군별 CBL 프로젝트 9개(교과 융합 6 · 특색 동아리 3)와, 모든 노선을 감싸는 공통 프로젝트 「잇:다 노선의 약속 승차권」(AI 윤리·디지털 시민성)</li>
         <li><b>수업·평가 자료</b><ul class="sl"><li>CBL 과정안과 루브릭</li><li>학생용 활동지(PDF 인쇄물)</li><li>캔바·북크리에이터 예제 파일</li><li>HTML 웹앱 디지털 활동지</li></ul></li>
         <li><b>맞춤형 수업용 웹앱</b><ul class="sl"><li><i>저학년</i>반 전체가 함께 쓰는 전자칠판 웹앱</li><li><i>모둠</i>태블릿 하나로 함께 쓰는 웹앱</li><li><i>중학년 이상</i>학생이 혼자 쓰는 개인 웹앱</li><li><i>교사</i>AI 피드백 도우미 웹앱</li></ul></li></ol></article>
       <article style="--c:var(--mid)"><span class="ck">일반화 방안</span><h3>우리 학교로 가져가려면</h3><ol>
@@ -519,6 +545,7 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
 <a href="#top" class="totop" id="toTop" aria-label="맨 위 첫 화면으로">▲<span>처음으로</span></a>
 
 <div class="full" id="full" role="dialog" aria-modal="true" aria-labelledby="fTitle"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="자료 보기"></div>
 
 <script>
 const LINES={
@@ -579,13 +606,19 @@ const P=[
   out:"움직이는 그림 편지, 모둠 멜로디",ai:"애니메이티드 드로잉은 교사가 조작하고, 크롬 뮤직랩은 학생이 모둠으로 직접 써요.",
   std:[["2바02-03","차이와 다양성을 존중하는 생활 태도"],["2슬02-03","알고 싶은 나라를 탐구하며 관심 넓히기"],["2슬02-04","궁금한 세계를 여러 매체로 탐색하기"],["2즐03-06","음악과 미술 작품 감상으로 다양성 받아들이기"],["2국01-04","경험과 생각을 바른 자세로 발표하기"]],
   res:[["결과물","움직이는 그림 편지"],["안내","크롬 뮤직랩과 애니메이티드 드로잉"],["수업 자료","10차시 수업 흐름"]]},
- {id:"mid-1",line:"mid",no:1,name:"꼬마 큐레이터",sub:"부산의 자랑거리를 고르고 확인해 우리 반 박람회를 열어요",
-  grade:"4학년",subj:"사회, 국어, 미술, 영어",theme:"우리 지역 알리기",
-  q:"부산에 처음 오는 사람에게 부산의 자랑거리를 어떻게 알릴까?",
-  flow:["'부산에 처음 온 친구가 묻는다면?' 하고 모둠 질문을 만들어요.","AI에게 묻고, 관광 자료와 가족 인터뷰와 견주어 틀린 곳을 찾아요.","소개 글, AI 홍보 포스터, 영어 소개말, 박람회 웹앱을 만들어요.","갤러리 워크 박람회를 열고 서로 피드백해요."],
-  out:"박람회 웹앱, AI 홍보 포스터, 영어 소개말",ai:"모둠이 AI에게 묻고, 답은 다른 자료로 확인해요.",
-  std:[["4사09-02","지역을 알리려는 지역사회의 노력을 알고 관심을 갖는다."],["4국01-05","자료를 정리하여 자신감 있게 발표한다."],["4국06-02","매체를 활용하여 간단한 발표 자료를 만든다."],["4미02-04","표현 의도를 담아 작품을 제작하기"],["4영02-05","주변 사람이나 사물을 쉽고 간단한 문장으로 소개한다."]],
-  res:[["웹앱","부산 자랑 도감","https://bejewelled-alfajores-71feff.netlify.app/"],["웹앱","보물찾기 탐방대","https://busantreasure.netlify.app/"],["결과물","AI 홍보 포스터 모음"],["수업 이야기","갤러리 워크 공개수업"]]},
+ {id:"mid-1",line:"mid",no:1,name:"꼬마 큐레이터",sub:"부산의 보물을 찾아 다른 지역·세계 친구에게 잇는 박람회를 열어요",
+  grade:"4학년 2학기",subj:"사회, 국어, 미술, 영어",theme:"우리 지역 알리기",hours:"교과 21시간",
+  q:"우리 지역을 제대로 알린다는 것은 무엇일까? 자랑하는 것과 알리는 것은 어떻게 다를까?",
+  flow:["다른 지역 친구의 편지로 문제를 만나고, 부산을 알리기 위한 질문을 만들어요. (1차시)","어른들의 노력, 도감 웹앱, 공식 자료, AI의 답을 견주며 맞는 단서를 찾아요. (2~4차시)","큐레이터 노트, 발표 슬라이드와 대본, 영어 소개 카드를 짓고 고쳐요. (5·6·8차시)","교실 박람회 → ZEP 온라인 박람회 → 퀴즈쇼로 다른 지역·세계 친구와 이어요. (7·9·10차시)"],
+  out:"자랑거리 발표 슬라이드, 큐레이터 노트(보고하는 글), 영어 소개 카드, 관람객 퀴즈 3문항, ZEP 온라인 박람회 부스, 탐방 여권",
+  ai:"모둠이 교사가 관리하는 화면에서 AI에게 묻고, 그 답을 도감·공식 누리집과 견주는 '단서 하나'로 써요. 문제 상황 편지, 웹앱, 활동지는 교사가 AI로 만들었어요.",
+  std:[["4사09-02","지역의 자연환경, 역사, 문화, 생산물 등을 알리려는 지역사회의 노력을 알고 관심을 갖는다."],["4국01-05","목적과 주제에 알맞게 자료를 정리하여 자신감 있게 발표한다."],["4국03-02","절차와 결과가 드러나게 정확한 표현으로 보고하는 글을 쓴다."],["4미03-03","(원문 확인 필요) 미술 작품의 전시와 행사에 관심을 가지고 참여한다."],["4영02-05","자신, 주변 사람이나 사물의 소개나 묘사를 쉽고 간단한 문장으로 말하거나 보고 쓴다."],["4영02-09","적절한 매체나 전략을 활용하여 창의적으로 의미를 표현한다."]],
+  res:[["수업 자료","박람회 수업 PPT (7차시)",{img:Array.from({length:26},(_,i)=>`materials/mid-1/ppt/${String(i+1).padStart(2,"0")}.jpg`),note:"학생 이름은 ○○○로 가렸습니다."}],
+       ["학생 활동지","부산 보물찾기 지도",{img:["materials/mid-1/sheets/busan-treasure-map.jpg"],note:"학생 이름은 가렸습니다."}],
+       ["학생 활동지","부산 보물찾기 탐방 여권",{img:["materials/mid-1/sheets/busan-treasure-passport.jpg"]}],
+       ["수업용 웹앱","부산을 자랑해! 도감 (조사할 때)","https://bejewelled-alfajores-71feff.netlify.app/"],
+       ["수업용 웹앱","부산 보물찾기 탐방대 (확인·퀴즈)","https://busantreasure.netlify.app/"],
+       ["수업 결과물","박람회 장면과 학생 작품"]]},
  {id:"mid-2",line:"mid",no:2,name:"바다로 간 그림책",sub:"그림책 한 권에서 출발해 부산 바다의 문제를 따라가요",
   grade:"4학년",subj:"[교사 입력: 융합 교과]",theme:"생태전환교육",
   q:"[교사 입력: 핵심 질문]",flow:["[교사 입력]","[교사 입력]","[교사 입력]","[교사 입력]"],
@@ -749,14 +782,14 @@ function showPeek(p){
   const svg=document.getElementById("routeSvg");
   const Y={lo:425,mid:300,hi:175}, XS=[245,450,655], END={x:930,y:300};
   // 모든 노선을 감싸는 약속 띠
-  const band=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"공통 프로젝트, 모든 노선을 감싸는 AI 윤리와 디지털 시민성 열기"});
+  const band=mk(svg,"g",{class:"mark",tabindex:0,role:"button","aria-label":"공통 프로젝트 잇:다 노선의 약속 승차권(AI 윤리와 디지털 시민성) 열기"});
   mk(svg,"rect",{x:112,y:42,width:760,height:440,rx:60,fill:"#F6D58E","fill-opacity":.22,stroke:"#D9A93A","stroke-width":2.5,"stroke-dasharray":"8 7"},band);
   const pill=mk(svg,"g",{},band);
   mk(svg,"rect",{x:268,y:13,width:448,height:58,rx:29,fill:"#fff",stroke:"#D9A93A","stroke-width":2.5},pill);
   mk(svg,"circle",{cx:300,cy:42,r:20,fill:"#F6D58E",stroke:"#D9A93A","stroke-width":3},pill);
   mk(svg,"path",{d:"M300 52 l-10 -9 c-5 -6 3 -13 10 -5 c7 -8 15 -1 10 5z",fill:"#E8566A"},pill);
-  tx(svg,pill,330,35,"공통 프로젝트 · 모든 노선을 감싸는 열 번째 역",{"font-size":12.5,fill:"#A0700A","text-anchor":"start","font-weight":700});
-  tx(svg,pill,330,60,"AI 윤리와 디지털 시민성",{"font-size":20,fill:"#1C2433",class:"hd","font-weight":700,"text-anchor":"start"});
+  tx(svg,pill,330,35,"공통 프로젝트 · 열 번째 역 · 생각은 내가, AI는 도구로",{"font-size":12.5,fill:"#A0700A","text-anchor":"start","font-weight":700});
+  tx(svg,pill,330,60,"잇:다 노선의 약속 승차권",{"font-size":20,fill:"#1C2433",class:"hd","font-weight":700,"text-anchor":"start"});
   tx(svg,pill,700,48,"열기 ›",{"font-size":13,fill:"#A0700A","text-anchor":"end","font-weight":700});
   band.addEventListener("click",openEthics); band.addEventListener("keydown",e=>{if(e.key==="Enter")openEthics();});
   ["lo","mid","hi"].forEach(k=>{
@@ -786,7 +819,7 @@ function showPeek(p){
     const st={fill:"#1C2433","font-weight":600,"font-size":15.5,"letter-spacing":"-0.3",class:"lname"};
     tx(svg,g,x,y-55,p.map[0],st);
     tx(svg,g,x,y-35,p.map[1],st);
-    tx(svg,g,x,y+(club?40:34),club?`동아리 · ${p.theme}`:p.theme,{"font-size":13,"letter-spacing":"-0.2",fill:club?L.hex:"#5B667A","font-family":"Gothic A1, sans-serif","font-weight":club?700:500,stroke:"#F3F0E4","stroke-width":4,"paint-order":"stroke"});
+    tx(svg,g,x,y+(club?40:34),club?`동아리 · ${p.theme}`:p.theme,{"font-size":13,"letter-spacing":"-0.2",fill:club?L.hex:"#5B667A","font-family":"Gowun Dodum, sans-serif","font-weight":club?700:500,stroke:"#F3F0E4","stroke-width":4,"paint-order":"stroke"});
     LBOX.push([box,g]); if(p.id==="mid-1")HOME=g;
     const on=()=>{svg.querySelectorAll(".st").forEach(s=>s.classList.remove("on"));g.classList.add("on");showPeek(p);};
     g.addEventListener("mouseenter",on); g.addEventListener("focus",on);
@@ -833,15 +866,16 @@ function openP(id){
         <div class="full-ctrl"><button type="button" data-go="-1">이전</button><button type="button" data-go="1">다음</button><button type="button" data-close>닫기</button></div></div>
       <h2 id="fTitle">${esc(p.name)}</h2>
       <p class="sub">${esc(p.sub)}</p>
-      <div class="chips">${p.no===3?`<span style="background:var(--c);color:#fff">★ 동아리 프로젝트</span>`:""}<span>${esc(p.grade)}</span><span>${esc(p.subj)}</span><span>${esc(p.theme)}</span><span>10차시</span></div>
+      <div class="chips">${p.no===3?`<span style="background:var(--c);color:#fff">★ 동아리 프로젝트</span>`:""}<span>${esc(p.grade)}</span><span>${esc(p.subj)}</span><span>${esc(p.theme)}</span><span>10차시</span>${p.hours?`<span>${esc(p.hours)}</span>`:""}</div>
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
-      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u])=>u?`<a href="${u}" target="_blank" rel="noopener"><small>${esc(t)}</small>${esc(n)}</a>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
+      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u],i)=>u?`<button type="button" class="res-open" data-ri="${i}"><small>${esc(t)}${typeof u==="string"?" · 웹앱":u.img.length>1?` · ${u.img.length}쪽`:""}</small>${esc(n)}</button>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
       ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
     </div>`;
   fillSlots(full);
   full.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>openP(P[(cur+Number(b.dataset.go)+P.length)%P.length].id)));
+  full.querySelectorAll("[data-ri]").forEach(b=>b.addEventListener("click",()=>openViewer(p.res[Number(b.dataset.ri)])));
   full.querySelector("[data-close]").addEventListener("click",closeFull);
   full.classList.add("open"); document.body.style.overflow="hidden";
   full.querySelector("[data-close]").focus();
@@ -861,7 +895,7 @@ function openEthics(){
   back=document.activeElement; full.style.setProperty("--c","#D9A93A");
   full.innerHTML=`<div class="slot" data-src="assets/ethics.png" data-size="1600×1000"></div>
     <div class="full-side"><div class="full-top"><span class="line"><i></i>공통 프로젝트 · 모든 노선을 감싸는 열 번째 역</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
-    <h2 id="fTitle">AI 윤리와 디지털 시민성</h2><p class="sub">아홉 개 프로젝트 모두를 감싸는 공통 프로젝트입니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있고, 학년군마다 지켜야 할 약속이 있습니다.</p><div class="chips"><span>전 학년</span><span>모든 프로젝트에 윤리 활동 1개 이상</span><span>AI 윤리 · 디지털 시민성</span></div>
+    <h2 id="fTitle">잇:다 노선의 약속 승차권</h2><p class="sub">생각은 내가, AI는 도구로. 아홉 개 프로젝트 모두를 감싸는 AI 윤리·디지털 시민성 공통 프로젝트입니다. 저·중·고 학년군별 안내 자료(약속 승차권)로 운영합니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있고, 학년군마다 지켜야 할 약속이 있습니다.</p><div class="chips"><span>전 학년</span><span>모든 프로젝트에 윤리 활동 1개 이상</span><span>AI 윤리 · 디지털 시민성</span><span>학년군별 안내 자료</span></div>
     <div class="eth">${["lo","mid","hi"].map(k=>`<div style="--c:${LINES[k].c}"><b>${LINES[k].lv}단 ${LINES[k].ladder}</b><span>${LINES[k].band} · ${LINES[k].grade}</span><p>${esc(LADDER[k].promise)}</p></div>`).join("")}</div>
     <div class="pair"><div><h4>프로젝트 속 윤리 활동</h4><p>그림책 그림의 저작권, 상인 얼굴의 초상권, AI 이미지 표시, AI 답의 출처 확인, 재난 가짜뉴스 가려내기, 앱 사용자의 개인정보 지키기</p></div><div><h4>함께 쓰는 원칙</h4><p>학생 이름과 얼굴은 싣지 않고, AI로 만든 것은 밝히며, AI의 답은 다른 자료로 확인합니다.</p></div></div></div>`;
   fillSlots(full);
@@ -869,7 +903,39 @@ function openEthics(){
   full.classList.add("open"); document.body.style.overflow="hidden"; full.querySelector("[data-close]").focus();
 }
 function closeFull(){full.classList.remove("open");document.body.style.overflow="";if(back)back.focus();}
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open"))closeFull();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open")&&!viewer.classList.contains("open"))closeFull();});
+
+/* 자료 보기 창: 사이트 안에서만 보기(내려받기 단추 없음) */
+const viewer=document.getElementById("viewer"); let vItem=null, vPage=0, vBack=null;
+function openViewer(item){
+  vItem=item; vPage=0; vBack=document.activeElement;
+  const [t,n,u]=item, web=typeof u==="string";
+  viewer.innerHTML=`<div class="v-top"><div class="v-title"><small>${esc(t)}</small><b>${esc(n)}</b></div>
+    <div class="v-ctrl">${web?`<a class="v-btn" href="${u}" target="_blank" rel="noopener">새 창에서 열기 ↗</a>`:u.img.length>1?`<button type="button" class="v-btn" data-v="-1">‹ 이전</button><span class="v-count" id="vCount"></span><button type="button" class="v-btn" data-v="1">다음 ›</button>`:""}<button type="button" class="v-btn v-close" data-vclose>닫기 ✕</button></div></div>
+    <div class="v-body">${web?`<iframe src="${u}" title="${esc(n)}" loading="lazy" allow="fullscreen"></iframe>`:`<img id="vImg" alt="${esc(n)}" draggable="false">`}</div>${web?`<p class="v-note">화면이 보이지 않으면 오른쪽 위 '새 창에서 열기'를 눌러 주세요.</p>`:""}
+    ${!web&&u.img.length>1?`<div class="v-strip">${u.img.map((src,i)=>`<button type="button" data-vp="${i}" aria-label="${i+1}쪽"><img src="${src}" alt="" draggable="false" loading="lazy"></button>`).join("")}</div>`:""}
+    ${!web&&u.note?`<p class="v-note">${esc(u.note)}</p>`:""}`;
+  viewer.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>vGo(vPage+Number(b.dataset.v))));
+  viewer.querySelectorAll("[data-vp]").forEach(b=>b.addEventListener("click",()=>vGo(Number(b.dataset.vp))));
+  viewer.querySelector("[data-vclose]").addEventListener("click",closeViewer);
+  if(!web)vGo(0);
+  viewer.classList.add("open"); viewer.querySelector("[data-vclose]").focus();
+}
+function vGo(i){
+  const imgs=vItem[2].img; vPage=(i+imgs.length)%imgs.length;
+  document.getElementById("vImg").src=imgs[vPage];
+  const c=document.getElementById("vCount"); if(c)c.textContent=`${vPage+1} / ${imgs.length}`;
+  viewer.querySelectorAll("[data-vp]").forEach(b=>b.classList.toggle("on",Number(b.dataset.vp)===vPage));
+  const on=viewer.querySelector("[data-vp].on"); if(on)on.scrollIntoView({block:"nearest",inline:"center"});
+}
+function closeViewer(){viewer.classList.remove("open");viewer.innerHTML="";if(vBack)vBack.focus();}
+document.addEventListener("keydown",e=>{if(!viewer.classList.contains("open"))return;
+  if(e.key==="Escape"){e.preventDefault();closeViewer();}
+  else if(typeof vItem[2]!=="string"&&e.key==="ArrowRight")vGo(vPage+1);
+  else if(typeof vItem[2]!=="string"&&e.key==="ArrowLeft")vGo(vPage-1);});
+/* 그림 오른쪽 클릭·끌어 저장 막기(완전한 차단은 아님) */
+viewer.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
+viewer.addEventListener("dragstart",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
 
 /* 메뉴에서 프로젝트 보기 바로 고르기 */
 document.querySelectorAll("[data-go-view]").forEach(a=>a.addEventListener("click",()=>{const b=document.querySelector(`.switch button[data-view="${a.dataset.goView}"]`);if(b)b.click();}));
@@ -880,6 +946,30 @@ const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#ha
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)marks.forEach(a=>a.setAttribute("aria-current",String(a.dataset.for.split(" ").includes(e.target.id))));}),{threshold:.6});
 document.querySelectorAll(".screen").forEach(s=>io.observe(s));
 fillSlots();
+
+/* 첫 화면: 세 선로를 따라 빛이 달려 전시관 섬으로 모이고, 별이 반짝임 */
+(function(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const slot=document.querySelector(".hero .slot"); if(!slot)return;
+  const W=1196,H=1033;
+  const T=[ /* 그림 속 선로를 따라 그린 길 (그림 크기 1196×1033 기준) */
+    {c:"#FF8FA0",d:"M612,342 C680,352 760,348 830,326 S915,288 938,262",dur:3.6,b:0},
+    {c:"#5FE0D2",d:"M440,582 C500,548 560,500 640,462 S770,420 840,380 S935,305 958,272",dur:4.2,b:1.1},
+    {c:"#FFD45C",d:"M700,782 C790,735 900,690 942,620 C962,585 960,540 962,470 C985,410 1002,350 990,268",dur:4.6,b:2.2}];
+  const S=[[645,88],[197,307],[1122,575],[145,833],[893,820]];
+  const NS="http://www.w3.org/2000/svg";
+  let h=`<defs><filter id="hfGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6"/></filter></defs>`;
+  T.forEach((t,i)=>{
+    h+=`<path id="hfP${i}" d="${t.d}" fill="none" stroke="none"/>`;
+    const am=(r,delay,op)=>`<g opacity="0"><animate attributeName="opacity" values="0;${op};${op};0" keyTimes="0;.12;.85;1" dur="${t.dur}s" begin="${t.b+delay}s" repeatCount="indefinite"/>
+      <circle r="${r*2.2}" fill="${t.c}" filter="url(#hfGlow)" opacity=".9"/><circle r="${r}" fill="#fff"/>
+      <animateMotion dur="${t.dur}s" begin="${t.b+delay}s" repeatCount="indefinite" rotate="auto" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 0 .35 1"><mpath href="#hfP${i}"/></animateMotion></g>`;
+    h+=am(11,0,1)+am(7,.12,.75)+am(4.5,.24,.5);
+  });
+  S.forEach(([x,y],i)=>{h+=`<g class="tw" style="animation-delay:${(i*.7).toFixed(1)}s"><path d="M${x},${y-30} L${x+7},${y-7} L${x+30},${y} L${x+7},${y+7} L${x},${y+30} L${x-7},${y+7} L${x-30},${y} L${x-7},${y-7}Z" fill="#FFF6D6"/><circle cx="${x}" cy="${y}" r="16" fill="#FFE9A8" filter="url(#hfGlow)"/></g>`;});
+  const sv=document.createElementNS(NS,"svg"); sv.setAttribute("class","hero-fx"); sv.setAttribute("viewBox",`0 0 ${W} ${H}`); sv.setAttribute("preserveAspectRatio","xMidYMid meet"); sv.setAttribute("aria-hidden","true");
+  sv.innerHTML=h; slot.appendChild(sv);
+})();
 </script>
 </body>
 </html>
