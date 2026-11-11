@@ -44,7 +44,7 @@ img{display:block}
   .screen{height:100vh;height:100dvh;scroll-snap-align:start;overflow:hidden}
 }
 .screen{position:relative;padding:calc(var(--head) + 3.6vh) 5.5vw 3.6vh;display:flex;flex-direction:column}
-#hall{padding-right:9vw}
+#hall,#list{padding-right:9vw}
 .night{background:var(--night);color:var(--on-night)}
 
 /* 글자 위계: 제목 G마켓 산스 / 본문 고운돋움 / 라틴 장식 글자 */
@@ -83,6 +83,7 @@ header nav{align-items:center}
 .close-cols h3{font-family:var(--display);font-weight:700;font-size:clamp(19px,2.6vh,24px);margin:.8vh 0 1.2vh}
 .close-cols ol{margin:0;padding:0;list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1vh}
 .close-cols li{counter-increment:n;position:relative;padding-left:34px;font-size:clamp(13.5px,1.7vh,15px);line-height:1.55;color:var(--ink-soft)}
+#close{padding-right:7vw}
 .close-cols li::before{content:counter(n);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:color-mix(in srgb,var(--c) 22%,#fff);color:var(--ink);font-family:var(--latin);font-weight:700;font-size:14px;display:grid;place-items:center}
 .close-cols li b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(15px,2vh,17px);color:var(--ink)}
 .close-cols .sl{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:1px}
@@ -265,6 +266,9 @@ header nav{align-items:center}
 .hall-bg.has-img img{opacity:.35}
 .hall-top{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
 .switch{display:flex;background:#fff;border-radius:999px;padding:6px;box-shadow:0 4px 16px #1C24331a}
+.switch a{border:0;background:none;padding:12px 30px;border-radius:999px;font-family:var(--sans);font-weight:700;font-size:18px;color:var(--ink-soft);cursor:pointer}
+.switch a:hover{color:var(--ink)}
+.switch a[aria-current="true"]{background:var(--ink);color:#fff}
 .switch button{border:0;background:none;padding:12px 30px;border-radius:999px;font-family:var(--sans);font-weight:700;font-size:18px;color:var(--ink-soft);cursor:pointer}
 .switch button:hover{color:var(--ink)}
 .switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
@@ -416,8 +420,8 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
     <a href="#story" data-for="story">동아리 소개</a>
     <div class="dd"><a href="#model" data-for="model ladder">수업 모델</a>
       <div class="sub"><a href="#model">① ITDA 수업 단계</a><a href="#ladder">② 학년군별 AI 활용 단계</a></div></div>
-    <div class="dd"><a href="#hall" data-for="hall" data-go-view="map">프로젝트</a>
-      <div class="sub"><a href="#hall" data-go-view="map">① 프로젝트 구성도</a><a href="#hall" data-go-view="grid">② 프로젝트 목록</a></div></div>
+    <div class="dd"><a href="#hall" data-for="hall list">프로젝트</a>
+      <div class="sub"><a href="#hall">① 프로젝트 구성도</a><a href="#list">② 프로젝트 목록</a></div></div>
     <a href="#close" data-for="close">성과와 제언</a>
   </nav>
 </header>
@@ -426,7 +430,8 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   <a href="#story" data-for="story">동아리 소개<i></i></a>
   <a href="#model" data-for="model">ITDA 수업 단계<i></i></a>
   <a href="#ladder" data-for="ladder">학년군별 AI 활용 단계<i></i></a>
-  <a href="#hall" data-for="hall">프로젝트<i></i></a>
+  <a href="#hall" data-for="hall">프로젝트 구성도<i></i></a>
+  <a href="#list" data-for="list">프로젝트 목록<i></i></a>
   <a href="#close" data-for="close">성과와 제언<i></i></a>
 </nav>
 
@@ -497,20 +502,29 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   <section class="screen" id="hall">
     <div class="slot light corner hall-bg" data-src="assets/hall-bg.png" data-size="1920×1080"></div>
     <div class="hall-top">
-      <div><span class="eyebrow" id="hallEyebrow">프로젝트 · ① 프로젝트 구성도</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
-      <div class="switch" role="group" aria-label="보는 방법">
-        <button type="button" data-view="map" aria-pressed="true">프로젝트 구성도</button>
-        <button type="button" data-view="grid" aria-pressed="false">프로젝트 목록</button>
-      </div>
+      <div><span class="eyebrow">프로젝트 · ① 프로젝트 구성도</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
+      <nav class="switch" aria-label="프로젝트 보기"><a href="#hall" aria-current="true">프로젝트 구성도</a><a href="#list">프로젝트 목록</a></nav>
     </div>
     <div class="hall-body" id="hallBody">
       <div id="routeWrap">
         <svg id="routeSvg" viewBox="10 10 960 480" preserveAspectRatio="xMidYMid meet" role="group" aria-label="잇:다 노선도"></svg>
         <aside class="peek" id="peek" aria-live="polite"></aside>
       </div>
-      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill"><i>❤</i><span><small>공통 프로젝트 · 열 번째 역 · 생각은 내가, AI는 도구로</small>잇:다 노선의 약속 승차권</span><em>열기 ›</em></button><div class="grid" id="grid"></div></div>
     </div>
     <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span id="bgNote" class="bgnote">배경 이미지 자리: assets/hall-bg.png (1920×1080, 코덱스 제작)</span><span>제작: 동일중앙초등학교 김정지</span></div>
+  </section>
+
+  <!-- 5-2 -->
+  <section class="screen" id="list">
+    <div class="slot light corner hall-bg" data-src="assets/hall-bg.png" data-size="1920×1080"></div>
+    <div class="hall-top">
+      <div><span class="eyebrow">프로젝트 · ② 프로젝트 목록</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
+      <nav class="switch" aria-label="프로젝트 보기"><a href="#hall">프로젝트 구성도</a><a href="#list" aria-current="true">프로젝트 목록</a></nav>
+    </div>
+    <div class="hall-body as-grid">
+      <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill"><i>❤</i><span><small>공통 프로젝트 · 열 번째 역 · 생각은 내가, AI는 도구로</small>잇:다 노선의 약속 승차권</span><em>열기 ›</em></button><div class="grid" id="grid"></div></div>
+    </div>
+    <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
 
   <!-- 6 -->
@@ -532,11 +546,11 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
         <li><b>웹앱과 만든 지시문 함께 공개</b>로그인·설치 없는 HTML 한 파일 웹앱과, 그 앱을 만든 프롬프트(지시문)를 함께 나눕니다. 교사가 문제·카드 같은 내용만 바꾸거나 직접 고쳐 만들 수 있습니다.</li>
         <li><b>인쇄본과 편집 원본 함께 제공</b>활동지·루브릭을 PDF 인쇄본과 고쳐 쓸 수 있는 원본(캔바·북크리에이터·한글)으로 나누고, 생활기록부 기록 예시까지 이어 평가 업무를 덜어 줍니다.</li></ol></article>
       <article style="--c:var(--hi)"><span class="ck">제언</span><h3>이어 갈 길</h3><ol>
-        <li><b>학교에</b>동아리 시간에 운영한 CBL 프로젝트는 학교 동아리, 학교자율시간, 방과후 프로그램으로 옮겨 운영할 수 있습니다.<br>학년군 협의회에서 ITDA 단계로 프로젝트 하나를 함께 설계해 보기를 권합니다.</li>
-        <li><b>교육청에</b>교사가 서로 배우며 전문성을 기를 수 있는 연구회·수업 나눔·실습형 연수 기회가 넓어지기를 바랍니다. 학교마다 만든 자료와 웹앱을 나누는 공간, 학생이 안전하게 쓰는 AI·디지털 환경도 함께 갖추어지기를 기대합니다.</li>
-        <li><b>무엇보다, 윤리와 디지털 리터러시<span class="spark" aria-hidden="true">★</span></b>생성형 AI는 피할 수 없는 흐름이지만, 학생이 도구에 매몰되지 않고 스스로 생각하고 표현하는 데 쓰여야 합니다. 도구별 사용 연령과 이용 규칙을 지키고 개인정보와 저작권을 살피는 교육이 함께 가야 합니다.</li>
-        <li><b>가정과 함께</b>프로젝트 결과물을 가정과 나누고, 집에서도 지킬 디지털 사용 약속을 학생·학부모가 함께 세우면 교실의 배움이 생활로 이어집니다.</li>
-        <li><b>다음 해</b>생성형 AI를 활용한 학년별 프로젝트를 다듬고, 학생이 AI를 바르게 쓰는 역량(묻기·검증하기·밝히기)의 평가 기준과 학년군별 디지털 윤리 교육 내용을 더 깊이 연구하고자 합니다.</li></ol></article>
+        <li><b>학교에</b>동아리 CBL 프로젝트는 학교 동아리·학교자율시간·방과후로 옮겨 운영할 수 있습니다.<br>학년군 협의회에서 ITDA 단계로 함께 설계해 보기를 권합니다.</li>
+        <li><b>교육청에</b>교사 전문성을 기를 연구회·수업 나눔·실습형 연수와, 자료를 나누는 공간·안전한 AI 환경을 바랍니다.</li>
+        <li><b>무엇보다, 윤리와 디지털 리터러시<span class="spark" aria-hidden="true">★</span></b>AI는 학생이 스스로 생각하고 표현하게 돕는 도구여야 합니다. 사용 연령·이용 규칙, 개인정보·저작권을 함께 가르칩니다.</li>
+        <li><b>가정과 함께</b>결과물을 가정과 나누고, 집에서 지킬 디지털 약속을 함께 세웁니다.</li>
+        <li><b>다음 해</b>생성형 AI 활용 학년별 프로젝트, AI를 바르게 쓰는 역량의 평가 기준, 학년군별 디지털 윤리 교육을 더 깊이 연구하겠습니다.</li></ol></article>
     </div>
     <div class="close-foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
@@ -653,10 +667,14 @@ function fillSlots(root){
   const st=document.getElementById("story");
   if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
     st.classList.add("fx-wait");
-    new IntersectionObserver(es=>es.forEach(e=>{
-      if(e.isIntersecting){requestAnimationFrame(()=>{st.classList.remove("fx-wait");st.classList.add("fx-go");});}
-      else if(e.intersectionRatio===0){st.classList.remove("fx-go");st.classList.add("fx-wait");}
-    }),{threshold:[0,.45]}).observe(st);
+    const vis=()=>{const r=st.getBoundingClientRect();return r.top<innerHeight*.6&&r.bottom>innerHeight*.4;};
+    let on=false;
+    const check=()=>{const v=vis();
+      if(v&&!on){on=true;setTimeout(()=>{st.classList.remove("fx-wait");st.classList.add("fx-go");},60);}
+      else if(!v&&on){const r=st.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight){on=false;st.classList.remove("fx-go");st.classList.add("fx-wait");}}};
+    addEventListener("scroll",check,{passive:true}); addEventListener("resize",check);
+    new IntersectionObserver(check,{threshold:[0,.25,.5,.75,1]}).observe(st);
+    setInterval(check,700); check();
   }
 })();
 
@@ -777,12 +795,7 @@ document.getElementById("grid").innerHTML=["lo","mid","hi"].map(k=>{
 }).join("");
 document.querySelectorAll(".mini").forEach(b=>b.addEventListener("click",()=>openP(b.dataset.id)));
 document.getElementById("bandPill").addEventListener("click",openEthics);
-document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{
-  document.querySelectorAll(".switch button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-  document.getElementById("hallBody").classList.toggle("as-grid",b.dataset.view==="grid");
-  document.getElementById("hallEyebrow").textContent=b.dataset.view==="grid"?"프로젝트 · ② 프로젝트 목록":"프로젝트 · ① 프로젝트 구성도";
-  if(b.dataset.view==="map"&&window.resetPeek)resetPeek();
-}));
+
 
 /* 프로젝트 화면 */
 const full=document.getElementById("full"); let back=null, cur=0;
@@ -873,7 +886,7 @@ document.querySelectorAll("[data-go-view]").forEach(a=>a.addEventListener("click
 
 /* 지금 보는 화면 표시 */
 const marks=[...document.querySelectorAll("[data-for]")];
-const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#hall"]').forEach(a=>a.addEventListener("click",()=>window.resetPeek&&resetPeek()));const ttOn=new Set();const ttObs=new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?ttOn.add(e.target.id):ttOn.delete(e.target.id);tt.classList.toggle("show",ttOn.size>0);if(e.target.id==="hall"&&!e.isIntersecting&&window.resetPeek)resetPeek();}),{threshold:.5});["hall","close"].forEach(id=>{const el=document.getElementById(id);if(el)ttObs.observe(el);});
+const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#hall"]').forEach(a=>a.addEventListener("click",()=>window.resetPeek&&resetPeek()));const ttOn=new Set();const ttObs=new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?ttOn.add(e.target.id):ttOn.delete(e.target.id);tt.classList.toggle("show",ttOn.size>0);if(e.target.id==="hall"&&!e.isIntersecting&&window.resetPeek)resetPeek();}),{threshold:.5});["hall","list","close"].forEach(id=>{const el=document.getElementById(id);if(el)ttObs.observe(el);});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)marks.forEach(a=>a.setAttribute("aria-current",String(a.dataset.for.split(" ").includes(e.target.id))));}),{threshold:.6});
 document.querySelectorAll(".screen").forEach(s=>io.observe(s));
 fillSlots();
