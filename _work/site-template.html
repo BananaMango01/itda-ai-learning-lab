@@ -39,9 +39,10 @@ button{font:inherit;cursor:pointer}
 img{display:block}
 :focus-visible{outline:3px solid var(--dawn);outline-offset:3px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-@media (min-width:900px) and (min-height:620px){
+@media (min-width:1200px) and (min-height:620px){
   html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
-  .screen{height:100vh;height:100dvh;scroll-snap-align:start;overflow:hidden}
+  .screen{min-height:100vh;min-height:100dvh;height:auto;scroll-snap-align:start;overflow:visible}
+  html{scroll-snap-type:y proximity}
 }
 .screen{position:relative;padding:calc(var(--head) + 3.6vh) 5.5vw 3.6vh;display:flex;flex-direction:column}
 #hall,#list{padding-right:9vw}
@@ -188,7 +189,7 @@ header nav{align-items:center}
 .m-head .lede{justify-self:end}
 .steps{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4vw;margin-top:2.4vh}
 .step{display:flex;flex-direction:column;background:var(--night-2);border-radius:18px;overflow:hidden;position:relative}
-.step .slot{flex:0 0 28vh;border-radius:0;border-width:0 0 2px 0}
+.step .slot{flex:0 0 clamp(110px,24vh,300px);border-radius:0;border-width:0 0 2px 0}
 .step .slot img{object-fit:contain;padding:1.6vh 1vw .6vh}
 .hero .slot img{object-fit:contain}
 .hero .slot.has-img{animation:heroFloat 7s ease-in-out infinite}
@@ -196,7 +197,7 @@ header nav{align-items:center}
 .hero-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
 .hero-fx .tw{transform-box:fill-box;transform-origin:center;animation:twinkle 3.2s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(20deg)}70%{opacity:.25;transform:scale(.7) rotate(35deg)}}
-.step .glyph{position:absolute;left:18px;top:calc(28vh - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
+.step .glyph{position:absolute;left:18px;top:calc(clamp(110px,24vh,300px) - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
 .step-body{padding:2vh 1.2vw 1.6vh;display:flex;flex-direction:column;gap:.7vh;flex:1;min-height:0}
 .step-name{display:flex;align-items:baseline;gap:10px;padding-left:min(70px,5vw)}
 .step-name strong{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vh,28px)}
@@ -393,7 +394,7 @@ summary{cursor:pointer;color:var(--ink-soft)}
 details ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px}
 details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
 
-@media (max-width:899px), (max-height:619px){
+@media (max-width:1199px), (max-height:619px){
   .hero,.story,.steps,.hall-body,.signature,.m-head,.l-head,.close-cols,.close-head{grid-template-columns:1fr}
   .m-head .lede,.l-head .lede{justify-self:start}
   .nowrap{white-space:normal}
@@ -410,6 +411,52 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   header{gap:12px}.brand small,.dots{display:none}
   .step .slot{flex-basis:200px}.step .glyph{top:150px}
 }
+/* 낮은 화면(크롬북·노트북·태블릿 가로)에서 한 화면에 들어가게 줄이기 */
+@media (min-width:1200px) and (max-height:920px){
+  .step .slot{flex-basis:clamp(90px,18vh,170px)}
+  .step .glyph{top:calc(clamp(90px,18vh,170px) - 46px);font-size:clamp(52px,8vh,80px)}
+  .step p{font-size:clamp(13px,1.8vh,15px);line-height:1.55}
+  .step-body{padding:1.4vh 1vw 1.2vh}
+  .steps{margin-top:1.6vh}
+  .close-cols li{font-size:clamp(12.5px,1.62vh,14px);line-height:1.45}
+  .close-cols .sl li{font-size:clamp(12px,1.55vh,13.5px)}
+  .close-cols ol{gap:.7vh}
+  .close-cols h3{margin:.4vh 0 .8vh}
+  .close-cols article{padding:1.6vh 1.3vw}
+  .close-head .lede{display:none}
+  .close-art{width:clamp(130px,16vh,200px)}
+  .mini small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
+@media (min-width:1200px) and (max-height:920px){
+  .l-head .lede{font-size:clamp(13px,1.7vh,15px);line-height:1.6}
+  .ladder-wrap{margin-top:1.4vh}
+  .ladder{row-gap:.6vh!important}
+  .cell{font-size:clamp(12.5px,1.65vh,14.5px);line-height:1.45;padding:1vh .7vw}
+  .cell.tools span{font-size:11px}
+  .rowlab{padding:.8vh 10px}
+  .rowlab .lv{font-size:clamp(30px,4.6vh,48px)}
+  .rowlab small{font-size:12px}
+  .rowlab .who{font-size:11.5px}
+  .promises{font-size:12px;padding:.8vh 1vw}
+  .m-head .lede{font-size:clamp(13px,1.7vh,15px);line-height:1.6}
+  .wordmark .big.clay img{height:clamp(64px,11vh,120px)}
+  .tabs{margin-bottom:1vh}.tabs a{font-size:15px;padding:7px 16px}
+  .title{font-size:clamp(26px,4.2vh,44px)}
+  .mini img,.mini .slot{max-height:15vh}
+}
+@media (min-width:1200px) and (max-width:1280px){
+  .l-head{grid-template-columns:1fr}.l-head .lede{justify-self:start;max-width:none}
+  .m-head .lede br{display:none}
+  .step-foot{grid-template-columns:1fr}.chips2{flex-wrap:wrap}
+  .step-foot span{font-size:12px;padding:2px 8px}
+  .close-cols li{font-size:12.5px}
+
+  .step-name{padding-left:min(54px,4.4vw)}
+  .close-cols{gap:1.2vw}
+}
+@media (max-width:1499px){.dots a{color:transparent!important;background:none!important;box-shadow:none!important;padding:2px}}
+@media (min-width:700px) and (max-width:1199px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.close-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.close-cols article:last-child{grid-column:1/-1}}
+@media (max-width:1199px), (max-height:619px){.cell[data-k]::before{content:attr(data-k);display:block;font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink-soft);margin-bottom:2px}.peek{max-width:560px;margin:0 auto}.peek .slot{max-height:300px}}
 </style>
 </head>
 <body>
@@ -702,7 +749,7 @@ document.getElementById("steps").innerHTML=STEPS.map(s=>`
   ["hi","mid","lo"].forEach(k=>{
     const L=LINES[k], R=LADDER[k];
     h+=`<div class="rowlab${k==="hi"?" top":k==="lo"?" bot":""}" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
-    h+=R.cells.map(c=>`<div class="cell" style="--c:${L.c}">${esc(c)}</div>`).join("");
+    h+=R.cells.map((c,i)=>`<div class="cell" data-k="${STEPS[i].k} ${STEPS[i].w}" style="--c:${L.c}">${esc(c)}</div>`).join("");
     h+=`<div class="cell tools">${R.tools.map(t=>`<span>${t}</span>`).join("")}</div>`;
   });
   h+=`<div class="promises"><b>모든 단계가 지나는 약속</b>${["lo","mid","hi"].map(k=>`<span style="--c:${LINES[k].c}"><i>${LINES[k].lv}단</i>${esc(LADDER[k].promise)}</span>`).join("")}</div>`;
