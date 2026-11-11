@@ -94,6 +94,19 @@ header nav{align-items:center}
 .close-cols .spark{display:inline-block;margin-left:6px;color:#F2B33D;font-size:.95em;animation:spark 2.4s ease-in-out infinite}
 @keyframes spark{0%,100%{opacity:.55;transform:scale(.85) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(18deg);text-shadow:0 0 10px #F6D58E}}
 .close-cols em{font-style:normal;font-size:.92em;background:#FFF3C8;border:1.5px dashed #E0B341;border-radius:6px;padding:0 6px;color:#7A5A00;white-space:nowrap}
+/* 성과와 제언: 한 화면 모드에서는 글자 크기를 화면에 맞춰 자동 조절(JS가 --cfs 지정) */
+#close .close-cols.fit{font-size:var(--cfs,15px)}
+#close .close-cols.fit article{padding:2.2vh 1.6vw}
+#close .close-cols.fit .ck{font-size:.92em}
+#close .close-cols.fit h3{font-size:1.55em;margin:.5em 0 .75em}
+#close .close-cols.fit ol{gap:.85em}
+#close .close-cols.fit li{font-size:1em;line-height:1.6}
+#close .close-cols.fit li::before{width:1.6em;height:1.6em;font-size:.9em}
+#close .close-cols.fit li{padding-left:2.3em}
+#close .close-cols.fit li b{font-size:1.14em;margin-bottom:.15em}
+#close .close-cols.fit .sl{gap:.2em;margin-top:.25em}
+#close .close-cols.fit .sl li{font-size:1em;padding-left:1em;line-height:1.55}
+#close .close-cols.fit .sl li::before{width:.4em;height:.4em;font-size:1em}
 .close-foot{position:relative;display:flex;justify-content:space-between;padding-right:88px;font-size:12px;color:var(--ink-soft);margin-top:1.6vh}
 
 /* 화면 위치 점 */
@@ -356,7 +369,11 @@ header nav{align-items:center}
 .pair h4,.res h4{margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink-soft)}
 .pair p{margin:0;font-size:16.5px;line-height:1.7}
 .res{margin-top:auto;padding-top:2vh;border-top:1px solid #C5CFDB}
-.res-list{display:flex;flex-wrap:wrap;gap:10px}
+.res-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.res-list .res-slot{min-width:0;width:100%;box-sizing:border-box}
+.res-list .res-slot.wide{grid-column:1/-1}
+.res-list .res-open .res-note{max-width:none}
+@media (max-width:640px){.res-list{grid-template-columns:1fr}}
 .res-list a,.res-list span{display:inline-flex;flex-direction:column;padding:10px 16px;border-radius:12px;background:#fff;font-size:15px;min-width:150px}
 .res-list small{font-size:12px;color:var(--ink-soft)}
 .res-list span{color:#8A95A7}
@@ -869,12 +886,12 @@ function openP(id){
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
-      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(resBtn).join("")}</div>
+      ${resBlock(p.res).html.slice(0,-6)}
       ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
     </div>`;
   fillSlots(full);
   full.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>openP(P[(cur+Number(b.dataset.go)+P.length)%P.length].id)));
-  full.querySelectorAll("[data-ri]").forEach(b=>b.addEventListener("click",()=>openViewer(p.res[Number(b.dataset.ri)])));
+  const RG=resGroups(p.res); full.querySelectorAll("[data-ri]").forEach(b=>b.addEventListener("click",()=>openViewer(RG[Number(b.dataset.ri)].g)));
   full.querySelector("[data-close]").addEventListener("click",closeFull);
   full.classList.add("open"); document.body.style.overflow="hidden";
   full.querySelector("[data-close]").focus();
@@ -890,13 +907,15 @@ function openZep(){
   full.querySelector("[data-close]").addEventListener("click",closeFull);
   full.classList.add("open"); document.body.style.overflow="hidden"; full.querySelector("[data-close]").focus();
 }
+const ETHICS_RES=[["수업 자료","학년군별 약속 승차권 안내 자료"]];
 function openEthics(){
   back=document.activeElement; full.style.setProperty("--c","#D9A93A");
   full.innerHTML=`<div class="slot" data-src="assets/ethics.png" data-size="1600×1000"></div>
     <div class="full-side"><div class="full-top"><span class="line"><i></i>공통 프로젝트 · 모든 노선을 감싸는 열 번째 역</span><div class="full-ctrl"><button type="button" data-close>닫기</button></div></div>
     <h2 id="fTitle">잇:다 노선의 약속 승차권</h2><p class="sub">생각은 내가, AI는 도구로. 아홉 개 프로젝트 모두를 감싸는 AI 윤리·디지털 시민성 공통 프로젝트입니다. 저·중·고 학년군별 안내 자료(약속 승차권)로 운영합니다. 프로젝트마다 하나 이상의 윤리 활동이 들어 있고, 학년군마다 지켜야 할 약속이 있습니다.</p><div class="chips"><span>전 학년</span><span>모든 프로젝트에 윤리 활동 1개 이상</span><span>AI 윤리 · 디지털 시민성</span><span>학년군별 안내 자료</span></div>
     <div class="eth">${["lo","mid","hi"].map(k=>`<div style="--c:${LINES[k].c}"><b>${LINES[k].lv}단 ${LINES[k].ladder}</b><span>${LINES[k].band} · ${LINES[k].grade}</span><p>${esc(LADDER[k].promise)}</p></div>`).join("")}</div>
-    <div class="pair"><div><h4>프로젝트 속 윤리 활동</h4><p>그림책 그림의 저작권, 상인 얼굴의 초상권, AI 이미지 표시, AI 답의 출처 확인, 재난 가짜뉴스 가려내기, 앱 사용자의 개인정보 지키기</p></div><div><h4>함께 쓰는 원칙</h4><p>학생 이름과 얼굴은 싣지 않고, AI로 만든 것은 밝히며, AI의 답은 다른 자료로 확인합니다.</p></div></div></div>`;
+    <div class="pair"><div><h4>프로젝트 속 윤리 활동</h4><p>그림책 그림의 저작권, 상인 얼굴의 초상권, AI 이미지 표시, AI 답의 출처 확인, 재난 가짜뉴스 가려내기, 앱 사용자의 개인정보 지키기</p></div><div><h4>함께 쓰는 원칙</h4><p>학생 이름과 얼굴은 싣지 않고, AI로 만든 것은 밝히며, AI의 답은 다른 자료로 확인합니다.</p></div></div>${resBlock(ETHICS_RES).html}</div>`;
+  {const RG=resGroups(ETHICS_RES); full.querySelectorAll("[data-ri]").forEach(b=>b.addEventListener("click",()=>openViewer(RG[Number(b.dataset.ri)].g)));}
   fillSlots(full);
   full.querySelector("[data-close]").addEventListener("click",closeFull);
   full.classList.add("open"); document.body.style.overflow="hidden"; full.querySelector("[data-close]").focus();
@@ -907,13 +926,27 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.cont
 /* 자료 보기 창: 사이트 안에서만 보기(내려받기 단추 없음) */
 const viewer=document.getElementById("viewer"); let vG=null, vPages=[], vPage=0, vItem=0, vBack=null;
 /* 자료 묶음: [종류, [{n, sub, img|url|ext, note}, ...]] — 같은 성격 자료는 한 단추로 모아 보여 줌 */
-function resBtn(r,i){
-  const [t,items]=r;
-  if(!Array.isArray(items)||!items.length) return `<span><small>${esc(t)} · 준비 중</small>${typeof items==="string"?esc(items):"곧 올라와요"}</span>`;
-  const isImg=items.every(x=>x.img), cnt=isImg?items.reduce((a,x)=>a+x.img.length,0):items.length;
-  const unit=isImg?(t==="수업 자료"?"쪽":"장"):"개";
-  return `<button type="button" class="res-open" data-ri="${i}"><small>${cnt}${unit}</small>${esc(t)}<em class="res-note">${items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
+/* 자료 칸은 모든 프로젝트 공통: 윗줄 [교사] 수업 자료 · [학생] 활동지 · 수업용 웹앱 및 챗봇 / 아랫줄 학생 결과물 */
+const RES_SLOTS=[
+  {t:"[교사] 수업 자료",keys:["수업 자료","안내"],unit:"쪽"},
+  {t:"[학생] 활동지",keys:["학생 활동지","활동지"],unit:"장"},
+  {t:"수업용 웹앱 및 챗봇",keys:["수업용 웹앱","웹앱","챗봇","수업용 챗봇"],unit:"개"},
+  {t:"학생 결과물",keys:["수업 결과물","결과물","학생 결과물"],unit:"개",wide:true}];
+function resGroups(res){
+  return RES_SLOTS.map(sl=>{
+    const hits=(res||[]).filter(r=>sl.keys.includes(r[0]));
+    const items=hits.flatMap(r=>Array.isArray(r[1])?r[1]:[]);
+    const plan=hits.filter(r=>typeof r[1]==="string").map(r=>r[1]);
+    return {sl,g:[sl.t,items],plan};
+  });
 }
+function resBtn({sl,g,plan},i){
+  const items=g[1], cls=sl.wide?" wide":"";
+  if(!items.length) return `<span class="res-slot${cls}"><small>${esc(sl.t)} · 준비 중</small>${plan.length?esc(plan.join(" · ")):"곧 올라와요"}</span>`;
+  const isImg=items.every(x=>x.img), cnt=isImg?items.reduce((a,x)=>a+x.img.length,0):items.length;
+  return `<button type="button" class="res-open res-slot${cls}" data-ri="${i}"><small>${cnt}${isImg?sl.unit:"개"}</small>${esc(sl.t)}<em class="res-note">${items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
+}
+function resBlock(res){const G=resGroups(res);return {html:`<div class="res"><h4>자료</h4><div class="res-list">${G.map(resBtn).join("")}</div></div>`,G};}
 function openViewer(g){
   vG=g; vBack=document.activeElement; vPage=0; vItem=0;
   const [t,items]=g, isImg=items.every(x=>x.img);
@@ -991,6 +1024,28 @@ fillSlots();
   S.forEach(([x,y],i)=>{h+=`<g class="tw" style="animation-delay:${(i*.7).toFixed(1)}s"><path d="M${x},${y-30} L${x+7},${y-7} L${x+30},${y} L${x+7},${y+7} L${x},${y+30} L${x-7},${y+7} L${x-30},${y} L${x-7},${y-7}Z" fill="#FFF6D6"/><circle cx="${x}" cy="${y}" r="16" fill="#FFE9A8" filter="url(#hfGlow)"/></g>`;});
   const sv=document.createElementNS(NS,"svg"); sv.setAttribute("class","hero-fx"); sv.setAttribute("viewBox",`0 0 ${W} ${H}`); sv.setAttribute("preserveAspectRatio","xMidYMid meet"); sv.setAttribute("aria-hidden","true");
   sv.innerHTML=h; slot.appendChild(sv);
+})();
+
+/* 성과와 제언 글자 크기 자동 맞춤: 세 칸이 남는 공간 없이 차도록, 그러나 절대 넘치지 않게 */
+(function(){
+  const sec=document.getElementById("close"), cols=sec&&sec.querySelector(".close-cols"); if(!cols)return;
+  const mq=matchMedia("(min-width:1200px) and (min-height:620px)");
+  function fits(){
+    if(sec.getBoundingClientRect().height>innerHeight+1)return false;
+    return [...cols.querySelectorAll("article")].every(a=>{const ol=a.querySelector("ol"); if(!ol)return true;
+      const pad=parseFloat(getComputedStyle(a).paddingBottom)||0; return ol.getBoundingClientRect().bottom<=a.getBoundingClientRect().bottom-pad-innerHeight*0.015;});
+  }
+  function fit(){
+    if(!mq.matches){cols.classList.remove("fit");cols.style.removeProperty("--cfs");return;}
+    cols.classList.add("fit"); cols.style.setProperty("--cfs","12px");
+    if(!fits()){cols.classList.remove("fit");cols.style.removeProperty("--cfs");return;}
+    let lo=12, hi=40;
+    for(let k=0;k<12;k++){const m=(lo+hi)/2; cols.style.setProperty("--cfs",m+"px"); fits()?lo=m:hi=m;}
+    cols.style.setProperty("--cfs",lo.toFixed(2)+"px");
+  }
+  let t; const run=()=>{clearTimeout(t);t=setTimeout(fit,80);};
+  addEventListener("resize",run); mq.addEventListener("change",run);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit); addEventListener("load",fit); fit();
 })();
 </script>
 </body>
