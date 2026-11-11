@@ -1,0 +1,36 @@
+클레이 그림 제작 완료목록
+저장 완료: 25장 / 요청: 27장
+
+저장한 파일:
+01. assets/itda/itda-I.png (1200x1200, 투명 배경)
+02. assets/itda/itda-T.png (1200x1200, 투명 배경)
+03. assets/itda/itda-D.png (1200x1200, 투명 배경)
+04. assets/itda/itda-A.png (1200x1200, 투명 배경)
+05. assets/hero-islands.png (1920x1200, 투명 배경)
+06. assets/step-I.png (1200x900, 투명 배경)
+07. assets/step-T.png (1200x900, 투명 배경)
+08. assets/step-D.png (1200x900, 투명 배경)
+09. assets/step-A.png (1200x900, 투명 배경)
+10. assets/thumbs/lo-1.png (1600x1000, 투명 배경)
+13. assets/thumbs/mid-1.png (1600x1000, 투명 배경)
+14. assets/thumbs/mid-2.png (1600x1000, 투명 배경)
+15. assets/thumbs/mid-3.png (1600x1000, 투명 배경)
+16. assets/thumbs/hi-1.png (1600x1000, 투명 배경)
+17. assets/thumbs/hi-2.png (1600x1000, 투명 배경)
+18. assets/thumbs/hi-3.png (1600x1000, 투명 배경)
+19. assets/venn-itda.png (1280x1160, 투명 배경)
+20. assets/ladder-kids.png (600x1500, 투명 배경)
+21. assets/bg-story.png (1920x1080, 불투명 배경)
+22. assets/bg-ladder.png (1920x1080, 불투명 배경)
+23. assets/hall-bg.png (1920x1080, 불투명 배경)
+24. assets/ethics.png (1200x900, 투명 배경)
+25. assets/zep-hall.png (1600x1000, 투명 배경)
+26. assets/og-image.png (1200x630, 불투명 배경)
+27. assets/favicon.png (512x512, 투명 배경)
+
+건너뛴 번호: 11, 12
+11. assets/thumbs/lo-2.png — 최초 생성의 불필요한 글자를 제거해 한 번 재시도했으나 하늘 배경이 남아 완전 투명 배경 조건을 충족하지 못함.
+12. assets/thumbs/lo-3.png — 최초 생성 후 한 번 재시도했으나 하늘 배경이 남아 완전 투명 배경 조건을 충족하지 못함.
+
+기존 assets/thumbs/mid-1.png는 같은 시리즈의 새 그림으로 교체함.
+index.html, README.md, _work 폴더는 수정하지 않음.
