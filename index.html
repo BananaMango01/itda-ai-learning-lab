@@ -11,15 +11,23 @@
 <link rel="icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@600;700;800&family=Gothic+A1:wght@400;500;700;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
+/* 글꼴: 제목 G마켓 산스 / 본문 고운돋움 / 세 원 페이퍼로지 / ITDA 영문 Fredoka (모두 OFL 무료 글꼴) */
+@font-face{font-family:"GmarketSans";font-weight:300;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff) format("woff")}
+@font-face{font-family:"GmarketSans";font-weight:500;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff) format("woff")}
+@font-face{font-family:"GmarketSans";font-weight:700 900;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff) format("woff")}
+@font-face{font-family:"Paperlogy";font-weight:600;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2) format("woff2")}
+@font-face{font-family:"Paperlogy";font-weight:800 900;font-display:swap;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2) format("woff2")}
 :root{
   --night:#13213A; --night-2:#1B2D4C; --mist:#EDF1F5; --mist-2:#DFE6EE;
   --ink:#1C2433; --ink-soft:#4B566A; --on-night:#EEF2F8; --on-night-soft:#BAC6DA;
   --lo:#E8566A; --mid:#2BB3A6; --hi:#F2B33D; --dawn:#F6D58E;
-  --display:"Hahmlet","Gothic A1",serif;
-  --latin:"Fredoka","Gothic A1",sans-serif;
-  --sans:"Gothic A1","Apple SD Gothic Neo",sans-serif;
+  --display:"GmarketSans","Gowun Dodum",sans-serif;
+  --venn:"Paperlogy","GmarketSans",sans-serif;
+  --latin:"Fredoka","GmarketSans",sans-serif;
+  --sans:"Gowun Dodum","Apple SD Gothic Neo",sans-serif;
   --head:68px;
 }
 *{box-sizing:border-box}
@@ -39,7 +47,7 @@ img{display:block}
 #hall{padding-right:9vw}
 .night{background:var(--night);color:var(--on-night)}
 
-/* 글자 위계: 명조 제목 / 고딕 본문 / 라틴 장식 글자 */
+/* 글자 위계: 제목 G마켓 산스 / 본문 고운돋움 / 라틴 장식 글자 */
 .eyebrow{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink-soft);display:block;margin-bottom:1vh}
 .night .eyebrow{color:var(--dawn)}
 .title{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vh,50px);line-height:1.3;letter-spacing:-1px;margin:0}
@@ -55,6 +63,30 @@ header{position:fixed;inset:0 0 auto;z-index:20;height:var(--head);padding:0 5.5
 header nav{display:flex;gap:6px;margin-left:auto}
 header nav a{font-weight:500;font-size:15px;padding:8px 14px;border-radius:999px;color:var(--on-night-soft)}
 header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffffff14}
+header nav{align-items:center}
+.dd{position:relative}
+.dd > a::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg);opacity:.7}
+.dd .sub{position:absolute;top:calc(100% + 6px);left:50%;transform:translate(-50%,-6px);min-width:230px;padding:8px;border-radius:16px;background:#fff;box-shadow:0 12px 30px #0000003a;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.dd .sub::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px}
+.dd:hover .sub,.dd:focus-within .sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.dd .sub a{color:var(--ink);font-family:var(--display);font-weight:500;font-size:15px;padding:10px 14px;border-radius:10px;white-space:nowrap}
+.dd .sub a:hover{background:var(--mist);color:var(--ink)}
+
+/* 6. 성과와 제언 */
+.close-head{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3vw;align-items:center}
+.close-art{width:clamp(220px,30vh,340px);aspect-ratio:16/10;border-radius:16px}
+.close-art.has-img img{object-fit:contain}
+.close-head .lede{margin-top:1.4vh}
+.close-cols{position:relative;flex:1;min-height:0;align-items:start;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6vw;margin-top:2.4vh}
+.close-cols article{background:#ffffffe8;border-radius:20px;padding:2.4vh 1.6vw;border-top:7px solid var(--c);box-shadow:0 8px 24px #1C24331a;display:flex;flex-direction:column;min-height:0}
+.close-cols .ck{align-self:flex-start;font-family:var(--display);font-weight:700;font-size:14px;color:#fff;background:var(--c);padding:4px 12px;border-radius:999px}
+.close-cols h3{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.8vh,26px);margin:1vh 0 1.2vh}
+.close-cols ol{margin:0;padding:0;list-style:none;counter-reset:n;display:flex;flex-direction:column;gap:1.3vh}
+.close-cols li{counter-increment:n;position:relative;padding-left:34px;font-size:clamp(14px,1.85vh,16px);line-height:1.6;color:var(--ink-soft)}
+.close-cols li::before{content:counter(n);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:color-mix(in srgb,var(--c) 22%,#fff);color:var(--ink);font-family:var(--latin);font-weight:700;font-size:14px;display:grid;place-items:center}
+.close-cols li b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(15px,2vh,17px);color:var(--ink)}
+.close-cols em{font-style:normal;font-size:.92em;background:#FFF3C8;border:1.5px dashed #E0B341;border-radius:6px;padding:0 6px;color:#7A5A00;white-space:nowrap}
+.close-foot{position:relative;display:flex;justify-content:space-between;padding-right:88px;font-size:12px;color:var(--ink-soft);margin-top:1.6vh}
 
 /* 화면 위치 점 */
 .dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;gap:10px}
@@ -92,13 +124,36 @@ header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffff
 .team-name{font-family:var(--display);font-weight:800;font-size:clamp(40px,6.4vh,68px);line-height:1.15;margin:0 0 3vh;letter-spacing:-1.5px}
 .team-name small{font-family:var(--sans);font-weight:500;font-size:.42em;color:var(--ink-soft);letter-spacing:0;margin-left:10px}
 .story .lede + .lede{margin-top:1.6vh}
-.venn-wrap{position:relative;width:100%;aspect-ratio:640/580;max-height:calc(100dvh - var(--head) - 22vh);margin:0 auto}
-.venn-art{position:absolute;inset:0;border-radius:24px}
-.venn-art:not(.has-img){background:none;border:0}.venn-art:not(.has-img) .tag{inset:auto auto -2px 0;flex-direction:row;gap:6px;font-size:11px;padding:2px 8px;border:1.5px dashed #9AA8BC;border-radius:8px;background:#ffffffcc}.venn-art:not(.has-img) .tag b{font-size:11px}
-#venn{position:absolute;inset:0;width:100%;height:100%}
-.venn-wrap:has(.venn-art.has-img) #venn .shape{display:none}
-#venn text{font-family:var(--sans)}
-#venn .vt{font-family:var(--display);font-weight:700}
+.venn-col{display:flex;flex-direction:column;align-items:center;min-height:0}
+.venn-wrap{position:relative;width:100%;aspect-ratio:640/580;max-height:calc(100dvh - var(--head) - 36vh);margin:0 auto}
+#venn{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#venn text{font-family:var(--venn);font-weight:800;fill:#fff;text-anchor:middle;dominant-baseline:central;paint-order:stroke;stroke:#00000030;stroke-width:4px;stroke-linejoin:round}
+#venn text.ov{font-weight:600;stroke-width:3px}
+#venn text.bd{stroke:none}
+#venn .vc,#venn .vb,#venn .vl{transform-box:view-box}
+#venn .vc{transition:transform .95s cubic-bezier(.2,.85,.25,1.08),opacity .5s}
+#venn .vimg{transition:opacity .55s .85s}
+#venn .vc circle{opacity:0;transition:opacity .45s 1.4s}
+.fx-wait #venn .vc circle{opacity:.85;transition:none}
+#venn .vb{transform-origin:320px 312px;transition:transform .5s cubic-bezier(.3,1.6,.5,1) 1.05s}
+#venn .vl{transition:opacity .6s 1.35s}
+.venn-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2vw;width:100%;max-width:620px;margin-top:1.4vh}
+.venn-legend div{border-top:5px solid var(--c);padding-top:.8vh;font-size:clamp(14px,1.8vh,16px);line-height:1.6;color:var(--ink-soft)}
+.venn-legend b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(14px,1.9vh,17px);color:var(--ink);margin-bottom:2px}
+/* 동아리 소개 효과: 세 원이 모이고(다) → 핵심어에 형광펜(나) */
+.story mark{background:none;color:inherit;background-image:linear-gradient(var(--c),var(--c));background-repeat:no-repeat;background-position:0 90%;background-size:0% 40%;transition:background-size .7s ease;padding:0 1px}
+.fx-wait #venn .vc1{transform:translate(0,-110px);opacity:0}
+.fx-wait #venn .vc2{transform:translate(-130px,70px);opacity:0}
+.fx-wait #venn .vc3{transform:translate(130px,70px);opacity:0}
+.fx-wait #venn .vb{transform:scale(0)}
+.fx-wait #venn .vimg{opacity:0}
+.fx-wait #venn .vl{opacity:0}
+.fx-wait .venn-legend div{opacity:0;transform:translateY(8px)}
+#venn .vc2{transition-delay:.18s}#venn .vc3{transition-delay:.36s}
+.venn-legend div{transition:opacity .5s,transform .5s}
+.fx-go .venn-legend div:nth-child(1){transition-delay:1.7s}.fx-go .venn-legend div:nth-child(2){transition-delay:2.3s}.fx-go .venn-legend div:nth-child(3){transition-delay:2.9s}
+.fx-go .story mark{background-size:100% 40%}
+.fx-go .story mark.m1{transition-delay:1.7s}.fx-go .story mark.m2{transition-delay:2.3s}.fx-go .story mark.m3{transition-delay:2.9s}
 .signature{display:grid;grid-template-columns:auto 1fr auto;gap:3.5vw;align-items:center;border-top:1px solid #C5CFDB;padding-top:2.2vh;margin-top:2vh}
 .sig-logo{display:flex;align-items:center;gap:16px}.sig-mark{display:flex;flex-direction:column;gap:2px}.sig-mark em{font-style:normal;font-family:var(--latin);font-weight:500;font-size:12px;letter-spacing:.5px;color:var(--ink-soft)}
 .sig-logo b{font-family:var(--latin);font-weight:700;font-size:clamp(34px,5vh,50px);line-height:1;letter-spacing:1px}
@@ -121,6 +176,8 @@ header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffff
 .wordmark .big{font-family:var(--latin);font-weight:700;font-size:clamp(64px,11vh,130px);line-height:.82;letter-spacing:-2px;display:flex}
 .wordmark .big span:nth-child(1){color:#FF8A97}.wordmark .big span:nth-child(2){color:#4FD1C5}.wordmark .big span:nth-child(3){color:#F6C35A}.wordmark .big span:nth-child(4){color:#AFC0FF}
 .wordmark .title{font-size:clamp(26px,3.8vh,40px)}
+.wordmark .big.clay{gap:.3vw;align-items:flex-end;letter-spacing:0}
+.wordmark .big.clay img{height:clamp(84px,14vh,150px);width:auto;filter:drop-shadow(0 6px 10px #0000004d)}
 .m-head .lede{justify-self:end}
 .steps{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4vw;margin-top:2.4vh}
 .step{display:flex;flex-direction:column;background:var(--night-2);border-radius:18px;overflow:hidden;position:relative}
@@ -157,13 +214,19 @@ header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffff
 .lh.up{flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;font-family:var(--display);font-weight:700;color:var(--ink);font-size:14px}
 .ladder-art{grid-column:1;grid-row:1 / 5;border-radius:18px;min-height:0}
 .ladder-art.has-img{border:0;background:none}
-.ladder-art.has-img img{object-fit:contain;object-position:center bottom}
+.ladder-art.has-img img{object-fit:contain;object-position:center bottom;padding-top:5vh}
 .ladder-art .tag{font-size:11px;gap:2px;padding:8px}
 .rung{position:relative;display:flex;align-items:center;justify-content:center}
 .rung::after{content:"";position:absolute;top:-1vh;bottom:-1vh;left:50%;width:62px;margin-left:-31px;border-left:5px solid #8A97AC;border-right:5px solid #8A97AC;background:repeating-linear-gradient(180deg,transparent 0 22px,#8A97AC 22px 27px);z-index:0;opacity:.55}
 .rung i{z-index:1}
 .rung::before{content:"";position:absolute;top:-1vh;bottom:-1vh;left:50%;width:62px;margin-left:-31px;background:color-mix(in srgb,var(--c) 18%,transparent);border-radius:4px}
 .rung i{position:relative;width:44px;height:44px;border-radius:50%;background:#fff;border:5px solid var(--c);display:grid;place-items:center;font-style:normal;font-family:var(--latin);font-weight:700;font-size:20px;color:var(--ink)}
+/* 학년 칸을 사다리 발판처럼: 양옆 나무 기둥 */
+.ladder > .rowlab{margin:0 12px;box-shadow:0 6px 14px #1C243326;overflow:visible}
+.rowlab::before,.rowlab::after{content:"";position:absolute;top:-1.1vh;bottom:-1.1vh;width:13px;border-radius:3px;background:linear-gradient(90deg,#E4CFA2,#F7ECD3 45%,#D6BC86);box-shadow:inset 0 0 0 1.5px #CDB07A;z-index:-1}
+.rowlab::before{left:-19px}.rowlab::after{right:-19px}
+.rowlab.top::before,.rowlab.top::after{top:-1.4vh;border-radius:8px 8px 3px 3px}
+.rowlab.bot::before,.rowlab.bot::after{bottom:-2vh;border-radius:3px 3px 8px 8px}
 .rowlab{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-content:center;padding:1.2vh 14px;background:var(--c);color:#fff;border-radius:16px}
 .rowlab .lv{grid-row:span 2;font-family:var(--latin);font-weight:700;font-size:clamp(38px,6vh,56px);line-height:.9}
 .rowlab strong{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vh,22px);line-height:1.2;align-self:end}
@@ -289,7 +352,7 @@ details ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px}
 details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
 
 @media (max-width:899px), (max-height:619px){
-  .hero,.story,.steps,.hall-body,.signature,.m-head,.l-head{grid-template-columns:1fr}
+  .hero,.story,.steps,.hall-body,.signature,.m-head,.l-head,.close-cols,.close-head{grid-template-columns:1fr}
   .m-head .lede,.l-head .lede{justify-self:start}
   .nowrap{white-space:normal}
   .hero .slot{height:300px}
@@ -313,16 +376,20 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   <a class="brand" href="#top"><b>잇:다</b><small>AI 러닝랩</small></a>
   <nav aria-label="주요 메뉴">
     <a href="#story" data-for="story">동아리 소개</a>
-    <a href="#model" data-for="model ladder">잇:다 수업 모델</a>
-    <a href="#hall" data-for="hall">프로젝트 전시관</a>
+    <div class="dd"><a href="#model" data-for="model ladder">수업 모델</a>
+      <div class="sub"><a href="#model">① ITDA 수업 단계</a><a href="#ladder">② 학년군별 AI 활용 단계</a></div></div>
+    <div class="dd"><a href="#hall" data-for="hall" data-go-view="map">프로젝트</a>
+      <div class="sub"><a href="#hall" data-go-view="map">① 프로젝트 구성도</a><a href="#hall" data-go-view="grid">② 프로젝트 목록</a></div></div>
+    <a href="#close" data-for="close">성과와 제언</a>
   </nav>
 </header>
 <nav class="dots" aria-label="화면 이동">
   <a href="#top" data-for="top">처음<i></i></a>
   <a href="#story" data-for="story">동아리 소개<i></i></a>
-  <a href="#model" data-for="model">네 걸음<i></i></a>
-  <a href="#ladder" data-for="ladder">AI 사다리<i></i></a>
-  <a href="#hall" data-for="hall">프로젝트 전시관<i></i></a>
+  <a href="#model" data-for="model">ITDA 수업 단계<i></i></a>
+  <a href="#ladder" data-for="ladder">학년군별 AI 활용 단계<i></i></a>
+  <a href="#hall" data-for="hall">프로젝트<i></i></a>
+  <a href="#close" data-for="close">성과와 제언<i></i></a>
 </nav>
 
 <main>
@@ -349,11 +416,12 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
       <div>
         <p class="team-motto">수업을 잇다, 미래를 깨우다</p>
         <h2 class="team-name">잇:다<small>AI 러닝랩</small></h2>
-        <p class="lede">교육과정과 수업과 평가를 하나로 잇고,<br>선생님들 간의 협력으로<br>AI·디지털 기반 수업 혁신을 연결하는 실천 공동체입니다.</p>
+        <p class="lede"><mark class="m1" style="--c:#E8566A55">교육과정과 수업과 평가</mark>를 하나로 잇고,<br><mark class="m2" style="--c:#2BB3A655">선생님들 간의 협력</mark>으로<br><mark class="m3" style="--c:#F2B33D66">AI·디지털 기반 수업 혁신</mark>을 연결하는 실천 공동체입니다.</p>
         <p class="lede">저학년, 중학년, 고학년의 교실을 고르게 담았습니다.</p>
         <p class="lede">부산의 바다와 시장, 산복도로와 항구에서 출발한 수업이라<br>다른 학교에서도 자기 동네로 바꾸어 쓸 수 있습니다.</p>
       </div>
-      <div class="venn-wrap"><div class="slot light venn-art" data-src="assets/venn-itda.png" data-size="1280×1120 투명 배경"></div><svg id="venn" viewBox="0 0 640 580" role="img" aria-label="잇:다가 잇는 세 가지: 교육과정·수업·평가, 교사와 교사, AI·디지털과 수업 혁신. 세 원이 겹치는 가운데에 잇:다가 있다."></svg></div>
+      <div class="venn-col"><div class="venn-wrap"><svg id="venn" viewBox="0 0 640 580" role="img" aria-label="잇:다가 잇는 세 가지: 교육과정·수업·평가, 선생님과 선생님, AI·디지털과 수업 혁신. 세 원이 겹치는 가운데에 잇:다가 있다."></svg></div>
+        <div class="venn-legend"><div style="--c:#E8566A"><b>교육과정·수업·평가</b>성취기준에서 출발해 수업과 평가를 한 흐름으로</div><div style="--c:#2BB3A6"><b>선생님과 선생님</b>학교를 넘어 함께 설계하고 나누는 협력</div><div style="--c:#F2B33D"><b>AI·디지털과 수업 혁신</b>도구보다 배움이 먼저인 생성형 AI 활용</div></div></div>
     </div>
     <div class="signature">
       <div class="sig-logo"><div class="sig-mark"><b><span>I</span><span>T</span><span>D</span><span>A</span></b><em>Inquire · Trace · Develop · Apply</em></div><strong>잇:다</strong></div>
@@ -364,11 +432,11 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
 
   <!-- 3 -->
   <section class="screen night" id="model">
-    <div class="tabs"><a href="#model" aria-current="true">① 네 걸음</a><a href="#ladder">② AI 사다리</a></div>
+    <div class="tabs"><a href="#model" aria-current="true">① ITDA 수업 단계</a><a href="#ladder">② 학년군별 AI 활용 단계</a></div>
     <div class="m-head">
       <div class="wordmark">
-        <div class="big" aria-hidden="true"><span>I</span><span>T</span><span>D</span><span>A</span></div>
-        <div><span class="eyebrow">잇:다 수업 모델</span><h2 class="title">묻고, 찾고,<br>짓고, 잇다</h2></div>
+        <div class="big clay" role="img" aria-label="ITDA"><img src="assets/itda/itda-I-w.png" alt=""><img src="assets/itda/itda-T-w.png" alt=""><img src="assets/itda/itda-D-w.png" alt=""><img src="assets/itda/itda-A-w.png" alt=""></div>
+        <div><span class="eyebrow">수업 모델 · ① ITDA 수업 단계</span><h2 class="title">묻고, 찾고,<br>짓고, 잇다</h2></div>
       </div>
       <p class="lede">걸음마다 잇는 것이 다릅니다.<br><span class="nowrap">질문은 삶과, 단서는 단서와, 생각은 결과물과, 배움은 세상과 이어집니다.</span><br>네 걸음마다 평가 장면을 두어 수업과 평가가 한 흐름으로 움직입니다.</p>
     </div>
@@ -377,9 +445,9 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
 
   <!-- 4 -->
   <section class="screen" id="ladder"><div class="slot screen-bg light" data-src="assets/bg-ladder.png" data-size="1920×1080"></div><span class="bgtag">배경 이미지 자리: assets/bg-ladder.png (1920×1080, 코덱스 제작)</span>
-    <div class="tabs light-tabs"><a href="#model">① 네 걸음</a><a href="#ladder" aria-current="true">② AI 사다리</a></div>
+    <div class="tabs light-tabs"><a href="#model">① ITDA 수업 단계</a><a href="#ladder" aria-current="true">② 학년군별 AI 활용 단계</a></div>
     <div class="l-head">
-      <div><span class="eyebrow">잇:다 AI 사다리</span><h2 class="title"><span class="itda-mini"><span>I</span><span>T</span><span>D</span><span>A</span></span> 한 칸씩 오르는 AI<small>학년군별 생성형 AI·디지털 도구 활용 단계</small></h2></div>
+      <div><span class="eyebrow">수업 모델 · ② 학년군별 AI 활용 단계</span><h2 class="title"><span class="itda-mini"><span>I</span><span>T</span><span>D</span><span>A</span></span> 한 칸씩 오르는 AI 사다리</h2></div>
       <p class="lede">같은 네 걸음을 걸어도 학년이 오를수록 AI를 쥐는 손이 달라집니다.<br>교사가 쥐던 AI를 모둠이 함께 쥐고, 마침내 학생이 직접 다룹니다.<br>단계마다 도구와 약속을 함께 정해 두었습니다.</p>
     </div>
     <div class="ladder-wrap">
@@ -391,10 +459,10 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
   <section class="screen" id="hall">
     <div class="slot light corner hall-bg" data-src="assets/hall-bg.png" data-size="1920×1080"></div>
     <div class="hall-top">
-      <div><span class="eyebrow">잇:다 노선도</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
+      <div><span class="eyebrow" id="hallEyebrow">프로젝트 · ① 프로젝트 구성도</span><h2 class="title">세 갈래 노선, 아홉 개의 역</h2></div>
       <div class="switch" role="group" aria-label="보는 방법">
-        <button type="button" data-view="map" aria-pressed="true">노선도</button>
-        <button type="button" data-view="grid" aria-pressed="false">한눈에 보기</button>
+        <button type="button" data-view="map" aria-pressed="true">프로젝트 구성도</button>
+        <button type="button" data-view="grid" aria-pressed="false">프로젝트 목록</button>
       </div>
     </div>
     <div class="hall-body" id="hallBody">
@@ -405,6 +473,33 @@ details li{display:grid;grid-template-columns:96px 1fr;gap:8px}
       <div class="grid-band" id="gridBand"><button type="button" class="band-pill" id="bandPill">❤ 늘 함께 가는 약속 · AI 윤리와 디지털 시민성</button><div class="grid" id="grid"></div></div>
     </div>
     <div class="foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span id="bgNote" class="bgnote">배경 이미지 자리: assets/hall-bg.png (1920×1080, 코덱스 제작)</span><span>제작: 동일중앙초등학교 김정지</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="screen" id="close"><div class="slot screen-bg light" data-src="assets/bg-story.png" data-size="1920×1080"></div>
+    <div class="close-head">
+      <div><span class="eyebrow">성과와 제언</span><h2 class="title">잇:다가 남긴 것, 이어 갈 길</h2>
+        <p class="lede">아홉 개의 역을 지나 노선의 끝에 닿았습니다.<br>우리가 만든 것을 정리하고, 다른 학교 교실로 이어 가는 길을 제안합니다.</p></div>
+      <div class="slot light close-art" data-src="assets/zep-hall.png" data-size="1600×1000"></div>
+    </div>
+    <div class="close-cols">
+      <article style="--c:var(--lo)"><span class="ck">성과</span><h3>무엇을 만들었나</h3><ol>
+        <li><b>수업 모델</b>ITDA 수업 단계(묻다·찾다·짓다·잇다)와 학년군별 AI 활용 단계(함께 보는 AI·대화하는 AI·만드는 AI)</li>
+        <li><b>프로젝트 9개</b>저·중·고학년 각 3개, 모두 10차시. 교과 융합 6개와 특색 동아리 3개</li>
+        <li><b>수업·평가 자료</b>과정안, 활동지, 루브릭, 생활기록부 기록 예시 <em>[교사 입력: 자료 수]</em></li>
+        <li><b>수업용 웹앱</b>전자칠판에서 바로 여는 한 파일 웹앱 <em>[교사 입력: 웹앱 수]</em></li></ol></article>
+      <article style="--c:var(--mid)"><span class="ck">일반화 방안</span><h3>우리 학교로 가져가려면</h3><ol>
+        <li><b>장소만 바꾸기</b>부산의 바다·시장·산복도로 자리에 우리 동네 장소를 넣으면 같은 흐름으로 운영할 수 있습니다.</li>
+        <li><b>사다리 한 칸 옮기기</b>학년이 달라도 AI 활용 단계를 한 칸 올리거나 내려 같은 프로젝트를 쓸 수 있습니다.</li>
+        <li><b>웹앱 그대로 열기</b>로그인 없이 파일 하나로 열려 기기 사정이 다른 학교에서도 바로 씁니다.</li>
+        <li><b>평가 도구 고쳐 쓰기</b>루브릭과 활동지를 내려받아 우리 반에 맞게 고칩니다.</li></ol></article>
+      <article style="--c:var(--hi)"><span class="ck">제언</span><h3>이어 갈 길</h3><ol>
+        <li><b>학교에</b>학년군 협의회에서 ITDA 네 단계로 프로젝트 하나를 함께 설계해 보기를 권합니다.</li>
+        <li><b>교육청에</b>학생이 안전하게 쓸 수 있는 생성형 AI 환경과, 교사가 만든 웹앱·자료를 나누는 공간을 바랍니다.</li>
+        <li><b>모든 교실에</b>'허락받고 나누기, 견주어 확인하기, AI로 만든 것 밝히기'를 수업의 기본 약속으로 두기를 제안합니다.</li>
+        <li><b>다음 해</b><em>[교사 입력: 2027년 이어 갈 계획]</em></li></ol></article>
+    </div>
+    <div class="close-foot"><span>수업을 잇다, 미래를 깨우다 · 잇:다 AI 러닝랩</span><span>제작: 동일중앙초등학교 김정지</span></div>
   </section>
 </main>
 
@@ -552,38 +647,40 @@ function fillSlots(root){
   });
 }
 
-/* 동아리 소개: 세 원 */
+/* 동아리 소개: 세 원 (클레이 그림을 원 세 개와 가운데 배지로 나누어 모이게 함) */
 (function(){
-  const svg=document.getElementById("venn");
-  const defs=mk(svg,"defs",{});
-  const C=[
-    {id:"g1",x:320,y:205,c:"#E8566A",l:"#FFD3D9",t:"교육과정·수업·평가",d1:"성취기준에서 출발해",d2:"수업과 평가를 한 흐름으로",tx:320,ty:92},
-    {id:"g2",x:222,y:362,c:"#2BB3A6",l:"#CDF3EE",t:"선생님과 선생님",d1:"학교를 넘어",d2:"함께 설계하고 나누는 협력",tx:150,ty:478},
-    {id:"g3",x:418,y:362,c:"#F2B33D",l:"#FFEFC8",t:"AI·디지털과 수업 혁신",d1:"도구보다 배움이 먼저인",d2:"생성형 AI 활용",tx:490,ty:478}];
-  const f=mk(svg,"filter",{id:"sh",x:"-20%",y:"-20%",width:"140%",height:"140%"},defs);
-  mk(svg,"feDropShadow",{dx:0,dy:6,stdDeviation:8,"flood-color":"#1C2433","flood-opacity":.12},f);
-  C.forEach(o=>{const g=mk(svg,"radialGradient",{id:o.id,cx:"40%",cy:"35%",r:"70%"},defs);
-    mk(svg,"stop",{offset:"0","stop-color":"#fff","stop-opacity":.9},g);mk(svg,"stop",{offset:"1","stop-color":o.l,"stop-opacity":.85},g);});
-  const gg=mk(svg,"g",{filter:"url(#sh)",class:"shape"});
-  C.forEach(o=>mk(svg,"circle",{cx:o.x,cy:o.y,r:168,fill:`url(#${o.id})`,"fill-opacity":.75},gg));
-  C.forEach(o=>mk(svg,"circle",{cx:o.x,cy:o.y,r:168,fill:"none",stroke:o.c,"stroke-width":4,"stroke-opacity":.85,class:"shape"}));
-  C.forEach(o=>{
-    const w=o.t.length*18+30;
-    mk(svg,"rect",{x:o.tx-w/2,y:o.ty-24,width:w,height:36,rx:18,fill:o.c});
-    tx(svg,svg,o.tx,o.ty+2,o.t,{"font-size":18,fill:"#fff","font-weight":700});
-    tx(svg,svg,o.tx,o.ty+36,o.d1,{"font-size":15,fill:"#3C4658"});
-    tx(svg,svg,o.tx,o.ty+57,o.d2,{"font-size":15,fill:"#3C4658"});
-  });
-  [[228,262,"함께 짜는 수업","#E8566A","#2BB3A6"],[412,262,"AI로 넓히는 평가","#E8566A","#F2B33D"],[320,425,"함께 배우는 AI","#2BB3A6","#F2B33D"]].forEach(([x,y,t,c1,c2],i)=>{
-    const gid="ov"+i, lg=mk(svg,"linearGradient",{id:gid,x1:"0",x2:"1"},defs);
-    mk(svg,"stop",{offset:"0","stop-color":c1},lg); mk(svg,"stop",{offset:"1","stop-color":c2},lg);
-    const w=t.length*14+24;
-    mk(svg,"rect",{x:x-w/2,y:y-19,width:w,height:30,rx:15,fill:`url(#${gid})`});
-    tx(svg,svg,x,y+2,t,{"font-size":14,fill:"#fff","font-weight":800});});
-  mk(svg,"circle",{cx:320,cy:312,r:62,fill:"#13213A",class:"shape"});
-  const m=tx(svg,svg,320,306,"",{"font-size":26,"font-family":"Fredoka, sans-serif","font-weight":700});
-  [["I","#FF8A97"],["T","#4FD1C5"],["D","#F6C35A"],["A","#AFC0FF"]].forEach(([c,col])=>{const t=mk(svg,"tspan",{fill:col},m);t.textContent=c;});
-  tx(svg,svg,320,336,"잇:다",{"font-size":22,fill:"#fff","font-weight":700});
+  const svg=document.getElementById("venn"), NS="http://www.w3.org/2000/svg", SRC="assets/venn-itda.png";
+  const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+  const circ=(x,y,r)=>`M${x-r},${y}a${r},${r} 0 1,0 ${2*r},0a${r},${r} 0 1,0 ${-2*r},0Z`;
+  const defs=el("defs",{}), BX=320, BY=312, BR=88;
+
+  const cb=el("clipPath",{id:"kvb"},defs); el("circle",{cx:BX,cy:BY,r:BR},cb);
+  /* 1) 단색 원 세 개가 모이고 → 2) 클레이 그림이 그 위로 나타나고 → 3) 가운데 배지가 톡 */
+  [["vc1",320,205,"#E8566A"],["vc2",222,362,"#2BB3A6"],["vc3",418,362,"#F2B33D"]].forEach(([id,x,y,c])=>{
+    const g=el("g",{class:"vc "+id}); el("circle",{cx:x,cy:y,r:166,fill:c,opacity:.85,style:"mix-blend-mode:multiply"},g);});
+  el("image",{href:SRC,width:640,height:580,class:"vimg"});
+  const gb=el("g",{class:"vb"}); el("image",{href:SRC,width:640,height:580,"clip-path":"url(#kvb)"},gb);
+  const t1=el("text",{x:BX,y:BY-17,"font-size":30,class:"bd"},gb);
+  [["I","#FF8A97"],["T","#4FD1C5"],["D","#F6C35A"],["A","#AFC0FF"]].forEach(([c,col])=>{const sp=el("tspan",{fill:col},t1);sp.textContent=c;});
+  t1.style.fontFamily="var(--latin)";
+  const t2=el("text",{x:BX,y:BY+19,"font-size":31,class:"bd"},gb); t2.textContent="잇:다";
+  const gl=el("g",{class:"vl"});
+  const T=(x,y,str,fs,cls)=>{const t=el("text",{x,y,"font-size":fs},gl);if(cls)t.setAttribute("class",cls);t.textContent=str;};
+  T(320,118,"교육과정·수업·평가",28);
+  T(176,440,"선생님과",28);T(176,476,"선생님",28);
+  T(464,440,"AI·디지털과",28);T(464,476,"수업 혁신",28);
+  T(226,246,"함께 짜는",17,"ov");T(226,268,"수업",17,"ov");
+  T(414,246,"AI로 넓히는",17,"ov");T(414,268,"평가",17,"ov");
+  T(320,430,"함께 배우는",17,"ov");T(320,452,"AI",17,"ov");
+  /* 화면에 들어올 때마다 한 번 재생 */
+  const st=document.getElementById("story");
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    st.classList.add("fx-wait");
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){requestAnimationFrame(()=>{st.classList.remove("fx-wait");st.classList.add("fx-go");});}
+      else if(e.intersectionRatio===0){st.classList.remove("fx-go");st.classList.add("fx-wait");}
+    }),{threshold:[0,.45]}).observe(st);
+  }
 })();
 
 /* 네 걸음 */
@@ -609,7 +706,7 @@ document.getElementById("steps").innerHTML=STEPS.map(s=>`
   h+=`<div class="slot light ladder-art" data-src="assets/ladder-kids.png" data-size="600×1500"></div><div class="lh">학년군과 단계</div>`+STEPS.map(s=>`<div class="lh"><b style="color:${s.c2}">${s.k}</b>${s.w}</div>`).join("")+`<div class="lh">대표 도구</div>`;
   ["hi","mid","lo"].forEach(k=>{
     const L=LINES[k], R=LADDER[k];
-    h+=`<div class="rowlab" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
+    h+=`<div class="rowlab${k==="hi"?" top":k==="lo"?" bot":""}" style="--c:${L.c}"><span class="lv">${L.lv}</span><strong>${L.ladder}</strong><small>${L.band} · ${L.grade}</small><span class="who">${R.who}</span></div>`;
     h+=R.cells.map(c=>`<div class="cell" style="--c:${L.c}">${esc(c)}</div>`).join("");
     h+=`<div class="cell tools">${R.tools.map(t=>`<span>${t}</span>`).join("")}</div>`;
   });
@@ -703,6 +800,7 @@ document.getElementById("bandPill").addEventListener("click",openEthics);
 document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{
   document.querySelectorAll(".switch button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
   document.getElementById("hallBody").classList.toggle("as-grid",b.dataset.view==="grid");
+  document.getElementById("hallEyebrow").textContent=b.dataset.view==="grid"?"프로젝트 · ② 프로젝트 목록":"프로젝트 · ① 프로젝트 구성도";
   if(b.dataset.view==="map"&&window.resetPeek)resetPeek();
 }));
 
@@ -757,9 +855,12 @@ function openEthics(){
 function closeFull(){full.classList.remove("open");document.body.style.overflow="";if(back)back.focus();}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open"))closeFull();});
 
+/* 메뉴에서 프로젝트 보기 바로 고르기 */
+document.querySelectorAll("[data-go-view]").forEach(a=>a.addEventListener("click",()=>{const b=document.querySelector(`.switch button[data-view="${a.dataset.goView}"]`);if(b)b.click();}));
+
 /* 지금 보는 화면 표시 */
 const marks=[...document.querySelectorAll("[data-for]")];
-const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#hall"]').forEach(a=>a.addEventListener("click",()=>window.resetPeek&&resetPeek()));new IntersectionObserver(es=>es.forEach(e=>{tt.classList.toggle("show",e.isIntersecting);if(!e.isIntersecting&&window.resetPeek)resetPeek();}),{threshold:.5}).observe(document.getElementById("hall"));
+const tt=document.getElementById("toTop");document.querySelectorAll('a[href="#hall"]').forEach(a=>a.addEventListener("click",()=>window.resetPeek&&resetPeek()));const ttOn=new Set();const ttObs=new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?ttOn.add(e.target.id):ttOn.delete(e.target.id);tt.classList.toggle("show",ttOn.size>0);if(e.target.id==="hall"&&!e.isIntersecting&&window.resetPeek)resetPeek();}),{threshold:.5});["hall","close"].forEach(id=>{const el=document.getElementById(id);if(el)ttObs.observe(el);});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)marks.forEach(a=>a.setAttribute("aria-current",String(a.dataset.for.split(" ").includes(e.target.id))));}),{threshold:.6});
 document.querySelectorAll(".screen").forEach(s=>io.observe(s));
 fillSlots();
