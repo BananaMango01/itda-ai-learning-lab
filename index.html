@@ -124,8 +124,10 @@ header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffff
 .m-head .lede{justify-self:end}
 .steps{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.4vw;margin-top:2.4vh}
 .step{display:flex;flex-direction:column;background:var(--night-2);border-radius:18px;overflow:hidden;position:relative}
-.step .slot{flex:0 0 17vh;border-radius:0;border-width:0 0 2px 0}
-.step .glyph{position:absolute;left:18px;top:calc(17vh - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
+.step .slot{flex:0 0 28vh;border-radius:0;border-width:0 0 2px 0}
+.step .slot img{object-fit:contain;padding:1.6vh 1vw .6vh}
+.hero .slot img{object-fit:contain}
+.step .glyph{position:absolute;left:18px;top:calc(28vh - 52px);font-family:var(--latin);font-weight:700;font-size:clamp(64px,10vh,96px);line-height:1;color:var(--c);text-shadow:0 3px 0 #13213A,0 0 24px #13213A}
 .step-body{padding:2vh 1.2vw 1.6vh;display:flex;flex-direction:column;gap:.7vh;flex:1;min-height:0}
 .step-name{display:flex;align-items:baseline;gap:10px;padding-left:min(70px,5vw)}
 .step-name strong{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vh,28px)}
@@ -247,6 +249,8 @@ header nav a:hover,header nav a[aria-current="true"]{color:#fff;background:#ffff
 .full{position:fixed;inset:0;z-index:40;background:var(--mist);display:grid;grid-template-columns:42% 1fr;opacity:0;visibility:hidden;transition:opacity .25s}
 .full.open{opacity:1;visibility:visible}
 .full > .slot{border-radius:0;border-width:0 2px 0 0}
+.full > .slot.has-img{background:radial-gradient(ellipse at 50% 55%,#FFFFFF 0%,#E3EEF6 70%)}
+.full > .slot img{object-fit:contain;padding:4vh 2.5vw}
 .full-side{position:relative;overflow-y:auto;padding:4.6vh 4.6vw 4vh 3.6vw;display:flex;flex-direction:column}
 .full-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.6vh}
 .full-top .line{font-family:var(--display);font-weight:700;font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:10px}
