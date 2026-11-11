@@ -381,6 +381,13 @@ header nav{align-items:center}
 .v-strip button{flex:0 0 auto;border:2px solid transparent;border-radius:6px;padding:0;background:none;cursor:pointer;opacity:.55}
 .v-strip button.on{border-color:var(--dawn);opacity:1}
 .v-strip img{display:block;height:54px;width:auto;border-radius:4px}
+.v-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.v-tabs button{border:1.5px solid #ffffff44;background:#ffffff10;color:#fff;border-radius:12px;padding:7px 14px;font-family:var(--display);font-size:15px;cursor:pointer;text-align:left;line-height:1.25}
+.v-tabs button small{display:block;font-family:var(--sans);font-size:12px;color:#BAC6DA}
+.v-tabs button.on{background:#fff;color:var(--ink);border-color:#fff}.v-tabs button.on small{color:#5b6472}
+.v-ext{background:#fff;color:var(--ink);border-radius:16px;padding:32px 36px;max-width:520px;text-align:center}
+.v-ext b{display:block;font-family:var(--display);font-size:22px;margin-bottom:10px}.v-ext p{margin:0 0 18px;line-height:1.6}
+.v-ext .v-btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;border:0;padding:10px 22px}
 .v-note{margin:6px 0 0;font-size:12.5px;color:#BAC6DA;text-align:center}
 .res-list a{position:relative;padding-right:42px;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;transition:background .15s,transform .15s}
 .res-list a::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
@@ -675,13 +682,13 @@ const P=[
   out:"큐레이터 노트(보고하는 글) · 발표 슬라이드 10장 · 관람객 퀴즈 3문제 · 영어 소개 카드(Busan Treasure Card)",
   ai:"4차시에 모둠이 선생님이 미조우(Mizou)로 만든 「꼬마 큐레이터의 단서 갈매기」 챗봇을 인터뷰하고, 그 답을 도감·공식 누리집과 견주는 '단서 하나'로 써요. 8차시에는 영어 문장을 AI 번역으로 되돌려 뜻을 확인하고, AI 펭톡으로 영어 소개 말하기를 연습해요.",
   std:[["4사09-02","지역의 자연환경, 역사, 문화, 생산물 등을 알리려는 지역사회의 노력을 알고 관심을 갖는다."],["4국01-05","목적과 주제에 알맞게 자료를 정리하여 자신감 있게 발표한다."],["4국03-02","절차와 결과가 드러나게 정확한 표현으로 보고하는 글을 쓴다."],["4미03-03","미술 문화에 관심을 가지고 전시 및 행사에 참여할 수 있다."],["4영02-05","자신, 주변 사람이나 사물의 소개나 묘사를 쉽고 간단한 문장으로 말하거나 보고 쓴다."],["4영02-09","적절한 매체나 전략을 활용하여 창의적으로 의미를 표현한다."]],
-  res:[["수업 자료","박람회 수업 PPT (7차시)",{img:Array.from({length:26},(_,i)=>`materials/mid-1/ppt/${String(i+1).padStart(2,"0")}.jpg`),note:"학생 이름은 ○○○로 가렸습니다."}],
-       ["학생 활동지","부산 보물찾기 지도",{img:["materials/mid-1/sheets/busan-treasure-map.jpg"],note:"학생 이름은 가렸습니다."}],
-       ["학생 활동지","부산 보물찾기 탐방 여권",{img:["materials/mid-1/sheets/busan-treasure-passport.jpg"]}],
-       ["수업용 웹앱","부산을 자랑해! 도감 (조사할 때)","https://bejewelled-alfajores-71feff.netlify.app/"],
-       ["수업용 웹앱","부산 보물찾기 탐방대 (확인·퀴즈)","https://busantreasure.netlify.app/"],
-       ["수업용 챗봇","꼬마 큐레이터의 단서 갈매기 (4차시 인터뷰)",{ext:"https://mizou.com/preview-bot?ID=168225",note:"미조우(Mizou) 선생님용 미리보기 링크예요. 학생 링크는 수업 때 New Session으로 만들어요."}],
-       ["수업 결과물","박람회 장면과 학생 작품"]]},
+  res:[["수업 자료",[{n:"학부모 공개수업 PPT · 갤러리 워크 박람회 (7차시)",img:Array.from({length:26},(_,i)=>`materials/mid-1/ppt/${String(i+1).padStart(2,"0")}.jpg`),note:"학부모 공개수업(교실 박람회) 때 쓴 화면이에요. 학생 이름은 ○○○로 가렸습니다."}]],
+       ["학생 활동지",[{n:"부산 보물찾기 지도",img:["materials/mid-1/sheets/busan-treasure-map.jpg"],note:"학생 이름은 가렸습니다."},
+                      {n:"부산 보물찾기 탐방 여권",img:["materials/mid-1/sheets/busan-treasure-passport.jpg"]}]],
+       ["수업용 웹앱",[{n:"부산을 자랑해! 도감",sub:"조사할 때",url:"https://bejewelled-alfajores-71feff.netlify.app/"},
+                      {n:"부산 보물찾기 탐방대",sub:"확인·퀴즈",url:"https://busantreasure.netlify.app/"},
+                      {n:"꼬마 큐레이터의 단서 갈매기",sub:"4차시 챗봇 인터뷰",ext:"https://mizou.com/preview-bot?ID=168225",extMsg:"미조우(Mizou)로 만든 부산 안내 챗봇이에요. 미조우 누리집에서 열려요. 학생은 수업 때 선생님이 New Session으로 만든 링크로 들어가요."}]],
+       ["수업 결과물",[]]]},
  {id:"mid-2",line:"mid",no:2,name:"바다로 간 그림책",sub:"그림책 한 권에서 출발해 부산 바다의 문제를 따라가요",
   grade:"4학년",subj:"[교사 입력: 융합 교과]",theme:"생태전환교육",
   q:"[교사 입력: 핵심 질문]",flow:["[교사 입력]","[교사 입력]","[교사 입력]","[교사 입력]"],
@@ -932,7 +939,7 @@ function openP(id){
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
-      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u],i)=>u&&u.ext?`<a class="res-open" href="${u.ext}" target="_blank" rel="noopener"><small>${esc(t)} · 새 창</small>${esc(n)}${u.note?`<em class="res-note">${esc(u.note)}</em>`:""}</a>`:u?`<button type="button" class="res-open" data-ri="${i}"><small>${esc(t)}${typeof u==="string"?" · 웹앱":u.img.length>1?` · ${u.img.length}쪽`:""}</small>${esc(n)}</button>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
+      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(resBtn).join("")}</div>
       ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
     </div>`;
   fillSlots(full);
@@ -968,33 +975,56 @@ function closeFull(){full.classList.remove("open");document.body.style.overflow=
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open")&&!viewer.classList.contains("open"))closeFull();});
 
 /* 자료 보기 창: 사이트 안에서만 보기(내려받기 단추 없음) */
-const viewer=document.getElementById("viewer"); let vItem=null, vPage=0, vBack=null;
-function openViewer(item){
-  vItem=item; vPage=0; vBack=document.activeElement;
-  const [t,n,u]=item, web=typeof u==="string";
-  viewer.innerHTML=`<div class="v-top"><div class="v-title"><small>${esc(t)}</small><b>${esc(n)}</b></div>
-    <div class="v-ctrl">${web?`<a class="v-btn" href="${u}" target="_blank" rel="noopener">새 창에서 열기 ↗</a>`:u.img.length>1?`<button type="button" class="v-btn" data-v="-1">‹ 이전</button><span class="v-count" id="vCount"></span><button type="button" class="v-btn" data-v="1">다음 ›</button>`:""}<button type="button" class="v-btn v-close" data-vclose>닫기 ✕</button></div></div>
-    <div class="v-body">${web?`<iframe src="${u}" title="${esc(n)}" loading="lazy" allow="fullscreen"></iframe>`:`<img id="vImg" alt="${esc(n)}" draggable="false">`}</div>${web?`<p class="v-note">화면이 보이지 않으면 오른쪽 위 '새 창에서 열기'를 눌러 주세요.</p>`:""}
-    ${!web&&u.img.length>1?`<div class="v-strip">${u.img.map((src,i)=>`<button type="button" data-vp="${i}" aria-label="${i+1}쪽"><img src="${src}" alt="" draggable="false" loading="lazy"></button>`).join("")}</div>`:""}
-    ${!web&&u.note?`<p class="v-note">${esc(u.note)}</p>`:""}`;
+const viewer=document.getElementById("viewer"); let vG=null, vPages=[], vPage=0, vItem=0, vBack=null;
+/* 자료 묶음: [종류, [{n, sub, img|url|ext, note}, ...]] — 같은 성격 자료는 한 단추로 모아 보여 줌 */
+function resBtn(r,i){
+  const [t,items]=r;
+  if(!Array.isArray(items)||!items.length) return `<span><small>${esc(t)} · 준비 중</small>${typeof items==="string"?esc(items):"곧 올라와요"}</span>`;
+  const isImg=items.every(x=>x.img), cnt=isImg?items.reduce((a,x)=>a+x.img.length,0):items.length;
+  const unit=isImg?(t==="수업 자료"?"쪽":"장"):"개";
+  return `<button type="button" class="res-open" data-ri="${i}"><small>${cnt}${unit}</small>${esc(t)}<em class="res-note">${items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
+}
+function openViewer(g){
+  vG=g; vBack=document.activeElement; vPage=0; vItem=0;
+  const [t,items]=g, isImg=items.every(x=>x.img);
+  vPages=isImg?items.flatMap((x,k)=>x.img.map(src=>({src,k}))):[];
+  viewer.innerHTML=`<div class="v-top"><div class="v-title"><small>${esc(t)}</small><b id="vName"></b></div>
+    <div class="v-ctrl">${isImg?(vPages.length>1?`<button type="button" class="v-btn" data-v="-1">‹ 이전</button><span class="v-count" id="vCount"></span><button type="button" class="v-btn" data-v="1">다음 ›</button>`:""):`<a class="v-btn" id="vOut" target="_blank" rel="noopener">새 창에서 열기 ↗</a>`}<button type="button" class="v-btn v-close" data-vclose>닫기 ✕</button></div></div>
+    ${items.length>1?`<div class="v-tabs" role="tablist">${items.map((x,k)=>`<button type="button" role="tab" data-vt="${k}">${esc(x.n)}${x.sub?`<small>${esc(x.sub)}</small>`:""}</button>`).join("")}</div>`:""}
+    <div class="v-body" id="vBody">${isImg?`<img id="vImg" alt="" draggable="false">`:""}</div>
+    ${isImg&&vPages.length>2?`<div class="v-strip">${vPages.map((pg,i)=>`<button type="button" data-vp="${i}" aria-label="${i+1}쪽"><img src="${pg.src}" alt="" draggable="false" loading="lazy"></button>`).join("")}</div>`:""}
+    <p class="v-note" id="vNote"></p>`;
   viewer.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>vGo(vPage+Number(b.dataset.v))));
   viewer.querySelectorAll("[data-vp]").forEach(b=>b.addEventListener("click",()=>vGo(Number(b.dataset.vp))));
+  viewer.querySelectorAll("[data-vt]").forEach(b=>b.addEventListener("click",()=>{const k=Number(b.dataset.vt); isImg?vGo(vPages.findIndex(pg=>pg.k===k)):vWeb(k);}));
   viewer.querySelector("[data-vclose]").addEventListener("click",closeViewer);
-  if(!web)vGo(0);
+  isImg?vGo(0):vWeb(0);
   viewer.classList.add("open"); viewer.querySelector("[data-vclose]").focus();
 }
+function vMark(k){
+  const x=vG[1][k]; vItem=k;
+  document.getElementById("vName").textContent=x.n+(x.sub?` (${x.sub})`:"");
+  document.getElementById("vNote").textContent=x.note||"";
+  viewer.querySelectorAll("[data-vt]").forEach(b=>{const on=Number(b.dataset.vt)===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});
+}
 function vGo(i){
-  const imgs=vItem[2].img; vPage=(i+imgs.length)%imgs.length;
-  document.getElementById("vImg").src=imgs[vPage];
-  const c=document.getElementById("vCount"); if(c)c.textContent=`${vPage+1} / ${imgs.length}`;
+  if(!vPages.length)return; vPage=(i+vPages.length)%vPages.length;
+  document.getElementById("vImg").src=vPages[vPage].src; vMark(vPages[vPage].k);
+  const c=document.getElementById("vCount"); if(c)c.textContent=`${vPage+1} / ${vPages.length}`;
   viewer.querySelectorAll("[data-vp]").forEach(b=>b.classList.toggle("on",Number(b.dataset.vp)===vPage));
   const on=viewer.querySelector("[data-vp].on"); if(on)on.scrollIntoView({block:"nearest",inline:"center"});
+}
+function vWeb(k){
+  const x=vG[1][k], body=document.getElementById("vBody"), out=document.getElementById("vOut"); vMark(k);
+  if(x.ext){ body.innerHTML=`<div class="v-ext"><b>${esc(x.n)}</b><p>${esc(x.extMsg||"이 자료는 다른 누리집에서 열려요.")}</p><a class="v-btn v-close" href="${x.ext}" target="_blank" rel="noopener">열기 ↗</a></div>`; out.href=x.ext; out.style.display="none"; }
+  else { body.innerHTML=`<iframe src="${x.url}" title="${esc(x.n)}" loading="lazy" allow="fullscreen"></iframe>`; out.href=x.url; out.style.display="";
+    if(!x.note)document.getElementById("vNote").textContent="화면이 보이지 않으면 오른쪽 위 '새 창에서 열기'를 눌러 주세요."; }
 }
 function closeViewer(){viewer.classList.remove("open");viewer.innerHTML="";if(vBack)vBack.focus();}
 document.addEventListener("keydown",e=>{if(!viewer.classList.contains("open"))return;
   if(e.key==="Escape"){e.preventDefault();closeViewer();}
-  else if(typeof vItem[2]!=="string"&&e.key==="ArrowRight")vGo(vPage+1);
-  else if(typeof vItem[2]!=="string"&&e.key==="ArrowLeft")vGo(vPage-1);});
+  else if(vPages.length&&e.key==="ArrowRight")vGo(vPage+1);
+  else if(vPages.length&&e.key==="ArrowLeft")vGo(vPage-1);});
 /* 그림 오른쪽 클릭·끌어 저장 막기(완전한 차단은 아님) */
 viewer.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
 viewer.addEventListener("dragstart",e=>{if(e.target.tagName==="IMG")e.preventDefault();});

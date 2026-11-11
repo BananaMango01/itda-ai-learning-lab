@@ -381,6 +381,13 @@ header nav{align-items:center}
 .v-strip button{flex:0 0 auto;border:2px solid transparent;border-radius:6px;padding:0;background:none;cursor:pointer;opacity:.55}
 .v-strip button.on{border-color:var(--dawn);opacity:1}
 .v-strip img{display:block;height:54px;width:auto;border-radius:4px}
+.v-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}
+.v-tabs button{border:1.5px solid #ffffff44;background:#ffffff10;color:#fff;border-radius:12px;padding:7px 14px;font-family:var(--display);font-size:15px;cursor:pointer;text-align:left;line-height:1.25}
+.v-tabs button small{display:block;font-family:var(--sans);font-size:12px;color:#BAC6DA}
+.v-tabs button.on{background:#fff;color:var(--ink);border-color:#fff}.v-tabs button.on small{color:#5b6472}
+.v-ext{background:#fff;color:var(--ink);border-radius:16px;padding:32px 36px;max-width:520px;text-align:center}
+.v-ext b{display:block;font-family:var(--display);font-size:22px;margin-bottom:10px}.v-ext p{margin:0 0 18px;line-height:1.6}
+.v-ext .v-btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;border:0;padding:10px 22px}
 .v-note{margin:6px 0 0;font-size:12.5px;color:#BAC6DA;text-align:center}
 .res-list a{position:relative;padding-right:42px;border:2px solid color-mix(in srgb,var(--c,#2BB3A6) 60%,#fff);color:var(--ink);font-weight:700;transition:background .15s,transform .15s}
 .res-list a::after{content:"↗";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--c,#2BB3A6)}
@@ -862,7 +869,7 @@ function openP(id){
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
-      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(([t,n,u],i)=>u&&u.ext?`<a class="res-open" href="${u.ext}" target="_blank" rel="noopener"><small>${esc(t)} · 새 창</small>${esc(n)}${u.note?`<em class="res-note">${esc(u.note)}</em>`:""}</a>`:u?`<button type="button" class="res-open" data-ri="${i}"><small>${esc(t)}${typeof u==="string"?" · 웹앱":u.img.length>1?` · ${u.img.length}쪽`:""}</small>${esc(n)}</button>`:`<span><small>${esc(t)} · 준비 중</small>${esc(n)}</span>`).join("")}</div>
+      <div class="res"><h4>자료</h4><div class="res-list">${p.res.map(resBtn).join("")}</div>
       ${p.std.length?`<details><summary>연계 성취기준 ${p.std.length}개</summary><ul>${p.std.map(([c,t])=>`<li><b>[${c}]</b><span>${esc(t)}</span></li>`).join("")}</ul></details>`:""}</div>
     </div>`;
   fillSlots(full);
@@ -898,33 +905,56 @@ function closeFull(){full.classList.remove("open");document.body.style.overflow=
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&full.classList.contains("open")&&!viewer.classList.contains("open"))closeFull();});
 
 /* 자료 보기 창: 사이트 안에서만 보기(내려받기 단추 없음) */
-const viewer=document.getElementById("viewer"); let vItem=null, vPage=0, vBack=null;
-function openViewer(item){
-  vItem=item; vPage=0; vBack=document.activeElement;
-  const [t,n,u]=item, web=typeof u==="string";
-  viewer.innerHTML=`<div class="v-top"><div class="v-title"><small>${esc(t)}</small><b>${esc(n)}</b></div>
-    <div class="v-ctrl">${web?`<a class="v-btn" href="${u}" target="_blank" rel="noopener">새 창에서 열기 ↗</a>`:u.img.length>1?`<button type="button" class="v-btn" data-v="-1">‹ 이전</button><span class="v-count" id="vCount"></span><button type="button" class="v-btn" data-v="1">다음 ›</button>`:""}<button type="button" class="v-btn v-close" data-vclose>닫기 ✕</button></div></div>
-    <div class="v-body">${web?`<iframe src="${u}" title="${esc(n)}" loading="lazy" allow="fullscreen"></iframe>`:`<img id="vImg" alt="${esc(n)}" draggable="false">`}</div>${web?`<p class="v-note">화면이 보이지 않으면 오른쪽 위 '새 창에서 열기'를 눌러 주세요.</p>`:""}
-    ${!web&&u.img.length>1?`<div class="v-strip">${u.img.map((src,i)=>`<button type="button" data-vp="${i}" aria-label="${i+1}쪽"><img src="${src}" alt="" draggable="false" loading="lazy"></button>`).join("")}</div>`:""}
-    ${!web&&u.note?`<p class="v-note">${esc(u.note)}</p>`:""}`;
+const viewer=document.getElementById("viewer"); let vG=null, vPages=[], vPage=0, vItem=0, vBack=null;
+/* 자료 묶음: [종류, [{n, sub, img|url|ext, note}, ...]] — 같은 성격 자료는 한 단추로 모아 보여 줌 */
+function resBtn(r,i){
+  const [t,items]=r;
+  if(!Array.isArray(items)||!items.length) return `<span><small>${esc(t)} · 준비 중</small>${typeof items==="string"?esc(items):"곧 올라와요"}</span>`;
+  const isImg=items.every(x=>x.img), cnt=isImg?items.reduce((a,x)=>a+x.img.length,0):items.length;
+  const unit=isImg?(t==="수업 자료"?"쪽":"장"):"개";
+  return `<button type="button" class="res-open" data-ri="${i}"><small>${cnt}${unit}</small>${esc(t)}<em class="res-note">${items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
+}
+function openViewer(g){
+  vG=g; vBack=document.activeElement; vPage=0; vItem=0;
+  const [t,items]=g, isImg=items.every(x=>x.img);
+  vPages=isImg?items.flatMap((x,k)=>x.img.map(src=>({src,k}))):[];
+  viewer.innerHTML=`<div class="v-top"><div class="v-title"><small>${esc(t)}</small><b id="vName"></b></div>
+    <div class="v-ctrl">${isImg?(vPages.length>1?`<button type="button" class="v-btn" data-v="-1">‹ 이전</button><span class="v-count" id="vCount"></span><button type="button" class="v-btn" data-v="1">다음 ›</button>`:""):`<a class="v-btn" id="vOut" target="_blank" rel="noopener">새 창에서 열기 ↗</a>`}<button type="button" class="v-btn v-close" data-vclose>닫기 ✕</button></div></div>
+    ${items.length>1?`<div class="v-tabs" role="tablist">${items.map((x,k)=>`<button type="button" role="tab" data-vt="${k}">${esc(x.n)}${x.sub?`<small>${esc(x.sub)}</small>`:""}</button>`).join("")}</div>`:""}
+    <div class="v-body" id="vBody">${isImg?`<img id="vImg" alt="" draggable="false">`:""}</div>
+    ${isImg&&vPages.length>2?`<div class="v-strip">${vPages.map((pg,i)=>`<button type="button" data-vp="${i}" aria-label="${i+1}쪽"><img src="${pg.src}" alt="" draggable="false" loading="lazy"></button>`).join("")}</div>`:""}
+    <p class="v-note" id="vNote"></p>`;
   viewer.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>vGo(vPage+Number(b.dataset.v))));
   viewer.querySelectorAll("[data-vp]").forEach(b=>b.addEventListener("click",()=>vGo(Number(b.dataset.vp))));
+  viewer.querySelectorAll("[data-vt]").forEach(b=>b.addEventListener("click",()=>{const k=Number(b.dataset.vt); isImg?vGo(vPages.findIndex(pg=>pg.k===k)):vWeb(k);}));
   viewer.querySelector("[data-vclose]").addEventListener("click",closeViewer);
-  if(!web)vGo(0);
+  isImg?vGo(0):vWeb(0);
   viewer.classList.add("open"); viewer.querySelector("[data-vclose]").focus();
 }
+function vMark(k){
+  const x=vG[1][k]; vItem=k;
+  document.getElementById("vName").textContent=x.n+(x.sub?` (${x.sub})`:"");
+  document.getElementById("vNote").textContent=x.note||"";
+  viewer.querySelectorAll("[data-vt]").forEach(b=>{const on=Number(b.dataset.vt)===k;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});
+}
 function vGo(i){
-  const imgs=vItem[2].img; vPage=(i+imgs.length)%imgs.length;
-  document.getElementById("vImg").src=imgs[vPage];
-  const c=document.getElementById("vCount"); if(c)c.textContent=`${vPage+1} / ${imgs.length}`;
+  if(!vPages.length)return; vPage=(i+vPages.length)%vPages.length;
+  document.getElementById("vImg").src=vPages[vPage].src; vMark(vPages[vPage].k);
+  const c=document.getElementById("vCount"); if(c)c.textContent=`${vPage+1} / ${vPages.length}`;
   viewer.querySelectorAll("[data-vp]").forEach(b=>b.classList.toggle("on",Number(b.dataset.vp)===vPage));
   const on=viewer.querySelector("[data-vp].on"); if(on)on.scrollIntoView({block:"nearest",inline:"center"});
+}
+function vWeb(k){
+  const x=vG[1][k], body=document.getElementById("vBody"), out=document.getElementById("vOut"); vMark(k);
+  if(x.ext){ body.innerHTML=`<div class="v-ext"><b>${esc(x.n)}</b><p>${esc(x.extMsg||"이 자료는 다른 누리집에서 열려요.")}</p><a class="v-btn v-close" href="${x.ext}" target="_blank" rel="noopener">열기 ↗</a></div>`; out.href=x.ext; out.style.display="none"; }
+  else { body.innerHTML=`<iframe src="${x.url}" title="${esc(x.n)}" loading="lazy" allow="fullscreen"></iframe>`; out.href=x.url; out.style.display="";
+    if(!x.note)document.getElementById("vNote").textContent="화면이 보이지 않으면 오른쪽 위 '새 창에서 열기'를 눌러 주세요."; }
 }
 function closeViewer(){viewer.classList.remove("open");viewer.innerHTML="";if(vBack)vBack.focus();}
 document.addEventListener("keydown",e=>{if(!viewer.classList.contains("open"))return;
   if(e.key==="Escape"){e.preventDefault();closeViewer();}
-  else if(typeof vItem[2]!=="string"&&e.key==="ArrowRight")vGo(vPage+1);
-  else if(typeof vItem[2]!=="string"&&e.key==="ArrowLeft")vGo(vPage-1);});
+  else if(vPages.length&&e.key==="ArrowRight")vGo(vPage+1);
+  else if(vPages.length&&e.key==="ArrowLeft")vGo(vPage-1);});
 /* 그림 오른쪽 클릭·끌어 저장 막기(완전한 차단은 아님) */
 viewer.addEventListener("contextmenu",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
 viewer.addEventListener("dragstart",e=>{if(e.target.tagName==="IMG")e.preventDefault();});
