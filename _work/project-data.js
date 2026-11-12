@@ -34,7 +34,7 @@ const P=[
        ["수업용 웹앱",[{n:"부산을 자랑해! 도감",sub:"조사할 때",url:"https://bejewelled-alfajores-71feff.netlify.app/"},
                       {n:"부산 보물찾기 탐방대",sub:"확인·퀴즈",url:"https://busantreasure.netlify.app/"},
                       {n:"꼬마 큐레이터의 단서 갈매기",sub:"4차시 챗봇 인터뷰",ext:"https://mizou.com/preview-bot?ID=168225",extMsg:"미조우(Mizou)로 만든 부산 안내 챗봇이에요. 미조우 누리집에서 열려요. 학생은 수업 때 선생님이 New Session으로 만든 링크로 들어가요."}]],
-       ["수업 결과물",[{n:"발표 자료 예시 ① 초량 이바구길과 168계단",sub:"캔바 · 문화",url:"https://www.canva.com/design/DAHYmiLpLt4/wdSePDIbhcyammkD6NrYmA/view?embed",note:"학생이 캔바로 만든 박람회 발표 슬라이드예요. 아래 단추로 넘겨 볼 수 있어요. 이름은 가렸습니다."},{n:"발표 자료 예시 ② 부산의 농산물",sub:"캔바 · 생산물",url:"https://www.canva.com/design/DAHYmmXfla0/f54_hwwCXknsfXw0cJaJ3Q/view?embed",note:"학생이 캔바로 만든 박람회 발표 슬라이드예요. 이름은 가렸습니다."},{n:"학생 발표 자료 모음",sub:"패들렛",ext:"https://padlet.com/t2433_5/breakout-room/kxPM2kBdEJoO4gbV-qg3ezd5gD6OEXwNP",extMsg:"학생들이 만든 박람회 발표 자료를 모은 패들렛이에요. 패들렛 누리집에서 열려요."}]]]},
+       ["수업 결과물",[{n:"발표 자료 예시 ① 초량 이바구길과 168계단",sub:"캔바",url:"https://www.canva.com/design/DAHYmiLpLt4/wdSePDIbhcyammkD6NrYmA/view?embed",note:"학생이 캔바로 만든 박람회 발표 슬라이드예요. 아래 단추로 넘겨 볼 수 있어요. 이름은 가렸습니다."},{n:"발표 자료 예시 ② 부산의 농산물",sub:"캔바",url:"https://www.canva.com/design/DAHYmmXfla0/f54_hwwCXknsfXw0cJaJ3Q/view?embed",note:"학생이 캔바로 만든 박람회 발표 슬라이드예요. 이름은 가렸습니다."},{n:"학생 발표 자료 모음",sub:"패들렛",ext:"https://padlet.com/t2433_5/breakout-room/kxPM2kBdEJoO4gbV-qg3ezd5gD6OEXwNP",extMsg:"학생들이 만든 박람회 발표 자료를 모은 패들렛이에요. 패들렛 누리집에서 열려요."}]]]},
  {id:"mid-2",line:"mid",no:2,name:"바다로 간 그림책",sub:"그림책 한 권에서 출발해 부산 바다의 문제를 따라가요",
   grade:"4학년",subj:"[교사 입력: 융합 교과]",theme:"생태전환교육",
   q:"[교사 입력: 핵심 질문]",flow:["[교사 입력]","[교사 입력]","[교사 입력]","[교사 입력]"],
