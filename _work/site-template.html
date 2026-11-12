@@ -937,14 +937,15 @@ function resGroups(res){
     const hits=(res||[]).filter(r=>sl.keys.includes(r[0]));
     const items=hits.flatMap(r=>Array.isArray(r[1])?r[1]:[]);
     const plan=hits.filter(r=>typeof r[1]==="string").map(r=>r[1]);
-    return {sl,g:[sl.t,items],plan};
+    const sum=hits.map(r=>r[2]).filter(Boolean);
+    return {sl,g:[sl.t,items],plan,sum};
   });
 }
-function resBtn({sl,g,plan},i){
+function resBtn({sl,g,plan,sum},i){
   const items=g[1], cls=sl.wide?" wide":"";
   if(!items.length) return `<span class="res-slot${cls}"><small>${esc(sl.t)} · 준비 중</small>${plan.length?esc(plan.join(" · ")):"곧 올라와요"}</span>`;
   const isImg=items.every(x=>x.img), cnt=isImg?items.reduce((a,x)=>a+x.img.length,0):items.length;
-  return `<button type="button" class="res-open res-slot${cls}" data-ri="${i}"><small>${cnt}${isImg?sl.unit:"개"}</small>${esc(sl.t)}<em class="res-note">${items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
+  return `<button type="button" class="res-open res-slot${cls}" data-ri="${i}"><small>${cnt}${isImg?sl.unit:"개"}</small>${esc(sl.t)}<em class="res-note">${sum&&sum.length?esc(sum.join(" · ")):items.map(x=>esc(x.n)).join(" · ")}</em></button>`;
 }
 function resBlock(res){const G=resGroups(res);return {html:`<div class="res"><h4>자료</h4><div class="res-list">${G.map(resBtn).join("")}</div></div>`,G};}
 function openViewer(g){
