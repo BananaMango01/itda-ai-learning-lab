@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>안용복의 답장 — 설명하는 글 AI 피드백 도우미(교사용)</title>
+<style>
+:root{
+  --paper:#F7F1E3; --paper2:#FFFDF7; --ink:#2B2A28; --ink2:#5A564F; --line:#DCCFB4;
+  --sea:#2F5D8C; --sea2:#E3ECF5; --seal:#C8553D; --seal2:#FBE6E0; --pine:#3E7C5A; --pine2:#E2F0E7;
+  --gold:#E2B44A; --gold2:#FBF1D6; --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:17px;line-height:1.6}
+header{background:var(--ink);color:#fff;padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header .stamp{width:44px;height:44px;border-radius:10px;background:var(--seal);display:grid;place-items:center;font-weight:800;font-size:15px;line-height:1.05;text-align:center;transform:rotate(-4deg);box-shadow:inset 0 0 0 3px #ffffff55}
+header h1{font-size:21px;margin:0;letter-spacing:-.3px}
+header p{margin:0;font-size:14px;opacity:.8}
+header .tag{margin-left:auto;background:#ffffff1f;border:1px solid #ffffff40;border-radius:999px;padding:4px 12px;font-size:13px}
+main{max-width:1320px;margin:0 auto;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px}
+@media (max-width:980px){main{grid-template-columns:1fr}}
+.card{background:var(--paper2);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:0 2px 0 #00000008}
+.card h2{font-size:18px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--seal);color:#fff;font-size:15px;transform:rotate(-3deg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label.small{font-size:14px;color:var(--ink2)}
+select,input[type=text],input[type=number],textarea{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:var(--ink)}
+textarea{width:100%;min-height:220px;resize:vertical;line-height:1.75}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--sea);color:#fff;min-height:44px}
+button.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+button.seal{background:var(--seal)}
+button.pine{background:var(--pine)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.tabs button{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pane{display:none}.pane.on{display:block}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;background:#fff;color:var(--ink2)}
+.drop img{max-width:100%;max-height:260px;border-radius:8px;margin-top:8px}
+.hint{font-size:14px;color:var(--ink2);margin:6px 0 0}
+.status{font-size:14px;margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--gold2);display:none}
+.status.on{display:block}.status.err{background:var(--seal2)}
+.mic{background:var(--pine)}.mic.live{background:var(--seal);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px #C8553D33}}
+table.rub{width:100%;border-collapse:collapse;font-size:14px}
+table.rub th,table.rub td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+table.rub th{background:var(--sea2)}
+table.rub td[contenteditable]{background:#fff}
+details summary{cursor:pointer;font-weight:700}
+.levels{display:grid;gap:8px}
+.lv{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff}
+.lv b{display:inline-block;min-width:96px}
+.pill{display:inline-block;border-radius:999px;padding:1px 10px;font-size:13px;font-weight:800;margin-left:6px}
+.p4{background:var(--pine2);color:var(--pine)}.p3{background:var(--sea2);color:var(--sea)}.p2{background:var(--gold2);color:#8a6512}.p1{background:var(--seal2);color:var(--seal)}
+.fb h3{font-size:16px;margin:14px 0 6px}
+.fb [contenteditable]{background:#fff;border:1.5px dashed var(--line);border-radius:10px;padding:8px 10px;min-height:38px}
+.fb [contenteditable]:focus{outline:2px solid var(--sea);border-style:solid}
+.sp{font-size:15px}.sp s{color:var(--seal)}.sp ins{text-decoration:none;color:var(--pine);font-weight:700}
+.empty{color:var(--ink2);text-align:center;padding:40px 10px}
+.list{display:grid;gap:6px;max-height:280px;overflow:auto}
+.list .it{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff;font-size:14px}
+.list .it span{flex:1}
+.warn{background:var(--seal2);border-left:4px solid var(--seal);padding:8px 10px;border-radius:8px;font-size:14px}
+.ok{background:var(--pine2);border-left:4px solid var(--pine);padding:8px 10px;border-radius:8px;font-size:14px}
+pre.prompt{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;max-height:280px;overflow:auto;font-size:13px}
+/* 인쇄용 학생 카드 */
+#printArea{display:none}
+@media print{
+  body{background:#fff}
+  header,main,.noprint{display:none!important}
+  #printArea{display:block}
+  .pcard{page-break-inside:avoid;border:2px solid #2B2A28;border-radius:12px;padding:14px 16px;margin:0 0 12px;font-size:14px;line-height:1.6}
+  .pcard h4{margin:0 0 6px;font-size:16px}
+  .pcard .lab{font-weight:800;color:#C8553D}
+  .pcard .foot{font-size:11px;color:#555;margin-top:6px;border-top:1px dashed #aaa;padding-top:4px}
+}
+</style>
+</head>
+<body>
+<div style="background:#2F5D8C;color:#fff;padding:8px 16px;display:flex;font-weight:700;gap:12px;flex-wrap:wrap"><span>「동래 사람 안용복과 펼치는 우리 반 독도 안내 책」</span><span style="margin-left:auto">잇:다 AI 러닝랩 · 교사용</span></div>
+<header>
+  <div class="stamp">안용복<br>답장</div>
+  <div>
+    <h1>안용복의 답장 — 설명하는 글 AI 피드백 도우미</h1>
+    <p>교사용 · 학생 글을 읽고 루브릭에 맞춘 <b>피드백 초안</b>을 만들어요. 최종 피드백은 선생님이 확인하고 고쳐서 줍니다.</p>
+  </div>
+  <span class="tag" id="aiState">제미나이 연결 확인 중…</span>
+</header>
+
+<main>
+<!-- 왼쪽: 입력 -->
+<section class="noprint" style="display:grid;gap:18px;align-content:start">
+  <div class="card">
+    <h2><span class="num">1</span>누구의 글인가요?</h2>
+    <div class="row">
+      <label class="small">학생 번호 <input type="number" id="stuNo" min="1" max="40" style="width:80px" placeholder="번호"></label>
+      <label class="small">모둠 <select id="group"><option value="">선택</option><option>1모둠</option><option>2모둠</option><option>3모둠</option><option>4모둠</option><option>5모둠</option><option>6모둠</option></select></label>
+      <label class="small">설명 대상(장)
+        <select id="topic">
+          <option>독도는 어디에 (열거)</option>
+          <option>땅과 바위 (열거)</option>
+          <option>생물과 자원 (열거)</option>
+          <option>옛 지도와 기록 (순서)</option>
+          <option>독도를 지킨 사람들 (비교와 대조)</option>
+        </select>
+      </label>
+      <label class="small">읽을 사람
+        <select id="reader">
+          <option>동생</option>
+          <option>이웃</option>
+          <option>외국인 손님(번역해서 읽음)</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint">학생 이름은 넣지 않아요. 번호만으로 구별합니다.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>학생 글 불러오기</h2>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-p="pPhoto">📷 사진으로</button>
+      <button role="tab" aria-selected="false" data-p="pVoice">🎙️ 읽어 주기로</button>
+      <button role="tab" aria-selected="false" data-p="pPaste">📋 붙여넣기</button>
+    </div>
+    <div class="pane on" id="pPhoto">
+      <div class="drop" id="drop">
+        <div><b>활동지 사진을 끌어다 놓거나</b> 아래 단추를 누르세요.</div>
+        <div class="row" style="justify-content:center;margin-top:8px">
+          <input type="file" id="file" accept="image/*" style="display:none"><button type="button" class="ghost ghostbtn">사진 고르기 / 찍기</button>
+          <button id="ocrBtn" disabled>글자 읽어 오기</button>
+        </div>
+        <img id="preview" alt="" hidden>
+      </div>
+      <p class="hint">손글씨는 잘못 읽을 수 있어요. 읽어 온 글은 아래 칸에서 꼭 원본과 견주어 고쳐 주세요. (AI가 글을 '고치지 않고' 쓰인 그대로 옮기도록 설정되어 있어요.)</p>
+    </div>
+    <div class="pane" id="pVoice">
+      <div class="row">
+        <button class="mic" id="micBtn">🎙️ 받아쓰기 시작</button>
+        <span class="hint" id="micInfo">학생이 자기 글을 또박또박 읽으면 아래 칸에 글자로 적혀요.</span>
+      </div>
+      <p class="hint">문장부호와 띄어쓰기는 소리로 알 수 없어서, 받아쓴 뒤 원본을 보며 고쳐야 해요. 맞춤법 피드백은 '사진으로' 불러온 글에서 더 정확해요.</p>
+    </div>
+    <div class="pane" id="pPaste">
+      <p class="hint" style="margin-top:0">구글 문서·패들렛·캔바에 쓴 글을 복사해 아래 칸에 붙여넣으세요.</p>
+    </div>
+    <label class="small" style="display:block;margin-top:10px">학생 글 (여기서 직접 고칠 수 있어요)</label>
+    <textarea id="essay" placeholder="학생 글이 여기에 들어와요."></textarea>
+    <div class="row" style="justify-content:space-between;margin-top:6px">
+      <span class="hint" id="count">0자</span>
+      <button class="ghost" id="clearBtn">비우기</button>
+    </div>
+    <div class="status" id="inStatus"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>루브릭(채점 기준) 확인</h2>
+    <details>
+      <summary>보고서의 '설명하는 글' 루브릭이 들어 있어요 — 눌러서 보기·고치기</summary>
+      <p class="hint">칸을 눌러 문구를 바꿀 수 있어요. 바꾼 내용은 이 기기에 저장돼요.</p>
+      <table class="rub" id="rubTable"></table>
+      <div class="row" style="margin-top:8px"><button class="ghost" id="rubReset">처음 루브릭으로 되돌리기</button></div>
+    </details>
+    <div class="row" style="margin-top:12px">
+      <label class="small"><input type="checkbox" id="optRecord" checked> 학생부 누가기록용 한 문장 초안도 받기</label>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="seal" id="runBtn">✒️ 피드백 초안 만들기</button>
+      <button class="ghost" id="promptBtn">프롬프트만 복사(다른 AI에 붙여넣기용)</button>
+    </div>
+    <div class="status" id="runStatus"></div>
+    <pre class="prompt" id="promptBox" hidden></pre>
+  </div>
+</section>
+
+<!-- 오른쪽: 결과 -->
+<section style="display:grid;gap:18px;align-content:start">
+  <div class="card fb" id="fbCard">
+    <h2><span class="num">4</span>피드백 초안 <span class="hint" style="font-weight:400">— 점선 칸을 눌러 고친 뒤 '확인 완료'를 누르세요</span></h2>
+    <div id="fbBody"><div class="empty">아직 만든 피드백이 없어요.<br>왼쪽에서 글을 불러오고 <b>피드백 초안 만들기</b>를 누르세요.</div></div>
+  </div>
+  <div class="card noprint">
+    <h2><span class="num">5</span>오늘 확인한 피드백 <span class="hint" id="doneCount" style="font-weight:400"></span></h2>
+    <div class="list" id="doneList"><div class="empty" style="padding:14px">확인 완료한 피드백이 여기에 모여요.</div></div>
+    <div class="row" style="margin-top:10px">
+      <button class="pine" id="printBtn">🖨️ 인쇄용 피드백 카드 내려받기</button>
+      <button class="ghost" id="copyTableBtn">표로 복사(엑셀·한글에 붙여넣기)</button>
+      <button class="ghost" id="clearDone">목록 비우기</button>
+    </div>
+    <p class="hint">목록은 이 기기의 브라우저에만 저장돼요. 학생 이름은 저장하지 않아요.</p>
+  </div>
+</section>
+</main>
+
+
+
+<script>
+/* 앱스 스크립트 연결 부분: 클로드 아티팩트의 claude.use("sample") 자리를 제미나이(Code.gs)로 바꿔 줌 */
+(function(){
+  if(!(window.google&&google.script&&google.script.run)){window.claude={use:async function(){return null}};return;}
+  function run(fn){var args=[].slice.call(arguments,1);return new Promise(function(res,rej){
+    var r=google.script.run.withSuccessHandler(res).withFailureHandler(function(e){rej({message:(e&&e.message)||String(e)})});
+    r[fn].apply(r,args);});}
+  function b64(blob){return new Promise(function(r){var fr=new FileReader();fr.onload=function(){r(String(fr.result).split(',')[1])};fr.readAsDataURL(blob)})}
+  var s=async function(prompt,opts){
+    if(opts&&opts.images&&opts.images.length){var im=opts.images[0];var d=await b64(im);return {text:await run('ocr',d,im.type||'image/jpeg',prompt)}}
+    return {text:await run('ask',prompt)};
+  };
+  s.json=function(prompt){return run('feedback',prompt)};
+  s.limits=async function(){return {images:true}};
+  window.claude={use:async function(n){return n==='sample'?s:null}};
+})();
+</script>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const LEVELS=["매우 잘함","잘함","보통","노력 요함"];
+const DEFAULT_RUBRIC=[
+ {k:"내용 선정",d:"설명 대상(독도)의 특성이 드러나는 알맞은 내용을 골랐는가, 사회 시간에 배운 사실이 정확한가",
+  l:["독도의 특성을 잘 드러내는 내용을 3가지 이상 골랐고, 사실이 모두 정확하며 근거(교과서·기록·자료)를 밝힘","독도의 특성을 드러내는 내용을 2~3가지 골랐고 사실이 대체로 정확함","독도에 관한 내용을 일부 골랐으나 특성이 잘 드러나지 않거나 부정확한 사실이 있음","독도에 관한 내용을 간단히 씀"]},
+ {k:"글의 구조",d:"맡은 장에 알맞은 글의 구조(열거·순서·비교와 대조)를 골라 이음말과 함께 드러냈는가. 비교와 대조는 우열이 아니라 옛날과 오늘의 노력의 같은 점·다른 점을 밝히는 것",
+  l:["고른 구조가 글 전체에 분명하고 이음말(첫째·먼저·둘 다·그런데 등)이 알맞아 독자가 쉽게 따라 읽음","고른 구조가 드러나고 이음말을 씀","구조가 일부만 드러나거나 이음말이 내용과 맞지 않음","구조가 드러나지 않음"]},
+ {k:"글의 짜임",d:"처음-가운데-끝의 짜임과 문단 나누기가 알맞은가",
+  l:["처음(대상 소개)-가운데(특성 설명)-끝(정리)이 분명하고 문단마다 중심 내용이 하나씩 있음","처음-가운데-끝이 드러나고 문단을 나눔","짜임이 일부만 드러나거나 문단 구분이 흐림","짜임 없이 문장을 나열함"]},
+ {k:"독자 고려",d:"정한 독자(동생·이웃·외국인)에게 알맞은 낱말·문장 길이·예시를 썼는가",
+  l:["독자에게 맞는 쉬운 낱말과 짧은 문장, 독자가 아는 것에 빗댄 예시를 씀(외국인 독자는 번역이 잘 되는 짧고 분명한 문장)","독자를 생각한 낱말이나 문장이 드러남","독자를 생각한 흔적이 조금 있음","독자를 생각하지 않고 씀"]}
+];
+const FACTS=`[독도 사실 메모 — 초등 사회 5-1 교과서 범위. 학생 글과 비교만 하고, 메모에 없는 사실은 '교과서에서 확인해요'로만 쓰며 맞다·틀리다를 단정하지 말 것]
+- 위치(사31~32): 우리나라 영토의 동쪽 끝 섬, 경상북도 울릉군, 울릉도에서 87.4km, 맑은 날 울릉도에서 보임. 중요성: 군사, 수산·천연자원, 연구 가치, 영토의 경계.
+- 땅(사34~35): 동도·서도 두 큰 섬과 크고 작은 여러 바위섬, 오래전 바닷속 화산 활동. 대한봉(서도 최고봉), 우산봉(동도 최고봉), 탕건봉·촛대바위·코끼리바위·한반도바위·독립문바위·장군바위. 2024년까지 26개 주요 지형 이름.
+- 기후·생물·자원(사36~37): 대체로 온화, 안개, 흐린 날, 겨울 눈. 괭이갈매기·바다제비·해국·사철나무, 독도 전체 천연기념물. 차가운·따뜻한 바닷물이 만나 좋은 어장, 수심 200m 아래 해양 심층수, 가스 하이드레이트('불타는 얼음').
+- 기록(사38~40): 『삼국사기』 512년 이사부, 『세종실록지리지』 1454(우산과 무릉 두 섬, 맑으면 서로 바라봄), 「팔도총도」 1531, 「돗토리번 답변서」 1695, 「삼국접양지도」 1785, 「태정관 지령」·「기죽도약도」 1877, 대한 제국 칙령 제41호 1900 → 10월 25일 독도의 날, 연합국 최고 사령관 각서 제677호 1946, 1735 「조선왕국전도」 기사.
+- 사람(사42~44): 안용복(조선 시대, 두 차례 일본에 건너가 울릉도와 독도가 조선 땅이라고 설명 → 일본이 인정, 일본인이 울릉도 주변에서 물고기를 잡지 못하게 함), 홍순칠과 독도 의용 수비대('한국령'), 최종덕(1981 첫 주민).
+- 오늘(사45~47): 선착장·주민 숙소·등대, 독도 경비대, 법령·정책, 외교부 다국어 독도 누리집, 독도 방문 행사, 반크.
+- 부산과 잇기(교과서 밖, 수업 도입용): 안용복은 부산 동래 사람, 수영사적공원에 안용복을 기리는 사당, 서도 도로 이름 '독도안용복길'.`;
+
+let rubric=load("dk_rubric")||JSON.parse(JSON.stringify(DEFAULT_RUBRIC));
+let done=load("dk_done")||[];
+let imgBlob=null, sample=null, canImages=false, dict=null, current=null;
+
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function status(el,msg,err){el.textContent=msg;el.classList.toggle("on",!!msg);el.classList.toggle("err",!!err)}
+
+/* ---------- 탭 ---------- */
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.id===b.dataset.p));
+}));
+const essay=$("#essay");
+essay.addEventListener("input",()=>$("#count").textContent=essay.value.replace(/\s/g,"").length+"자 (공백 빼고)");
+$("#clearBtn").onclick=()=>{essay.value="";essay.dispatchEvent(new Event("input"))};
+
+/* ---------- 루브릭 표 ---------- */
+function drawRubric(){
+  let h="<tr><th>기준</th>"+LEVELS.map(l=>"<th>"+l+"</th>").join("")+"</tr>";
+  rubric.forEach((r,i)=>{h+="<tr><th contenteditable data-i='"+i+"' data-f='k'>"+esc(r.k)+"</th>"+r.l.map((t,j)=>"<td contenteditable data-i='"+i+"' data-j='"+j+"'>"+esc(t)+"</td>").join("")+"</tr>"});
+  $("#rubTable").innerHTML=h;
+}
+$("#rubTable").addEventListener("input",e=>{const t=e.target,i=+t.dataset.i;if(isNaN(i))return;
+  if(t.dataset.f==="k")rubric[i].k=t.textContent.trim();else rubric[i].l[+t.dataset.j]=t.textContent.trim();save("dk_rubric",rubric)});
+$("#rubReset").onclick=()=>{rubric=JSON.parse(JSON.stringify(DEFAULT_RUBRIC));save("dk_rubric",rubric);drawRubric()};
+drawRubric();
+
+/* ---------- 사진 ---------- */
+const drop=$("#drop");
+["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.style.borderColor="var(--sea)"}));
+drop.addEventListener("dragleave",()=>drop.style.borderColor="");
+drop.addEventListener("drop",e=>{e.preventDefault();drop.style.borderColor="";const f=e.dataTransfer.files[0];if(f)takeImage(f)});
+$("#file").addEventListener("change",e=>{const f=e.target.files[0];if(f)takeImage(f)});
+document.querySelector(".ghostbtn").addEventListener("click",()=>$("#file").click());
+async function takeImage(f){
+  if(!/^image\//.test(f.type)){status($("#inStatus"),"그림 파일만 올릴 수 있어요.",true);return}
+  imgBlob=await shrink(f,1800);
+  const p=$("#preview");p.src=URL.createObjectURL(imgBlob);p.hidden=false;
+  $("#ocrBtn").disabled=!(sample&&canImages);
+  if(!(sample&&canImages))status($("#inStatus"),"이 화면에서는 AI가 사진을 읽을 수 없어요. 글을 붙여넣거나 받아쓰기를 써 주세요.",true);
+}
+function shrink(file,max){return new Promise(res=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height,s=Math.min(1,max/Math.max(w,h));
+  const c=document.createElement("canvas");c.width=Math.round(w*s);c.height=Math.round(h*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+  c.toBlob(b=>res(b||file),"image/jpeg",0.88)};img.onerror=()=>res(file);img.src=URL.createObjectURL(file)})}
+$("#ocrBtn").onclick=async()=>{
+  if(!sample||!imgBlob)return;
+  const btn=$("#ocrBtn");btn.disabled=true;status($("#inStatus"),"사진 속 글자를 읽고 있어요…");
+  try{
+    const r=await sample("이 사진은 초등학교 5학년 학생이 손으로 쓴 활동지예요. 학생이 쓴 '설명하는 글' 본문만 쓰인 그대로 옮겨 적어 주세요.\n규칙:\n- 맞춤법·띄어쓰기·문장을 절대 고치지 말고 보이는 그대로 옮깁니다(틀린 글자도 그대로).\n- 활동지의 인쇄된 안내 문구, 제목 칸 안내, 이름 칸은 빼고 학생이 쓴 글만 옮깁니다. 학생 이름이 보이면 옮기지 않습니다.\n- 문단이 바뀐 곳은 빈 줄로 나눕니다.\n- 도저히 읽을 수 없는 글자는 [?]로 씁니다.\n- 다른 설명 없이 옮긴 글만 답합니다.",{images:[imgBlob],modelTier:"default"});
+    essay.value=(r&&r.text?r.text:"").trim();essay.dispatchEvent(new Event("input"));
+    status($("#inStatus"),"다 읽었어요. 원본 사진과 견주어 [?] 부분과 잘못 읽은 글자를 고쳐 주세요.");
+  }catch(e){status($("#inStatus"),errMsg(e),true)}
+  btn.disabled=false;
+};
+
+/* ---------- 받아쓰기 ---------- */
+let listening=false, webRec=null, partialBase="";
+$("#micBtn").addEventListener("click",()=>{
+  const btn=$("#micBtn");
+  if(listening){stopMic();return}
+  if(dict){
+    partialBase=essay.value?essay.value.replace(/\s*$/,"")+" ":"";
+    const p=dict.start(); listening=true; btn.classList.add("live"); btn.textContent="⏹️ 받아쓰기 멈추기";
+    Promise.resolve(p).catch(e=>{listening=false;btn.classList.remove("live");btn.textContent="🎙️ 받아쓰기 시작";
+      $("#micInfo").textContent=(e&&e.code==="not_granted")?"마이크 사용이 허락되지 않았어요. 붙여넣기를 써 주세요.":"받아쓰기를 시작하지 못했어요. 다시 눌러 보세요."});
+    return;
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$("#micInfo").textContent="이 브라우저는 받아쓰기를 지원하지 않아요. 크롬에서 열거나 붙여넣기를 써 주세요.";return}
+  webRec=new SR();webRec.lang="ko-KR";webRec.continuous=true;webRec.interimResults=true;
+  partialBase=essay.value?essay.value.replace(/\s*$/,"")+" ":"";
+  webRec.onresult=ev=>{let fin="",tmp="";for(let i=ev.resultIndex;i<ev.results.length;i++){const t=ev.results[i][0].transcript;if(ev.results[i].isFinal)fin+=t+" ";else tmp+=t}
+    if(fin){partialBase+=fin}essay.value=partialBase+tmp;essay.dispatchEvent(new Event("input"))};
+  webRec.onend=()=>{if(listening){try{webRec.start()}catch(e){}}};
+  webRec.onerror=e=>{$("#micInfo").textContent="받아쓰기 오류: "+e.error};
+  try{webRec.start();listening=true;btn.classList.add("live");btn.textContent="⏹️ 받아쓰기 멈추기"}catch(e){}
+});
+function stopMic(){listening=false;const btn=$("#micBtn");btn.classList.remove("live");btn.textContent="🎙️ 받아쓰기 시작";
+  if(dict){Promise.resolve(dict.stop()).catch(()=>{})} if(webRec){try{webRec.stop()}catch(e){}}}
+
+/* ---------- 프롬프트 ---------- */
+function buildPrompt(){
+  const reader=$("#reader").value, topic=$("#topic").value;
+  const rubTxt=rubric.map((r,i)=>(i+1)+". "+r.k+"\n"+r.l.map((t,j)=>"   - "+LEVELS[j]+": "+t).join("\n")).join("\n");
+  return `당신은 초등학교 5학년 국어 수업을 돕는 피드백 조수입니다. 학생이 쓴 '설명하는 글'을 읽고, 아래 루브릭에 맞춘 피드백 '초안'을 만듭니다. 최종 판단은 담임교사가 합니다.
+
+[수업 정보]
+- 학년: 초등 5학년 / 국어 「대상을 설명해요」 + 사회 「소중한 우리 땅, 독도」 융합 프로젝트
+- 성취기준: [6국03-01] 알맞은 내용을 선정하여 대상의 특성이 나타나게 설명하는 글을 쓴다. / [6사01-02] 독도의 지리적 특성과 독도에 대한 역사 기록을 바탕으로 영토로서 독도의 중요성을 이해한다.
+- 이 학생이 맡은 설명 대상: ${topic}
+- 이 글을 읽을 사람: ${reader}
+- 이 글은 '우리 반 독도 안내 책'에 실려 동생들·이웃·외국인 관광객에게 전해집니다.
+
+[루브릭]
+${rubTxt}
+
+${FACTS}
+
+[피드백 원칙]
+- 5학년이 읽고 바로 고칠 수 있게 쉬운 말, 존댓말(~해요)로 씁니다. 학생을 탓하지 않고 구체적으로 칭찬합니다.
+- 잘한 점은 학생 글의 실제 문장을 짧게 인용해 근거를 댑니다.
+- 고칠 점은 가장 중요한 것 1~2가지만 고릅니다(루브릭에서 수준이 낮은 기준부터).
+- 고쳐 쓰기 힌트는 학생이 그대로 베끼지 않도록 '문장의 앞부분'이나 '빈칸이 있는 틀'로 줍니다. 예: "독도는 ______처럼 ______한 섬이에요."
+- 맞춤법·띄어쓰기는 눈에 띄는 것 최대 5개만 가볍게 알려 줍니다(원래 표기 → 바른 표기, 짧은 이유).
+- 사실 확인: 학생 글의 사실이 [독도 사실 메모]와 다르거나 메모로 확인할 수 없으면 '확인이 필요해요'로 표시만 하고, 새로운 사실을 지어내지 않습니다.
+- 다른 나라나 사람을 깎아내리는 표현이 있으면 부드럽게 바꾸도록 안내합니다.
+- 사진·받아쓰기로 옮긴 글이라 글자에 [?]가 있거나 띄어쓰기가 어색할 수 있으니, 그런 부분은 맞춤법 지적에서 뺍니다.
+
+[학생 글]
+"""
+${essay.value.trim()}
+"""
+
+[답 형식] 아래 JSON 하나만 답합니다. 다른 말은 쓰지 않습니다.
+{
+ "levels":[{"criterion":"내용 선정","level":"매우 잘함|잘함|보통|노력 요함","evidence":"그렇게 판단한 근거(학생 문장 짧게 인용)"} ...루브릭 기준 수만큼],
+ "praise":"잘한 점 2~3문장",
+ "fixes":["고칠 점 1(무엇을, 왜)","고칠 점 2(없으면 생략)"],
+ "hints":["고쳐 쓰기 힌트 문장 틀 1","힌트 2"],
+ "spelling":[{"from":"원래 표기","to":"바른 표기","why":"짧은 이유"}],
+ "factcheck":[{"sentence":"학생 문장","note":"무엇을 확인해야 하는지"}],
+ "reader_tip":"정한 독자를 위해 한 가지 더 해 볼 것(1문장)",
+ "teacher_note":"교사만 보는 메모(1~2문장: 이 학생에게 다음에 지도할 점)"${$("#optRecord").checked?`,
+ "record":"학교생활기록부 누가기록용 초안 1문장. 이름 없이 '~함.'으로 끝내고, 실제 글에서 드러난 성취만 씀(과장 금지)"`:""}
+}`;
+}
+$("#promptBtn").onclick=async()=>{
+  if(!essay.value.trim()){status($("#runStatus"),"먼저 학생 글을 넣어 주세요.",true);return}
+  const p=buildPrompt();const box=$("#promptBox");box.hidden=false;box.textContent=p;
+  try{await navigator.clipboard.writeText(p);status($("#runStatus"),"프롬프트를 복사했어요. 클로드·제미나이 등에 붙여넣으면 같은 형식의 피드백을 받을 수 있어요.")}
+  catch(e){status($("#runStatus"),"아래 상자의 글을 드래그해서 복사해 주세요.")}
+};
+
+/* ---------- 피드백 만들기 ---------- */
+$("#runBtn").onclick=async()=>{
+  if(!essay.value.trim()){status($("#runStatus"),"먼저 학생 글을 넣어 주세요.",true);return}
+  if(essay.value.replace(/\s/g,"").length<30){status($("#runStatus"),"글이 너무 짧아요(30자 이상). 글을 다 불러왔는지 확인해 주세요.",true);return}
+  if(!sample){status($("#runStatus"),"이 화면에서는 AI를 바로 부를 수 없어요. '프롬프트만 복사'를 눌러 다른 AI에 붙여넣어 주세요.",true);return}
+  const btn=$("#runBtn");btn.disabled=true;status($("#runStatus"),"안용복이 글을 읽고 답장을 쓰는 중이에요… (20~40초)");
+  try{
+    const data=await sample.json(buildPrompt(),{modelTier:"default"});
+    if(!data||!Array.isArray(data.levels))throw {message:"답의 모양이 달라요. 한 번 더 눌러 주세요."};
+    current={no:$("#stuNo").value||"",group:$("#group").value,topic:$("#topic").value,reader:$("#reader").value,essay:essay.value.trim(),fb:data,time:new Date().toLocaleString("ko-KR")};
+    renderFb();status($("#runStatus"),"초안이 나왔어요. 오른쪽에서 확인하고 고쳐 주세요.");
+  }catch(e){status($("#runStatus"),errMsg(e),true)}
+  btn.disabled=false;
+};
+function errMsg(e){
+  if(e&&e.code==="not_granted")return"AI 사용이 허락되지 않았어요. '프롬프트만 복사'를 써 주세요.";
+  if(e&&e.code==="rate_limited")return"잠시 요청이 많아요. 1분쯤 뒤에 다시 눌러 주세요.";
+  return"문제가 생겼어요: "+((e&&e.message)||"알 수 없는 오류")+" — 다시 눌러 보세요.";
+}
+function pill(level){const i=LEVELS.indexOf(level);return"<span class='pill p"+(4-Math.max(i,0))+"'>"+esc(level)+"</span>"}
+function renderFb(){
+  const d=current.fb;let h="";
+  h+="<div class='ok'><b>"+(current.no?current.no+"번":"번호 없음")+"</b> · "+esc(current.group||"모둠 없음")+" · "+esc(current.topic)+" · 독자: "+esc(current.reader)+"</div>";
+  h+="<h3>루브릭 수준(초안)</h3><div class='levels'>"+d.levels.map((l,i)=>"<div class='lv'><b>"+esc(l.criterion)+"</b>"+
+    "<select data-lv='"+i+"'>"+LEVELS.map(x=>"<option"+(x===l.level?" selected":"")+">"+x+"</option>").join("")+"</select> "+pill(l.level)+
+    "<div class='hint' contenteditable data-ev='"+i+"'>"+esc(l.evidence)+"</div></div>").join("")+"</div>";
+  h+="<h3>👍 잘한 점</h3><div contenteditable data-k='praise'>"+esc(d.praise)+"</div>";
+  h+="<h3>🔧 고칠 점</h3><div contenteditable data-k='fixes'>"+(d.fixes||[]).map(esc).join("<br>")+"</div>";
+  h+="<h3>✏️ 고쳐 쓰기 힌트</h3><div contenteditable data-k='hints'>"+(d.hints||[]).map(esc).join("<br>")+"</div>";
+  h+="<h3>🔤 맞춤법 살짝 보기</h3><div contenteditable data-k='spelling' class='sp'>"+((d.spelling&&d.spelling.length)?d.spelling.map(s=>"<s>"+esc(s.from)+"</s> → <ins>"+esc(s.to)+"</ins> ("+esc(s.why)+")").join("<br>"):"눈에 띄는 맞춤법 실수가 없어요.")+"</div>";
+  if(d.reader_tip)h+="<h3>👀 읽을 사람을 위해 한 가지 더</h3><div contenteditable data-k='reader_tip'>"+esc(d.reader_tip)+"</div>";
+  if(d.factcheck&&d.factcheck.length)h+="<h3>🔍 사실 확인이 필요해요 (교사 확인)</h3><div class='warn' contenteditable data-k='factcheck'>"+d.factcheck.map(f=>"「"+esc(f.sentence)+"」 — "+esc(f.note)).join("<br>")+"</div>";
+  h+="<h3>🗒️ 교사 메모 (학생 카드에 안 나와요)</h3><div contenteditable data-k='teacher_note'>"+esc(d.teacher_note||"")+"</div>";
+  if(d.record)h+="<h3>📘 누가기록 초안 (학생 카드에 안 나와요)</h3><div contenteditable data-k='record'>"+esc(d.record)+"</div>";
+  h+="<div class='row' style='margin-top:14px'><button class='pine' id='confirmBtn'>✅ 확인 완료 — 목록에 담기</button><button class='ghost' id='copyCardBtn'>학생 카드 글 복사</button></div>";
+  h+="<p class='hint'>※ AI가 만든 초안이에요. 수준과 문장을 선생님이 꼭 확인하고 고쳐 주세요.</p>";
+  $("#fbBody").innerHTML=h;
+  $("#fbBody").querySelectorAll("select[data-lv]").forEach(s=>s.addEventListener("change",()=>{current.fb.levels[+s.dataset.lv].level=s.value;s.nextElementSibling.outerHTML=pill(s.value)}));
+  $("#confirmBtn").onclick=confirmFb;
+  $("#copyCardBtn").onclick=async()=>{readEdits();try{await navigator.clipboard.writeText(cardText(current));status($("#runStatus"),"학생 카드 글을 복사했어요.")}catch(e){}};
+}
+function readEdits(){
+  const B=$("#fbBody"),g=k=>{const el=B.querySelector("[data-k='"+k+"']");return el?el.innerText.trim():""};
+  B.querySelectorAll("[data-ev]").forEach(el=>current.fb.levels[+el.dataset.ev].evidence=el.innerText.trim());
+  current.edit={praise:g("praise"),fixes:g("fixes"),hints:g("hints"),spelling:g("spelling"),reader_tip:g("reader_tip"),teacher_note:g("teacher_note"),record:g("record"),factcheck:g("factcheck")};
+}
+function cardText(c){const e=c.edit||{};return `[안용복의 답장] ${c.no?c.no+"번":""} ${c.topic}\n잘한 점: ${e.praise}\n고칠 점: ${e.fixes}\n고쳐 쓰기 힌트: ${e.hints}\n맞춤법: ${e.spelling}${e.reader_tip?"\n읽을 사람을 위해: "+e.reader_tip:""}\n※ 선생님이 AI의 도움으로 초안을 만들고 직접 확인했어요(사용 서비스: Gemini).`}
+function confirmFb(){
+  readEdits();
+  const idx=done.findIndex(x=>x.no&&x.no===current.no&&x.topic===current.topic);
+  const item=JSON.parse(JSON.stringify(current));
+  if(idx>=0)done[idx]=item;else done.push(item);
+  done.sort((a,b)=>(+a.no||999)-(+b.no||999));save("dk_done",done);drawDone();
+  status($("#runStatus"),(current.no||"번호 없는")+"번 피드백을 목록에 담았어요. 다음 학생 글을 불러오세요.");
+}
+function drawDone(){
+  $("#doneCount").textContent=done.length?"("+done.length+"명)":"";
+  if(!done.length){$("#doneList").innerHTML="<div class='empty' style='padding:14px'>확인 완료한 피드백이 여기에 모여요.</div>";return}
+  $("#doneList").innerHTML=done.map((c,i)=>"<div class='it'><b>"+esc(c.no||"-")+"번</b><span>"+esc(c.topic)+" · "+c.fb.levels.map(l=>esc(l.criterion)+" "+esc(l.level)).join(" / ")+"</span><button class='ghost' data-open='"+i+"' style='min-height:34px;padding:4px 10px'>열기</button><button class='ghost' data-del='"+i+"' style='min-height:34px;padding:4px 10px'>빼기</button></div>").join("");
+}
+$("#doneList").addEventListener("click",e=>{const o=e.target.dataset.open,d=e.target.dataset.del;
+  if(o!==undefined){current=JSON.parse(JSON.stringify(done[+o]));renderFb();applyEdits();window.scrollTo({top:0,behavior:"smooth"})}
+  if(d!==undefined){done.splice(+d,1);save("dk_done",done);drawDone()}});
+function applyEdits(){const e=current.edit;if(!e)return;const B=$("#fbBody");Object.keys(e).forEach(k=>{const el=B.querySelector("[data-k='"+k+"']");if(el&&e[k])el.innerText=e[k]})}
+let clearArm=0;
+$("#clearDone").onclick=()=>{const b=$("#clearDone");
+  if(Date.now()-clearArm>4000){clearArm=Date.now();b.textContent="한 번 더 누르면 모두 지워져요";setTimeout(()=>b.textContent="목록 비우기",4000);return}
+  done=[];save("dk_done",done);drawDone();b.textContent="목록 비우기";clearArm=0};
+function cardsHtml(){
+  const cards=done.map(c=>{const e=c.edit||{};return "<div class='pcard'><h4>📜 안용복의 답장 — "+esc(c.no||"")+"번 · "+esc(c.topic)+"</h4>"+
+    "<p><span class='lab'>잘한 점</span> "+esc(e.praise)+"</p><p><span class='lab'>고칠 점</span> "+esc(e.fixes).replace(/\n/g,"<br>")+"</p>"+
+    "<p><span class='lab'>고쳐 쓰기 힌트</span> "+esc(e.hints).replace(/\n/g,"<br>")+"</p><p><span class='lab'>맞춤법</span> "+esc(e.spelling).replace(/\n/g,"<br>")+"</p>"+
+    (e.reader_tip?"<p><span class='lab'>읽을 사람을 위해</span> "+esc(e.reader_tip)+"</p>":"")+
+    "<div class='foot'>선생님이 AI의 도움으로 초안을 만들고 직접 확인했어요(사용 서비스: Gemini). &nbsp; 내 생각으로 고쳐 쓰기 □ &nbsp; 고친 곳에 밑줄 □</div></div>"}).join("");
+  return "<!DOCTYPE html><html lang='ko'><head><meta charset='utf-8'><title>안용복의 답장 피드백 카드</title><style>"+
+   "body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;margin:12mm;color:#2B2A28}"+
+   ".pcard{page-break-inside:avoid;border:2px solid #2B2A28;border-radius:12px;padding:12px 16px;margin:0 0 10mm;font-size:13pt;line-height:1.6}"+
+   ".pcard h4{margin:0 0 6px;font-size:15pt}.pcard p{margin:4px 0}.lab{font-weight:800;color:#C8553D;margin-right:6px}"+
+   ".foot{font-size:10pt;color:#555;margin-top:6px;border-top:1px dashed #aaa;padding-top:4px}"+
+   ".top{font-size:11pt;color:#555;margin-bottom:6mm}@media print{.top{display:none}}</style></head><body>"+
+   "<div class='top'>이 파일을 연 뒤 Ctrl+P(인쇄)를 누르세요. A4 한 장에 카드 2~3장이 들어가요.</div>"+cards+"</body></html>";
+}
+let downloads=null;
+$("#printBtn").onclick=async()=>{
+  if(!done.length){status($("#runStatus"),"내려받을 피드백이 없어요. '확인 완료'를 먼저 눌러 주세요.",true);return}
+  const html=cardsHtml();
+  if(downloads){
+    try{await downloads.save({filename:"안용복의답장_피드백카드.html",data:html});status($("#runStatus"),"카드 파일을 내려받았어요. 파일을 열고 Ctrl+P로 인쇄하세요.");return}
+    catch(e){/* 아래 복사로 */}
+  }
+  const all=done.map(c=>cardText(c)).join("\n\n----------\n\n");
+  try{await navigator.clipboard.writeText(all);status($("#runStatus"),"내려받기를 쓸 수 없어 카드 글을 모두 복사했어요. 한글·워드에 붙여넣어 인쇄하세요.")}
+  catch(e){status($("#runStatus"),"내려받기와 복사를 모두 쓸 수 없어요. 카드마다 '학생 카드 글 복사'를 써 주세요.",true)}
+};
+$("#copyTableBtn").onclick=async()=>{
+  const head=["번호","모둠","설명 대상","독자"].concat(rubric.map(r=>r.k)).concat(["잘한 점","고칠 점","누가기록 초안"]);
+  const rows=done.map(c=>{const e=c.edit||{};return [c.no,c.group,c.topic,c.reader].concat(c.fb.levels.map(l=>l.level)).concat([e.praise,e.fixes,e.record]).map(v=>String(v||"").replace(/\t|\n/g," "))});
+  const tsv=[head].concat(rows).map(r=>r.join("\t")).join("\n");
+  try{await navigator.clipboard.writeText(tsv);status($("#runStatus"),"표를 복사했어요. 엑셀이나 한글 표에 붙여넣으세요.")}catch(e){status($("#runStatus"),"복사하지 못했어요.",true)}
+};
+drawDone();
+
+/* ---------- AI 연결 ---------- */
+(async()=>{
+  try{
+    if(window.claude&&claude.use){
+      sample=await claude.use("sample");
+      if(sample){try{const lim=await sample.limits();canImages=!!(lim&&lim.images)}catch(e){canImages=false}}
+      downloads=await claude.use("downloads");
+      dict=await claude.use("dictation");
+      if(dict){
+        dict.onPartial(({text})=>{essay.value=partialBase+(text||"");essay.dispatchEvent(new Event("input"))});
+        dict.onFinal(({text})=>{partialBase+=(text||"")+" ";essay.value=partialBase;essay.dispatchEvent(new Event("input"))});
+        dict.onState(({state})=>{if(state==="idle"&&listening){listening=false;const b=$("#micBtn");b.classList.remove("live");b.textContent="🎙️ 받아쓰기 시작"}});
+      }
+    }
+  }catch(e){sample=null}
+  const tag=$("#aiState");
+  if(sample){tag.textContent=canImages?"AI 연결됨 · 사진 읽기 가능":"AI 연결됨 · 사진 읽기 불가";}
+  else{tag.textContent="AI 미연결 · 프롬프트 복사 모드";$("#runBtn").title="이 화면에서는 '프롬프트만 복사'를 써 주세요."}
+  if(imgBlob)$("#ocrBtn").disabled=!(sample&&canImages);
+})();
+})();
+</script>
+</body>
+</html>
