@@ -877,7 +877,7 @@ function openP(id){
         <div class="full-ctrl"><button type="button" data-go="-1">이전</button><button type="button" data-go="1">다음</button><button type="button" data-close>닫기</button></div></div>
       <h2 id="fTitle">${esc(p.name)}</h2>
       <p class="sub">${esc(p.sub)}</p>
-      <div class="chips">${p.no===3?`<span style="background:var(--c);color:#fff">★ 동아리 프로젝트</span>`:""}<span>${esc(p.grade)}</span><span>${esc(p.subj)}</span><span>${esc(p.theme)}</span><span>10차시</span>${p.hours?`<span>${esc(p.hours)}</span>`:""}</div>
+      <div class="chips">${p.no===3?`<span style="background:var(--c);color:#fff">★ 동아리 프로젝트</span>`:""}<span>${esc(p.grade)}</span><span>${esc(p.subj)}</span><span>${esc(p.theme)}</span><span>${esc(p.hours||"10차시")}</span></div>
       <p class="question">${esc(p.q)}</p>
       <div class="track">${STEPS.map((s,i)=>`<div style="--k:${s.c2}"><b><em>${s.k}</em>${s.w}</b><p>${esc(p.flow[i])}</p></div>`).join("")}</div>
       <div class="pair"><div><h4>만드는 것</h4><p>${esc(p.out)}</p></div><div><h4>AI와 함께하는 방법</h4><p>${esc(p.ai)}</p></div></div>
